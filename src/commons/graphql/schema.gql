@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  primKey: String!
+  email: String!
+  name: String!
+  nickname: String!
+  level: Int!
+  cash: Int!
+  exp: Int!
+  emailCheck: Boolean!
+  regDate: DateTime!
+  updateDate: DateTime!
+  recentDate: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  sayHello: String!
+}
+
+type Mutation {
+  createUser(email: String!, psword: String!, name: String!, nickname: String!, regDate: DateTime!): User!
+  login(email: String!, psword: String!): User!
+}
