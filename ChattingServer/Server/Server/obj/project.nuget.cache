@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WLuNgrVWmHaosIEhtJEl4NIxlcEbgURxvLM6fasTSfh3m2tp+ipwxgOxf5Lh2pxbyoeqMCrDD4AA1mAFiWjLvA==",
+  "dgSpecHash": "MaBY6hdI+w3G1PR2Sv3sMV9mXXoO4D9axhuuioYmWdIa0n+rvLWZZmYPmET2RcMexK8y6+IB3pZ9NvijShWdjw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\KSS\\source\\repos\\Server\\Server\\Server.csproj",
+  "projectFilePath": "A:\\Project\\ants\\ChattingServer\\Server\\Server\\Server.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

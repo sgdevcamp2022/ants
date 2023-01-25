@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KSS\\source\\repos\\Server\\Server\\Server.csproj": {}
+    "A:\\Project\\ants\\ChattingServer\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KSS\\source\\repos\\Server\\Server\\Server.csproj": {
+    "A:\\Project\\ants\\ChattingServer\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KSS\\source\\repos\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "A:\\Project\\ants\\ChattingServer\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "C:\\Users\\KSS\\source\\repos\\Server\\Server\\Server.csproj",
+        "projectPath": "A:\\Project\\ants\\ChattingServer\\Server\\Server\\Server.csproj",
         "packagesPath": "C:\\Users\\KSS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KSS\\source\\repos\\Server\\Server\\obj\\",
+        "outputPath": "A:\\Project\\ants\\ChattingServer\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KSS\\AppData\\Roaming\\NuGet\\NuGet.Config",

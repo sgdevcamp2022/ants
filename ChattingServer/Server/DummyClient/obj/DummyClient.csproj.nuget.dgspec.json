@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KSS\\source\\repos\\Server\\DummyClient\\DummyClient.csproj": {}
+    "A:\\Project\\ants\\ChattingServer\\Server\\DummyClient\\DummyClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KSS\\source\\repos\\Server\\DummyClient\\DummyClient.csproj": {
+    "A:\\Project\\ants\\ChattingServer\\Server\\DummyClient\\DummyClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KSS\\source\\repos\\Server\\DummyClient\\DummyClient.csproj",
+        "projectUniqueName": "A:\\Project\\ants\\ChattingServer\\Server\\DummyClient\\DummyClient.csproj",
         "projectName": "DummyClient",
-        "projectPath": "C:\\Users\\KSS\\source\\repos\\Server\\DummyClient\\DummyClient.csproj",
+        "projectPath": "A:\\Project\\ants\\ChattingServer\\Server\\DummyClient\\DummyClient.csproj",
         "packagesPath": "C:\\Users\\KSS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KSS\\source\\repos\\Server\\DummyClient\\obj\\",
+        "outputPath": "A:\\Project\\ants\\ChattingServer\\Server\\DummyClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KSS\\AppData\\Roaming\\NuGet\\NuGet.Config",

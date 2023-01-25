@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KSS\\source\\repos\\Server\\ServerCore\\ServerCore.csproj",
+      "projectUniqueName": "A:\\Project\\ants\\ChattingServer\\Server\\ServerCore\\ServerCore.csproj",
       "projectName": "ServerCore",
-      "projectPath": "C:\\Users\\KSS\\source\\repos\\Server\\ServerCore\\ServerCore.csproj",
+      "projectPath": "A:\\Project\\ants\\ChattingServer\\Server\\ServerCore\\ServerCore.csproj",
       "packagesPath": "C:\\Users\\KSS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KSS\\source\\repos\\Server\\ServerCore\\obj\\",
+      "outputPath": "A:\\Project\\ants\\ChattingServer\\Server\\ServerCore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KSS\\AppData\\Roaming\\NuGet\\NuGet.Config",
