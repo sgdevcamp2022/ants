@@ -12,11 +12,7 @@ export class UserService {
     ) { }
 
 
-    emailToken() {
-        const mycount = 7
-        const result = String(Math.floor(Math.random() * 10 ** mycount)).padStart(mycount, "0")
-        return result
-    }
+
 
 
     async create({ email, hashedPsword: psword, name, nickname, regDate }) {
@@ -28,8 +24,13 @@ export class UserService {
         return await this.userRepository.save({ email, psword, name, nickname, regDate })
     }
 
+
     async findOne({ email }) {
         return await this.userRepository.findOneBy({ email })
+    }
+
+    async delete() {
+
     }
 
 }

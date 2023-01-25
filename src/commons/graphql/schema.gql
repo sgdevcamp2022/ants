@@ -23,9 +23,12 @@ scalar DateTime
 
 type Query {
   sayHello: String!
+  fetchUser: String!
 }
 
 type Mutation {
   createUser(email: String!, psword: String!, name: String!, nickname: String!, regDate: DateTime!): User!
-  login(email: String!, psword: String!): User!
+  deleteUser(email: String!): Boolean!
+  login(email: String!, psword: String!): String!
+  sendEmail(email: String!): String!
 }
