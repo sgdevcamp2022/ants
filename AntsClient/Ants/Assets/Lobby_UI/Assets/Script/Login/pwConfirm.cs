@@ -17,6 +17,7 @@ public class pwConfirm : MonoBehaviour
     {
         if(pw.text == PwConfirm.text)
         {
+            textMeshPro.SetText("Same");
             text.SetActive(true);
         }
         else
