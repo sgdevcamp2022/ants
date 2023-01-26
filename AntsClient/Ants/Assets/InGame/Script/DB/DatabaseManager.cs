@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class DatabaseManager : MonoBehaviour
 {
+    public static float nowStemina;
+    public static float fullStemina;
+    public static string playerState;
 
-    public static int stat;
-
-
+    public static bool isAction;
+    public static bool isRestOneSec;
     static public DatabaseManager instance;
     private void Awake()
     {
@@ -22,4 +24,4 @@ public class DatabaseManager : MonoBehaviour
         }
 
     }
-    }
+}
