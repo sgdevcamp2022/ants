@@ -35,5 +35,8 @@
     <ClInclude Include="Server.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

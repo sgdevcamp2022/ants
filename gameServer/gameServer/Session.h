@@ -2,7 +2,7 @@
 
 class Server;
 
-const int MAX_RECEIVE_BUFFER_LEN = 512;
+
 
 class Session
 {
@@ -24,7 +24,7 @@ public:
 	void AfterConnect();
 
 	virtual void OnSend() {}
-	virtual void OnReceive() {}
+	virtual void OnReceive(int numberOfBytes, char* buffer) {}
 private:
 	
 

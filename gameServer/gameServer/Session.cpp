@@ -22,7 +22,6 @@ void Session::RegisterSend(const int nSize, char* pData)
 {
     //네트워크에서 send는 보내는 것 뿐이야, 그렇다면 비즈니스 로직에서 어떠한 큐에 데이터를 넣고, 그 데이터를 꺼내서 전송을 하겠지 그러면 이 함수는 그냥 센드야
     char* sendData = nullptr;
-    
 
     sendData = pData;
 
@@ -68,7 +67,17 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     }
     else
     {
-        OnReceive();
+        /*test*/
+        cout << _receiveBuffer.data() << endl;
+
+        string data = _receiveBuffer.data();
+
+        data.push_back('O');
+        data.push_back('O');
+
+        RegisterSend(_receiveBuffer.size(),const_cast<char*>(data.data()));
+        /*test end*/
+        OnReceive(transferredBytes,_receiveBuffer.data());
 
         RegisterReceive();
     }

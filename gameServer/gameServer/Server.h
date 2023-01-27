@@ -2,7 +2,8 @@
 #include "Session.h"
 
 
-const unsigned short PORT_NUMBER = 10006;
+using work_guard_type = boost::asio::executor_work_guard<boost::asio::io_context::executor_type>;
+
 
 class Server
 {
@@ -16,7 +17,6 @@ public:
 	void Start();
 
 	void CloseSession(const unsigned int sessionID);
-
 private:
 
 	bool RegisterAccept();
@@ -24,6 +24,7 @@ private:
 	void AfterAccept(Session* session, const boost::system::error_code& error);
 	
 
+	work_guard_type* work_guard=nullptr;
 
 	boost::asio::ip::tcp::acceptor _acceptor;
 	
@@ -31,6 +32,8 @@ private:
 	deque<unsigned int> unusedSessions;
 
 	bool isAccepting;
+
+	vector<std::thread> workerThreads;
 	
 };
 

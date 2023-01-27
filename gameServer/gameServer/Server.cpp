@@ -2,15 +2,24 @@
 #include "Server.h"
 
 
-
 Server::Server(boost::asio::io_context& io_context)
 : _acceptor(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), PORT_NUMBER))
 {
 	isAccepting = false;
+	
+	work_guard = new work_guard_type(io_context.get_executor());
+	
+	for(int i=0; i< std::thread::hardware_concurrency(); i++)
+	{
+		workerThreads.emplace_back(thread([&]() {io_context.run();}));
+	}
 }
 
 Server::~Server()
 {
+
+	delete work_guard;
+
 	for (size_t i = 0; i < sessions.size(); ++i)
 	{
 		if (sessions[i]->GetSocket().is_open())
@@ -31,6 +40,7 @@ void Server::Init(const int maxSessionCount)
 		sessions.push_back(session);
 		unusedSessions.push_back(i);
 	}
+
 }
 
 void Server::Start()
@@ -51,6 +61,7 @@ void Server::CloseSession(const unsigned sessionID)
 		RegisterAccept();
 	}
 }
+
 
 
 bool Server::RegisterAccept()
@@ -82,6 +93,7 @@ void Server::AfterAccept(Session* session, const boost::system::error_code& erro
 		session->AfterConnect();
 
 		RegisterAccept();
+		session->RegisterReceive();
 	}
 	else
 	{
