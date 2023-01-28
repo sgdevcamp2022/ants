@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Mask
+  - BehindMask
+  - Obstracle
+  - Player
+  - Black
   - 
   - 
   - 
