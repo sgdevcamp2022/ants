@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using TMPro;
 using System.Xml.Serialization;
 
-public class pwConfirm : MonoBehaviour
+public class PwConfirm : MonoBehaviour
 {
     //pw에 입력된 값과 confirm에 입력된 값이 같다면 same 글씨 뜨게하기
     public TMP_InputField pw;
-    public TMP_InputField PwConfirm;
+    public TMP_InputField pwConfirm;
     public GameObject text;
     public TextMeshProUGUI textMeshPro;
 
    public void PwSame()
     {
-        if(pw.text == PwConfirm.text)
+        if(pw.text == pwConfirm.text)
         {
             textMeshPro.SetText("Same");
             text.SetActive(true);
