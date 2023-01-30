@@ -7,8 +7,9 @@ class Server;
 class Session
 {
 public:
-	Session(unsigned int sessionID, boost::asio::io_context& io_context, Server* server);
-
+    
+    Session(unsigned int sessionID, boost::asio::io_context& io_context, Server* server);
+	virtual ~Session() = default;
 
 	boost::asio::ip::tcp::socket& GetSocket() {	return socket; }
 
@@ -18,11 +19,12 @@ public:
 
 	void RegisterReceive();
 
-	void RegisterSend(const int nSize, char* pData);
+	void RegisterSend(const int size, char* buffer);
 
 
 	void AfterConnect();
 
+	virtual void OnConnect() {}
 	virtual void OnSend() {}
 	virtual void OnReceive(int numberOfBytes, char* buffer) {}
 private:
@@ -38,7 +40,7 @@ private:
 	
 	std::array<char, MAX_RECEIVE_BUFFER_LEN> _receiveBuffer;
 
-	std::deque< char* > m_SendDataQueue;
+	char*  _sendBuffer;
 
 
 	unsigned int _sessionID;

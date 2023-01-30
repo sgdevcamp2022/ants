@@ -18,17 +18,16 @@ void Session::RegisterReceive()
     );
 }
 
-void Session::RegisterSend(const int nSize, char* pData)
+void Session::RegisterSend(const int size, char* buffer)
 {
     //네트워크에서 send는 보내는 것 뿐이야, 그렇다면 비즈니스 로직에서 어떠한 큐에 데이터를 넣고, 그 데이터를 꺼내서 전송을 하겠지 그러면 이 함수는 그냥 센드야
-    char* sendData = nullptr;
-
-    sendData = pData;
+   
+    _sendBuffer = buffer;
 
 
     boost::asio::async_write(
         socket, 
-        boost::asio::buffer(sendData, nSize),
+        boost::asio::buffer(_sendBuffer, size),
         [this](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes); }
     );
 }
@@ -36,6 +35,7 @@ void Session::RegisterSend(const int nSize, char* pData)
 void Session::AfterConnect()
 {
     Init();
+    OnConnect();
     RegisterReceive();
 }
 

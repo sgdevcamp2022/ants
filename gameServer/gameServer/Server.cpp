@@ -93,7 +93,6 @@ void Server::AfterAccept(Session* session, const boost::system::error_code& erro
 		session->AfterConnect();
 
 		RegisterAccept();
-		session->RegisterReceive();
 	}
 	else
 	{
