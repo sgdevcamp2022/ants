@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerFOV : MonoBehaviour
 {
 
-    float angle;
-    Vector2 target, mouse;
+
+    Vector2 target;
 
     [SerializeField] private FieldOfView fieldOfView;
     // Start is called before the first frame update

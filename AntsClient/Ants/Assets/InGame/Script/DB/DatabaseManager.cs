@@ -11,6 +11,9 @@ public class DatabaseManager : MonoBehaviour
     public static bool isAction;
     public static bool isRestOneSec;
     static public DatabaseManager instance;
+
+
+
     private void Awake()
     {
         if (instance != null)
