@@ -45,6 +45,7 @@
     <ClCompile Include="RoomManager.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -74,5 +75,6 @@
     <ClInclude Include="RoomManager.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="User.h" />
   </ItemGroup>
 </Project>

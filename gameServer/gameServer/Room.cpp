@@ -3,6 +3,10 @@
 
 #include "GameSession.h"
 
+Room::Room(unsigned roomID) : _roomID(roomID)
+{
+}
+
 void Room::Enter(User* user)
 {
     LOCK_GUARD

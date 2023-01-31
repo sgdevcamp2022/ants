@@ -18,3 +18,8 @@ int RoomManager::GetRoomID(unsigned int userID)
     //못찾음
     return 0;
 }
+
+Room* RoomManager::MakeRoom(unsigned RoomID)
+{
+
+}
