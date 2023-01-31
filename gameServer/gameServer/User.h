@@ -5,8 +5,9 @@ class GameSession;
 class User
 {
 public:
-    unsigned int userID = 0;
-    string name;
-    GameSession* session;
+    User(unsigned int userID, string name);
+    unsigned int _userID;
+    string _name;
+    GameSession* _session;
 };
 

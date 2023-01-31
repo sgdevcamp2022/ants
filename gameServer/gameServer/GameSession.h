@@ -9,5 +9,6 @@ public:
     void OnConnect() override;
     void OnSend() override;
     void OnReceive(int numberOfBytes, char* buffer) override;
+    //Room포인터 두는 것 고려, 
 };
 

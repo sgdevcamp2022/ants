@@ -45,7 +45,9 @@
     <ClCompile Include="RoomManager.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="User.cpp" />
+    <ClCompile Include="User.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -75,6 +77,13 @@
     <ClInclude Include="RoomManager.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="User.h" />
+    <ClInclude Include="User.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\protoc-21.12-win64\bin\Protocol.proto">
+      <Filter>Protocol</Filter>
+    </None>
   </ItemGroup>
 </Project>

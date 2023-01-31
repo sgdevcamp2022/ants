@@ -1,25 +1,33 @@
 #include "pch.h"
 #include "RoomManager.h"
 #include "Room.h"
+#include "User.h"
 
-int RoomManager::GetRoomID(unsigned int userID)
+Room* RoomManager::MakeRoom(unsigned roomID)
 {
 
-    for (auto& room : _rooms)
-    {
-        auto it = room.second->_users.find(userID);
-        if(it != room.second->_users.end())
-        {
-            //찾음
-            return room.first;
-        }
-    }
-
-    //못찾음
-    return 0;
+    Room* room = new Room(roomID);
+    //필요시 여기에서 UserID 입력
+    LOCK_GUARD
+    _rooms[roomID] = room;
+    return room;
 }
 
-Room* RoomManager::MakeRoom(unsigned RoomID)
+Room* RoomManager::GetRoomByRoomID(unsigned roomID)
 {
+    LOCK_GUARD
+    auto it=_rooms.find(roomID);
+    if(it!=_rooms.end())
+    {
+        return it->second;
+    }
+    return nullptr;
+}
 
+void RoomManager::DeleteRoom(Room* room)
+{
+    if (room == nullptr)
+        return;
+    delete room;
+    room = nullptr;
 }
