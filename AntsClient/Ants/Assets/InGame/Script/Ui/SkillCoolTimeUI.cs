@@ -6,57 +6,70 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class SkillCoolTimeUI : MonoBehaviour
 {
-    bool isCoolTime = false;
-    float cooldown = 3f;
-    float delayTime = 30;
-    public Image image;
-    //public GameObject skillATT;
+    // Q  스킬 관련 변수
+    bool QisCoolTime = false;
+    float Qcooldown = 3f;
+    float QdelayTime = 30;
+    public Image QSkill;
 
-    // Start is called before the first frame update
+    //E스킬 관련 변수
+    bool EisCoolTime = false;
+    float Ecooldown = 5f;
+    float EdelayTime = 50;
+    public Image ESkill;
+
     void Start()
     {
 
     }
-    IEnumerator Wait()
-    {
-        image.fillAmount = 0;
-        while (delayTime > 0)
-        {
-            image.fillAmount += (0.033333333333333333333333333f);
-            delayTime -= 1;
-            yield return new WaitForSeconds(0.01f);
-        }
-        delayTime = 30;
-    }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (isCoolTime == true)
+        if (QisCoolTime == true)
         {
-            image.fillAmount += 1 / cooldown * Time.deltaTime;
+            QSkill.fillAmount += 1 / Qcooldown * Time.deltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (isCoolTime == false)
+            if (QisCoolTime == false)
             {
-                image.fillAmount = 0;
-                isCoolTime = true;
-                StartCoroutine(CoolTime());
+                QSkill.fillAmount = 0;
+                QisCoolTime = true;
+                StartCoroutine(QCoolTime());
             }
         }
 
+        if (EisCoolTime == true)
+        {
+            ESkill.fillAmount += 1 / Ecooldown * Time.deltaTime;
+        }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (EisCoolTime == false)
+            {
+                ESkill.fillAmount = 0;
+                EisCoolTime = true;
+                StartCoroutine(ECoolTime());
+            }
+        }
 
     }
 
-
-    IEnumerator CoolTime()
+    IEnumerator QCoolTime()
     {
         yield return new WaitForSeconds(3f);
+        QisCoolTime = false;
+    }
 
-        isCoolTime = false;
+
+    IEnumerator ECoolTime()
+    {
+        yield return new WaitForSeconds(5f);
+        EisCoolTime = false;
     }
 }
 
