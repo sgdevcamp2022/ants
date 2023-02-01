@@ -42,7 +42,7 @@ void Room::Broadcast()
 
     for (auto& user : _users)
     {
-        //다른 방식으로 수정 필요
+        //다른 방식으로 수정 필요, sendbuffer shared_ptr로 교체 필요
         auto buffer = sendDataQueue.front();
 
         sendDataQueue.pop_front();

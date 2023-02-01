@@ -19,7 +19,7 @@ public:
 
 	void RegisterReceive();
 
-	void RegisterSend(const int size, char* buffer);
+	void RegisterSend(const int size, string* buffer);
 
 
 	void AfterConnect();
@@ -30,7 +30,7 @@ public:
 private:
 	
 
-	void AfterSend(const boost::system::error_code& error, size_t bytes_transferred);
+	void AfterSend(const boost::system::error_code& error, size_t bytes_transferred, string* sendBuffer);
 
 	void AfterReceive(const boost::system::error_code& error, size_t bytes_transferred);
 
@@ -38,9 +38,8 @@ private:
 
 	boost::asio::ip::tcp::socket socket;
 	
-	std::array<char, MAX_RECEIVE_BUFFER_LEN> _receiveBuffer;
+	array<char, MAX_RECEIVE_BUFFER_LEN> _receiveBuffer;
 
-	char*  _sendBuffer;
 
 
 	unsigned int _sessionID;

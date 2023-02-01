@@ -23,11 +23,12 @@ int main()
     buf->set_buffid(100);
     buf->set_remaintime(10.1f);
     buf->add_victims(12);
-    
+
+
 
     // 패킷 구조체에 데이터 넣고 버퍼에 넣어주기, 앞 쪽에 헤더 넣고
     // 그리고 센드
-
+    
 
     getchar();
     

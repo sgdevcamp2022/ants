@@ -11,6 +11,8 @@ Session::Session(unsigned sessionID, boost::asio::io_context& io_context, Server
 
 void Session::RegisterReceive()
 {
+    
+
     socket.async_read_some(
         boost::asio::buffer(_receiveBuffer),
         [this] (boost::system::error_code error,size_t transferedBytes){ AfterReceive(error, transferedBytes); }
@@ -18,17 +20,14 @@ void Session::RegisterReceive()
     );
 }
 
-void Session::RegisterSend(const int size, char* buffer)
+void Session::RegisterSend(const int size, string* buffer)
 {
     //네트워크에서 send는 보내는 것 뿐이야, 그렇다면 비즈니스 로직에서 어떠한 큐에 데이터를 넣고, 그 데이터를 꺼내서 전송을 하겠지 그러면 이 함수는 그냥 센드야
    
-    _sendBuffer = buffer;
-
-
     boost::asio::async_write(
         socket, 
-        boost::asio::buffer(_sendBuffer, size),
-        [this](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes); }
+        boost::asio::buffer(*buffer),
+        [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); }
     );
 }
 
@@ -40,9 +39,11 @@ void Session::AfterConnect()
 }
 
 
-void Session::AfterSend(const boost::system::error_code& error, size_t transferredBytes)
+void Session::AfterSend(const boost::system::error_code& error, size_t transferredBytes, string* sendBuffer)
 {
     //끝났으니까 버퍼를 삭제한다 데이터를 어떻게 관리할래?
+    
+    delete sendBuffer;
     //여기서 Send는 다시 호출될 필요 없어 왜? 비즈니스 로직에서 특정 시간마다 반복해서 send 할 거니까 여기는 필요한 작업 생기면 추가 해 그냥
     OnSend();
 }
@@ -70,15 +71,18 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
         /*test*/
         cout << _receiveBuffer.data() << endl;
 
-        string data = _receiveBuffer.data();
+        string* data = new string(_receiveBuffer.begin(),_receiveBuffer.end());
 
-        data.push_back('O');
-        data.push_back('O');
 
-        RegisterSend(_receiveBuffer.size(),const_cast<char*>(data.data()));
+
+        data->push_back('O');
+        data->push_back('O');
+        RegisterSend(data->size(),data);
+        
         /*test end*/
         OnReceive(transferredBytes,_receiveBuffer.data());
-
+        //receiveBuffer 언제 어디서 삭제할까?
+        
         RegisterReceive();
     }
 }
