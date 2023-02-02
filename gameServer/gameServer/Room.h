@@ -26,6 +26,6 @@ private:
     bool isStart;
     mutex mutexLock;
     //필요 없을 시 삭제
-    std::deque< string* > sendDataQueue;
+    std::deque< char* > sendDataQueue;
 };
 
