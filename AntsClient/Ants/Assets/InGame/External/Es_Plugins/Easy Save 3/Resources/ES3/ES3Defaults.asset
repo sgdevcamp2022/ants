@@ -31,8 +31,11 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - AllIn1SpriteShaderAssembly
+    - AstarPathfindingProject
     - FangAutoTile
+    - AstarPathfindingProjectEditor
     - PsdPlugin
+    - PackageToolsEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

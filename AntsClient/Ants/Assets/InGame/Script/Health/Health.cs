@@ -5,9 +5,11 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] float HP;
+    EnemyStun enemyStun;
     public Animator ani;
     private void Start()
     {
+        enemyStun = GetComponent<EnemyStun>();
         ani = GetComponent<Animator>();
     }
     private void Update()
@@ -21,6 +23,11 @@ public class Health : MonoBehaviour
     {
         HP -= damage;
         ani.SetBool("hit", true);
+        if(this.tag == "Enemy")
+        {
+            enemyStun.Stun();
+        }
+
     }
     public void endHitAnimation()
     {
