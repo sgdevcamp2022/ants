@@ -96,7 +96,8 @@ struct M_InitRoomDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 M_InitRoomDefaultTypeInternal _M_InitRoom_default_instance_;
 PROTOBUF_CONSTEXPR S_RoomCompleted::S_RoomCompleted(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.iscompleted_)*/false
+    /*decltype(_impl_.roomid_)*/0u
+  , /*decltype(_impl_.iscompleted_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_RoomCompletedDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_RoomCompletedDefaultTypeInternal()
@@ -214,6 +215,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_RoomCompleted, _impl_.roomid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_RoomCompleted, _impl_.iscompleted_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_TEST, _internal_metadata_),
@@ -252,10 +254,10 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 27, -1, -1, sizeof(::Protocol::M_TEST)},
   { 34, -1, -1, sizeof(::Protocol::M_InitRoom)},
   { 42, -1, -1, sizeof(::Protocol::S_RoomCompleted)},
-  { 49, -1, -1, sizeof(::Protocol::C_TEST)},
-  { 56, -1, -1, sizeof(::Protocol::C_EnterRoom)},
-  { 64, -1, -1, sizeof(::Protocol::C_Move)},
-  { 71, -1, -1, sizeof(::Protocol::C_Attacked)},
+  { 50, -1, -1, sizeof(::Protocol::C_TEST)},
+  { 57, -1, -1, sizeof(::Protocol::C_EnterRoom)},
+  { 65, -1, -1, sizeof(::Protocol::C_Move)},
+  { 72, -1, -1, sizeof(::Protocol::C_Attacked)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -279,15 +281,16 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "rotocol.BuffData\"$\n\004User\022\016\n\006userID\030\001 \001(\r"
   "\022\014\n\004name\030\002 \001(\t\"\025\n\006M_TEST\022\013\n\003msg\030\001 \001(\t\":\n"
   "\nM_InitRoom\022\016\n\006roomID\030\001 \001(\r\022\034\n\004user\030\002 \003("
-  "\0132\016.Protocol.User\"&\n\017S_RoomCompleted\022\023\n\013"
-  "isCompleted\030\001 \001(\010\"\025\n\006C_TEST\022\013\n\003msg\030\001 \001(\t"
-  "\"-\n\013C_EnterRoom\022\016\n\006userID\030\001 \001(\r\022\016\n\006roomI"
-  "D\030\002 \001(\r\"\030\n\006C_Move\022\016\n\006userID\030\001 \001(\r\"\034\n\nC_A"
-  "ttacked\022\016\n\006userID\030\001 \001(\rb\006proto3"
+  "\0132\016.Protocol.User\"6\n\017S_RoomCompleted\022\016\n\006"
+  "roomID\030\001 \001(\r\022\023\n\013isCompleted\030\002 \001(\010\"\025\n\006C_T"
+  "EST\022\013\n\003msg\030\001 \001(\t\"-\n\013C_EnterRoom\022\016\n\006userI"
+  "D\030\001 \001(\r\022\016\n\006roomID\030\002 \001(\r\"\030\n\006C_Move\022\016\n\006use"
+  "rID\030\001 \001(\r\"\034\n\nC_Attacked\022\016\n\006userID\030\001 \001(\rb"
+  "\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 471, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 487, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 10,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -1497,11 +1500,14 @@ S_RoomCompleted::S_RoomCompleted(const S_RoomCompleted& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_RoomCompleted* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.iscompleted_){}
+      decltype(_impl_.roomid_){}
+    , decltype(_impl_.iscompleted_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.iscompleted_ = from._impl_.iscompleted_;
+  ::memcpy(&_impl_.roomid_, &from._impl_.roomid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.iscompleted_) -
+    reinterpret_cast<char*>(&_impl_.roomid_)) + sizeof(_impl_.iscompleted_));
   // @@protoc_insertion_point(copy_constructor:Protocol.S_RoomCompleted)
 }
 
@@ -1510,7 +1516,8 @@ inline void S_RoomCompleted::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.iscompleted_){false}
+      decltype(_impl_.roomid_){0u}
+    , decltype(_impl_.iscompleted_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -1538,7 +1545,9 @@ void S_RoomCompleted::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.iscompleted_ = false;
+  ::memset(&_impl_.roomid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.iscompleted_) -
+      reinterpret_cast<char*>(&_impl_.roomid_)) + sizeof(_impl_.iscompleted_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1548,9 +1557,17 @@ const char* S_RoomCompleted::_InternalParse(const char* ptr, ::_pbi::ParseContex
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // bool isCompleted = 1;
+      // uint32 roomID = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.roomid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool isCompleted = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.iscompleted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
@@ -1585,10 +1602,16 @@ uint8_t* S_RoomCompleted::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bool isCompleted = 1;
+  // uint32 roomID = 1;
+  if (this->_internal_roomid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_roomid(), target);
+  }
+
+  // bool isCompleted = 2;
   if (this->_internal_iscompleted() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_iscompleted(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_iscompleted(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1607,7 +1630,12 @@ size_t S_RoomCompleted::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // bool isCompleted = 1;
+  // uint32 roomID = 1;
+  if (this->_internal_roomid() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_roomid());
+  }
+
+  // bool isCompleted = 2;
   if (this->_internal_iscompleted() != 0) {
     total_size += 1 + 1;
   }
@@ -1630,6 +1658,9 @@ void S_RoomCompleted::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from._internal_roomid() != 0) {
+    _this->_internal_set_roomid(from._internal_roomid());
+  }
   if (from._internal_iscompleted() != 0) {
     _this->_internal_set_iscompleted(from._internal_iscompleted());
   }
@@ -1650,7 +1681,12 @@ bool S_RoomCompleted::IsInitialized() const {
 void S_RoomCompleted::InternalSwap(S_RoomCompleted* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.iscompleted_, other->_impl_.iscompleted_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(S_RoomCompleted, _impl_.iscompleted_)
+      + sizeof(S_RoomCompleted::_impl_.iscompleted_)
+      - PROTOBUF_FIELD_OFFSET(S_RoomCompleted, _impl_.roomid_)>(
+          reinterpret_cast<char*>(&_impl_.roomid_),
+          reinterpret_cast<char*>(&other->_impl_.roomid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_RoomCompleted::GetMetadata() const {

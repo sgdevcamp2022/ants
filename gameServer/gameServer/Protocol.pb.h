@@ -1072,9 +1072,19 @@ class S_RoomCompleted final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kIsCompletedFieldNumber = 1,
+    kRoomIDFieldNumber = 1,
+    kIsCompletedFieldNumber = 2,
   };
-  // bool isCompleted = 1;
+  // uint32 roomID = 1;
+  void clear_roomid();
+  uint32_t roomid() const;
+  void set_roomid(uint32_t value);
+  private:
+  uint32_t _internal_roomid() const;
+  void _internal_set_roomid(uint32_t value);
+  public:
+
+  // bool isCompleted = 2;
   void clear_iscompleted();
   bool iscompleted() const;
   void set_iscompleted(bool value);
@@ -1091,6 +1101,7 @@ class S_RoomCompleted final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    uint32_t roomid_;
     bool iscompleted_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -2103,7 +2114,27 @@ M_InitRoom::user() const {
 
 // S_RoomCompleted
 
-// bool isCompleted = 1;
+// uint32 roomID = 1;
+inline void S_RoomCompleted::clear_roomid() {
+  _impl_.roomid_ = 0u;
+}
+inline uint32_t S_RoomCompleted::_internal_roomid() const {
+  return _impl_.roomid_;
+}
+inline uint32_t S_RoomCompleted::roomid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_RoomCompleted.roomID)
+  return _internal_roomid();
+}
+inline void S_RoomCompleted::_internal_set_roomid(uint32_t value) {
+  
+  _impl_.roomid_ = value;
+}
+inline void S_RoomCompleted::set_roomid(uint32_t value) {
+  _internal_set_roomid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_RoomCompleted.roomID)
+}
+
+// bool isCompleted = 2;
 inline void S_RoomCompleted::clear_iscompleted() {
   _impl_.iscompleted_ = false;
 }

@@ -3,6 +3,17 @@
 #include "Room.h"
 #include "User.h"
 
+map<unsigned int, Room*> RoomManager::_rooms;
+mutex RoomManager::mutexLock;
+
+RoomManager::~RoomManager()
+{
+    for(auto it = _rooms.begin(); it !=_rooms.end(); ++it)
+    {
+        DeleteRoom(it->second);
+    }
+}
+
 Room* RoomManager::MakeRoom(unsigned roomID)
 {
 
@@ -26,6 +37,7 @@ Room* RoomManager::GetRoomByRoomID(unsigned roomID)
 
 void RoomManager::DeleteRoom(Room* room)
 {
+    LOCK_GUARD
     if (room == nullptr)
         return;
     delete room;
