@@ -19,7 +19,7 @@ public:
 
 	void RegisterReceive();
 
-	void RegisterSend(const int size, char* buffer);
+	void RegisterSend(char* buffer);
 
 
 	void AfterConnect();

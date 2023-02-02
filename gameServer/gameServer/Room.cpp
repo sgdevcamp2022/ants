@@ -47,7 +47,7 @@ void Room::Broadcast()
 
         sendDataQueue.pop_front();
 
-        user.second->_session->RegisterSend(sizeof(buffer), buffer);
+        user.second->_session->RegisterSend(buffer);
 
     }
 }
