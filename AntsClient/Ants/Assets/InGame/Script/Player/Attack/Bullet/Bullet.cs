@@ -34,20 +34,17 @@ public class Bullet : MonoBehaviour
             }
 
         }
-        if (collision.tag == "Enemy")
+        if (collision.tag == "Enemy" && this.transform.tag == "P_Bullet")
         {
-            if (collisionDestroy)
-            {
-                Health enemyHealth = collision.GetComponent<Health>();
-                enemyHealth.Hit(damage);
-                Destroy(gameObject);
-            }
-            else
-            {
-                Health enemyHealth = collision.GetComponent<Health>();
-                enemyHealth.Hit(damage);
-                Destroy(gameObject);
-            }
+            Health health = collision.GetComponent<Health>();
+            health.Hit(damage);
+            Destroy(gameObject);
+        }
+        if (collision.tag == "Player" && this.transform.tag == "E_Bullet")
+        {
+            Health health = collision.GetComponent<Health>();
+            health.Hit(damage);
+            Destroy(gameObject);
         }
     }
 

@@ -16,10 +16,12 @@ public class PlayerManager : MonoBehaviour
 
     public float angle;
     public GameObject target;
+    Rigidbody2D rigidbody2D;
     Vector2 mouse;
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+           animator = GetComponent<Animator>();
 
     }
     private void Awake()
@@ -30,6 +32,8 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        rigidbody2D.velocity = Vector3.zero;
+            
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 

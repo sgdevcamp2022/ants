@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstracle
   - Enemy
+  - P_Bullet
+  - E_Bullet
   layers:
   - Default
   - TransparentFX

@@ -23,6 +23,7 @@ public class SlimeBrain : MonoBehaviour
     private void Awake()
     {
         isAttacked = false;
+        enemyAttack = GetComponent<EnemyAttack>();
         aIPath = GetComponent<AIPath>();
         astarAI = GetComponent<IAstarAI>();
         Debug.Log(astarAI);

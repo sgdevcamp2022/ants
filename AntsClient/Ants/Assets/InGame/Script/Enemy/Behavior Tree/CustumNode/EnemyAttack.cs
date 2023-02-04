@@ -4,32 +4,17 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public bool inRange;
-    public Health PlayerHealth;
+
+    public GameObject AttackPrefab;
+    public float x;
+    public float y;
     // Start is called before the first frame update
 
     public void Attack()
     {
-        if (inRange)
-        {
-            PlayerHealth.Hit(10);
-        }
+        GameObject attack = Instantiate(AttackPrefab, new Vector3 (transform.position.x + x, transform.position.y + y, 2), transform.rotation);
+        attack.transform.parent = this.transform;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            inRange = true;
-            PlayerHealth = collision.GetComponent<Health>();
-        }
 
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            inRange = false;
-        }
-    }
 
 }

@@ -25,10 +25,15 @@ public class Bullet_Continuing_Box : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" )
+        if (collision.tag == "Enemy" && this.transform.tag == "P_Bullet" )
         {
-            Health enemyHealth = collision.GetComponent<Health>();
-            enemyHealth.Hit(damage);
+            Health health = collision.GetComponent<Health>();
+            health.Hit(damage);
+        }
+        if (collision.tag == "Player" && this.transform.tag == "E_Bullet")
+        {
+            Health health = collision.GetComponent<Health>();
+            health.Hit(damage);
         }
     }
 
