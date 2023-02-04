@@ -39,7 +39,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4261736516812209843}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.81, y: -12.95, z: 0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -163,7 +163,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 4261736516812209843}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9f860bd7a719cb44fa6c09a2d7fb12bb, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
   height: 3
   canMove: 1
   maxSpeed: 2
-  gravity: {x: NaN, y: NaN, z: NaN}
+  gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -364,6 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAttack: {fileID: 0}
+  Slime: 1
+  EliteSlime: 0
   IsWaiting: 0
   isEnd: 0
   isAttacked: 1

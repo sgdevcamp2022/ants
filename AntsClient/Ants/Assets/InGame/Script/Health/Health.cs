@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
     {
         HP -= damage;
         ani.SetBool("hit", true);
-        if(this.tag == "Enemy")
+        if(this.tag == "Enemy" && enemyStun != null)
         {
             enemyStun.Stun();
         }

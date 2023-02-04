@@ -5,26 +5,26 @@ using UnityEngine;
 public class EnemyStun : MonoBehaviour
 {
 
-    SlimeBrain slimeBrain;
+    Brain brain;
 
     public void Start()
     {
-        slimeBrain = GetComponent<SlimeBrain>();
+        brain = GetComponent<Brain>();
 
     }
 
     public void Stun()
     {
         StopAllCoroutines();
-        slimeBrain.isAttacked = true;
-        slimeBrain.ResetBrain();
-        slimeBrain.StopEvaluateCoroutine();
+        brain.isAttacked = true;
+        brain.ResetBrain();
+        brain.StopEvaluateCoroutine();
         StartCoroutine(WaitStun());
     }
 
     IEnumerator WaitStun()
     {
         yield return new WaitForSecondsRealtime(0.5f);
-        slimeBrain.StartEvaluateCoroutine();
+        brain.StartEvaluateCoroutine();
     }
 }

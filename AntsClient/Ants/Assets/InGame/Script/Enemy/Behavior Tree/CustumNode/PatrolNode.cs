@@ -16,7 +16,6 @@ public class PatrolNode : Node
     }
     public override NodeState Evaluate()
     {
-        Debug.Log("패트롤시작");
         float x = Random.Range(-2f, 2f);
         float y = Random.Range(-2f, 2f);
         patrolPosition = new Vector2(originPosition.x + x, originPosition.y + y);

@@ -5,10 +5,10 @@ using UnityEngine;
 public class AIDebug : Node
 {
     private string message;
-    private SlimeBrain ai;
+    private Brain ai;
 
     // Start is called before the first frame update
-    public AIDebug(SlimeBrain brain, string debug)
+    public AIDebug(Brain brain, string debug)
     {
         message = debug;
         ai = brain;

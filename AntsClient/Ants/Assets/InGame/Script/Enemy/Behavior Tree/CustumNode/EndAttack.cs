@@ -5,10 +5,10 @@ using UnityEngine;
 public class EndAttack : Node
 {
 
-    private SlimeBrain ai;
+    private Brain ai;
 
     // Start is called before the first frame update
-    public EndAttack(SlimeBrain brain)
+    public EndAttack(Brain brain)
     {
         ai = brain;
     }
