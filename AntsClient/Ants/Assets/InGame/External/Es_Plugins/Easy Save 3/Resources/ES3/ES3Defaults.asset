@@ -32,7 +32,6 @@ MonoBehaviour:
     - Assembly-CSharp
     - AllIn1SpriteShaderAssembly
     - AstarPathfindingProject
-    - FangAutoTile
     - AstarPathfindingProjectEditor
     - PsdPlugin
     - PackageToolsEditor
