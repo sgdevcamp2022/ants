@@ -6,6 +6,7 @@ public class EnemyStun : MonoBehaviour
 {
 
     Brain brain;
+    [SerializeField] bool isStun;
 
     public void Start()
     {
@@ -13,18 +14,17 @@ public class EnemyStun : MonoBehaviour
 
     }
 
-    public void Stun()
+    public void Stun(float time)
     {
         StopAllCoroutines();
         brain.isAttacked = true;
         brain.ResetBrain();
-        brain.StopEvaluateCoroutine();
-        StartCoroutine(WaitStun());
+        StartCoroutine(WaitStun(time));
     }
 
-    IEnumerator WaitStun()
+    IEnumerator WaitStun(float time)
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(time);
         brain.StartEvaluateCoroutine();
     }
 }

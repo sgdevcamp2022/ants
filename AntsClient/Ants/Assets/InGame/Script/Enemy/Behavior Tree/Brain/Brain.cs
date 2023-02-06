@@ -7,21 +7,29 @@ public class Brain : MonoBehaviour
 
     Sequence AttackNode;
     Sequence PatrolNode;
+    Sequence ChaseNode;
+
+    Invertor invertor;
 
     IAstarAI astarAI;
+
+    public GameObject player;
 
     public Coroutine evaluateCoroutine;
     public EnemyAttack enemyAttack;
 
-    [SerializeField] bool Slime, EliteSlime;
+    [SerializeField] bool Slime, EliteSlime, Zombie;
 
     AIPath aIPath;
 
     [HideInInspector]
-    public bool IsWaiting, isEnd, isAttacked;
+    public bool IsWaiting, isEnd, isAttacked, inRecognize;
+    public bool nearPlayer;
+
 
     private void Awake()
     {
+        player = GameObject.FindWithTag("Player");
         isAttacked = false;
         enemyAttack = GetComponent<EnemyAttack>();
         aIPath = GetComponent<AIPath>();
@@ -50,6 +58,10 @@ public class Brain : MonoBehaviour
         else if(EliteSlime)
         {
             ConstructBehaviourTree_EliteSlime();
+        }
+        else if(Zombie)
+        {
+            ConstructBehaviourTree_Zombile();
         }
     }
 
@@ -90,10 +102,26 @@ public class Brain : MonoBehaviour
         }
         else if (EliteSlime)
         {
-            PatrolNode.Evaluate();
-            yield return null;
+            if (isAttacked == true)
+            {
+                AttackNode.Evaluate();
+            }
+            else
+            {
+                PatrolNode.Evaluate();
+            }
         }
-
+        else if (Zombie)
+        {
+            if (isAttacked == true || inRecognize == true)
+            {
+                ChaseNode.Evaluate();
+            }
+            else
+            {
+                PatrolNode.Evaluate();
+            }
+        }
     }
 
 
@@ -103,7 +131,7 @@ public class Brain : MonoBehaviour
         EndAttack endAttack = new EndAttack(this);
 
 
-        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position);
+        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position, -2, 2, -2, 2);
         AttackNode attack = new AttackNode(this);
 
         DoNothing doNothing2f_Patrol = new DoNothing(4f, "patrol",true, this);
@@ -119,16 +147,35 @@ public class Brain : MonoBehaviour
         EndAttack endAttack = new EndAttack(this);
 
 
-        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position);
+        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position, -4, 4, -4, 4);
+        ChasePlayer chase = new ChasePlayer(astarAI, this);
         AttackNode attack = new AttackNode(this);
 
         DoNothing doNothing2f_Patrol = new DoNothing(1f, "patrol", true, this);
-        DoNothing doNothing2f_Attack = new DoNothing(1f, "attack", false, this);
+        DoNothing doNothing2f_Attack = new DoNothing(0.5f, "attack", false, this);
 
-
+        AttackNode = new Sequence(new List<Node> { doNothing2f_Attack, chase, attack, Eed });
         PatrolNode = new Sequence(new List<Node> { doNothing2f_Patrol, patrol, Eed });
     }
+    private void ConstructBehaviourTree_Zombile()
+    {
+        EndNode Eed = new EndNode(this);
+        EndAttack endAttack = new EndAttack(this);
+        CheckNear checkNear = new CheckNear(this);
+        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position, -4, 4, -4, 4);
+        ChasePlayer chase = new ChasePlayer(astarAI, this);
+        //AttackNode attack = new AttackNode(this);
+        meleeAttackNode meleeAttack = new meleeAttackNode(this);
 
+        DoNothing doNothing_Patrol = new DoNothing(3f, "patrol", true, this);
+        DoNothing doNothing_Attack = new DoNothing(0.5f, "attack", false, this);
+        DoNothing doNothing_Chase = new DoNothing(0.5f, "chase", false, this);
+
+
+        AttackNode = new Sequence(new List<Node> { doNothing_Attack, checkNear, meleeAttack, Eed });
+        ChaseNode = new Sequence(new List<Node> { doNothing_Chase, chase, AttackNode, checkNear, Eed });
+        PatrolNode = new Sequence(new List<Node> { doNothing_Patrol, patrol, Eed });
+    }
 
 
 
@@ -158,6 +205,9 @@ public class Brain : MonoBehaviour
                 break;
             case "attack":
                 AttackNode.Evaluate();
+                break;
+            case "chase":
+                ChaseNode.Evaluate();
                 break;
         }
     }

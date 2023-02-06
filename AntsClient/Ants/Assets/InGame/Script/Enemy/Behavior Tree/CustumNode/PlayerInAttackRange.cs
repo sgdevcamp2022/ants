@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCheck : MonoBehaviour
+public class PlayerInAttackRange : MonoBehaviour
 {
-    public bool nearPlayer;
+    public Brain Enemy;
     // Start is called before the first frame update
 
 
     private void Start()
     {
-
+        Enemy = GetComponentInParent<Brain>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-            nearPlayer = true;
+            Enemy.nearPlayer = true;
         }
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            nearPlayer = false;
+            Enemy.nearPlayer = false;
         }
     }
 }

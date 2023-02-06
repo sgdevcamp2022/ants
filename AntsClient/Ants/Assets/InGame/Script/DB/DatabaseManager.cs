@@ -6,6 +6,7 @@ public class DatabaseManager : MonoBehaviour
 {
     public static float nowStemina;
     public static float fullStemina;
+
     public static string playerState;
 
     public static bool isAction;
