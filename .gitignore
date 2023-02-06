@@ -469,3 +469,5 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,c++
+gameServer/Include/google
+gameServer/protoc-21.12-win64
