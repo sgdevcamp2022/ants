@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Server.h"
 
+#include "GameSession.h"
+
 
 Server::Server(boost::asio::io_context& io_context)
 : _acceptor(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), PORT_NUMBER))
@@ -36,7 +38,7 @@ void Server::Init(const int maxSessionCount)
 {
 	for(int i=0;i<maxSessionCount; ++i)
 	{
-		Session* session = new Session(i,static_cast<boost::asio::io_context&> (_acceptor.get_executor().context()),this);
+		GameSession* session = new GameSession(i,static_cast<boost::asio::io_context&> (_acceptor.get_executor().context()),this);
 		sessions.push_back(session);
 		unusedSessions.push_back(i);
 	}

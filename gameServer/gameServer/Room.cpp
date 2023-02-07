@@ -3,8 +3,9 @@
 
 #include"User.h"
 #include "GameSession.h"
+#include "PacketHandler.h"
 
-Room::Room(unsigned roomID) : _roomID(roomID),userCount(0),isStart(false)
+Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false)
 {
 }
 
@@ -16,7 +17,7 @@ Room::~Room()
         {
             continue;
         }
-        //i->second->_session->room=nullptr;
+        //i->second->session->room=nullptr;
         delete i->second;
         i->second = nullptr;
     }
@@ -36,20 +37,21 @@ void Room::Leave(User* user)
     _users.erase(user->_userID);
 }
 
-void Room::Broadcast()
+void Room::Broadcast(shared_ptr<char>& buffer)
 {
     LOCK_GUARD
 
     for (auto& user : _users)
     {
-        //다른 방식으로 수정 필요, sendbuffer shared_ptr로 교체 필요
-        auto buffer = sendDataQueue.front();
-
-        sendDataQueue.pop_front();
 
         user.second->_session->RegisterSend(buffer);
 
     }
+}
+
+void Room::SetMaxUserCount(unsigned number)
+{
+    _maxUserCount = number;
 }
 
 void Room::AddUserID(unsigned int userID)
@@ -79,4 +81,26 @@ bool Room::HasUserID(unsigned userID)
         }
     }
     return false;
+}
+
+bool Room::CanStart()
+{
+    return _maxUserCount == userCount;
+}
+
+void Room::InitGame()
+{
+
+    for(auto it = _users.begin(); it!= _users.end(); ++it)
+    {
+        Protocol::UserInfo& userInfo = it->second->GetUserInfo();
+        userInfo.mutable_moveinfo()->set_positionx(0);
+        userInfo.mutable_moveinfo()->set_positiony(0);
+
+        PacketHandler& ph= PacketHandler::GetPacketHandler();
+
+        auto buffer = ph.MakeBuffer_sharedPtr(userInfo, S_UserInfo);
+
+        Broadcast(buffer);
+    }
 }

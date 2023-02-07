@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#include "PacketHandler.h"
 #include "Server.h"
 
 #include "Protocol.pb.h"
@@ -11,6 +12,7 @@ int main()
 	boost::asio::io_context io_context;
 
     RoomManager::GetRoomManager();
+    PacketHandler::GetPacketHandler();
 
     Server server(io_context);
     server.Init(MAX_SESSION_COUNT);

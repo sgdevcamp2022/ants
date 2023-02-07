@@ -20,7 +20,7 @@ public:
 	void RegisterReceive();
 
 	void RegisterSend(char* buffer);
-
+	void RegisterSend(shared_ptr<char>& buffer);
 
 	void AfterConnect();
 
@@ -31,6 +31,8 @@ private:
 	
 
 	void AfterSend(const boost::system::error_code& error, size_t bytes_transferred, char* sendBuffer);
+
+	void AfterSend(const boost::system::error_code& error, size_t transferredBytes, const shared_ptr<char>& sendBuffer);
 
 	void AfterReceive(const boost::system::error_code& error, size_t bytes_transferred);
 

@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "GameSession.h"
 
+GameSession::GameSession(unsigned sessionID, boost::asio::io_context& io_context, Server* server): Session(sessionID,io_context,server)
+{
+    
+}
+
 void GameSession::OnConnect()
 {
     Session::OnConnect();
