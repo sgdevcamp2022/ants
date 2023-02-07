@@ -89,32 +89,6 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     }
     else
     {
-        /*test*/
-        PacketHandler& temp= PacketHandler::GetPacketHandler();
-        /*cout << _receiveBuffer.data() << endl;
-
-        temp.Handle_M_TEST( static_cast<GameSession*>(this), nullptr, 0);*/
-        
-        /*test end*/
-        RoomManager& roomManager = RoomManager::GetRoomManager();
-        Room* room = roomManager.MakeRoom(11);
-
-        room->AddUserID(123);
-
-        //Handle_C_EnterRoom test
-        Protocol::C_EnterRoom packet;
-        packet.set_roomid(11);
-        packet.set_userid(123);
-        packet.set_name("hwichan");
-
-        auto tempbuffer= temp.MakeBuffer_sharedPtr(packet, M_InitRoom);
-
-        const int size = reinterpret_cast<PacketHeader*>(tempbuffer.get())->size;
-        
-        temp.Handle_C_EnterRoom((GameSession*)this, tempbuffer.get(), size);
-        //test end
-
-
         OnReceive(transferredBytes,_receiveBuffer.data());
         //receiveBuffer 언제 어디서 삭제할까?
         
