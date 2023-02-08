@@ -90,7 +90,7 @@ bool Room::CanStart()
 
 void Room::InitGame()
 {
-
+    LOCK_GUARD
     for(auto it = _users.begin(); it!= _users.end(); ++it)
     {
         Protocol::UserInfo& userInfo = it->second->GetUserInfo();

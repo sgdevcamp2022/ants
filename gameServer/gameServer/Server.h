@@ -9,7 +9,6 @@ class Server
 {
 public:
 	Server(boost::asio::io_context& io_context);
-
 		
 	~Server();
 	
@@ -34,6 +33,5 @@ private:
 	bool isAccepting;
 
 	vector<std::thread> workerThreads;
-	
 };
 

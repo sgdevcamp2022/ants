@@ -22,13 +22,18 @@ enum :unsigned int
 
     M_TEST = 1999,
 
-    C_UserInfo=2000,
-    S_UserInfo=2001,
+    C_EnterRoom = 2000,
+    C_UserInfo=2001,
+    S_UserInfo=2002,
 
-    C_Move = 2002,
-    S_Move = 2003,
+    C_Move = 2003,
+    S_Move = 2004,
 
-    C_EnterRoom = 2004,
+    C_Attack = 2005,
+    S_Attack = 2006,
+
+
+    
     C_TEST = 2999,
 
 };
@@ -132,7 +137,6 @@ public:
             //없는 방 접근
             return;
         }
-
         if(!room->HasUserID(packet.userid()))
         {
             //잘못된 방 접근
@@ -150,7 +154,6 @@ public:
             room->InitGame();
             
         }
-
     }
 
     void Handle_C_Move(GameSession* session, char* data, int length)
@@ -161,13 +164,28 @@ public:
         Protocol::UserInfo& userInfo = session->user->GetUserInfo();
         *(userInfo.mutable_moveinfo()) = packet.moveinfo();
 
-
         Protocol::S_Move sendPacket;
         sendPacket.set_userid(userInfo.userid());
         *(sendPacket.mutable_moveinfo()) = packet.moveinfo();
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Move);
 
+        session->room->Broadcast(buffer);
+    }
+
+    void Handle_C_Attack(GameSession* session, char* data, int length)
+    {
+        Protocol::C_Attack packet;
+        PARSE(packet);
+
+        Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+        //필요시 유저 상태 공격으로 변경
+        Protocol::S_Attack sendPacket;
+        sendPacket.set_userid(userInfo.userid());
+        sendPacket.set_directionx(packet.directionx());
+        sendPacket.set_directiony(packet.directiony());
+
+        auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attack);
         session->room->Broadcast(buffer);
     }
 

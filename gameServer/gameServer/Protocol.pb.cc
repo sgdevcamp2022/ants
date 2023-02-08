@@ -149,6 +149,35 @@ struct S_MoveDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_MoveDefaultTypeInternal _S_Move_default_instance_;
+PROTOBUF_CONSTEXPR C_Attack::C_Attack(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.directionx_)*/0
+  , /*decltype(_impl_.directiony_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct C_AttackDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_AttackDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_AttackDefaultTypeInternal() {}
+  union {
+    C_Attack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_AttackDefaultTypeInternal _C_Attack_default_instance_;
+PROTOBUF_CONSTEXPR S_Attack::S_Attack(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.userid_)*/0u
+  , /*decltype(_impl_.directionx_)*/0
+  , /*decltype(_impl_.directiony_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_AttackDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_AttackDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_AttackDefaultTypeInternal() {}
+  union {
+    S_Attack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_AttackDefaultTypeInternal _S_Attack_default_instance_;
 PROTOBUF_CONSTEXPR C_Attacked::C_Attacked(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.userid_)*/0u
@@ -163,7 +192,7 @@ struct C_AttackedDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_AttackedDefaultTypeInternal _C_Attacked_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[10];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[12];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -242,6 +271,23 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   PROTOBUF_FIELD_OFFSET(::Protocol::S_Move, _impl_.userid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_Move, _impl_.moveinfo_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_Attack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_Attack, _impl_.directionx_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_Attack, _impl_.directiony_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attack, _impl_.userid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attack, _impl_.directionx_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attack, _impl_.directiony_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_Attacked, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -259,7 +305,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 49, -1, -1, sizeof(::Protocol::C_EnterRoom)},
   { 58, -1, -1, sizeof(::Protocol::C_Move)},
   { 65, -1, -1, sizeof(::Protocol::S_Move)},
-  { 73, -1, -1, sizeof(::Protocol::C_Attacked)},
+  { 73, -1, -1, sizeof(::Protocol::C_Attack)},
+  { 81, -1, -1, sizeof(::Protocol::S_Attack)},
+  { 90, -1, -1, sizeof(::Protocol::C_Attacked)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -272,6 +320,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_C_EnterRoom_default_instance_._instance,
   &::Protocol::_C_Move_default_instance_._instance,
   &::Protocol::_S_Move_default_instance_._instance,
+  &::Protocol::_C_Attack_default_instance_._instance,
+  &::Protocol::_S_Attack_default_instance_._instance,
   &::Protocol::_C_Attacked_default_instance_._instance,
 };
 
@@ -289,17 +339,20 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "serID\030\001 \001(\r\022\016\n\006roomID\030\002 \001(\r\022\014\n\004name\030\003 \001("
   "\t\".\n\006C_Move\022$\n\010moveInfo\030\001 \001(\0132\022.Protocol"
   ".MoveInfo\">\n\006S_Move\022\016\n\006userID\030\001 \001(\r\022$\n\010m"
-  "oveInfo\030\002 \001(\0132\022.Protocol.MoveInfo\"\034\n\nC_A"
-  "ttacked\022\016\n\006userID\030\001 \001(\r*)\n\tUserState\022\010\n\004"
-  "IDLE\020\000\022\010\n\004MOVE\020\001\022\010\n\004DEAD\020\002*2\n\tDirection\022"
-  "\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003b\006"
-  "proto3"
+  "oveInfo\030\002 \001(\0132\022.Protocol.MoveInfo\"2\n\010C_A"
+  "ttack\022\022\n\ndirectionX\030\001 \001(\002\022\022\n\ndirectionY\030"
+  "\002 \001(\002\"B\n\010S_Attack\022\016\n\006userID\030\001 \001(\r\022\022\n\ndir"
+  "ectionX\030\002 \001(\002\022\022\n\ndirectionY\030\003 \001(\002\"\034\n\nC_A"
+  "ttacked\022\016\n\006userID\030\001 \001(\r*5\n\tUserState\022\010\n\004"
+  "IDLE\020\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*2"
+  "\n\tDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022"
+  "\t\n\005RIGHT\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 686, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 818, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 10,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 12,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -320,6 +373,7 @@ bool UserState_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -2403,6 +2457,500 @@ void S_Move::InternalSwap(S_Move* other) {
 
 // ===================================================================
 
+class C_Attack::_Internal {
+ public:
+};
+
+C_Attack::C_Attack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_Attack)
+}
+C_Attack::C_Attack(const C_Attack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  C_Attack* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.directionx_){}
+    , decltype(_impl_.directiony_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.directionx_, &from._impl_.directionx_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.directiony_) -
+    reinterpret_cast<char*>(&_impl_.directionx_)) + sizeof(_impl_.directiony_));
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_Attack)
+}
+
+inline void C_Attack::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.directionx_){0}
+    , decltype(_impl_.directiony_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+C_Attack::~C_Attack() {
+  // @@protoc_insertion_point(destructor:Protocol.C_Attack)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void C_Attack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void C_Attack::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void C_Attack::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_Attack)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.directionx_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.directiony_) -
+      reinterpret_cast<char*>(&_impl_.directionx_)) + sizeof(_impl_.directiony_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* C_Attack::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // float directionX = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
+          _impl_.directionx_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float directionY = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          _impl_.directiony_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* C_Attack::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_Attack)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // float directionX = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = this->_internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_directionx(), target);
+  }
+
+  // float directionY = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = this->_internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_directiony(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_Attack)
+  return target;
+}
+
+size_t C_Attack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_Attack)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // float directionX = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = this->_internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float directionY = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = this->_internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_Attack::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    C_Attack::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_Attack::GetClassData() const { return &_class_data_; }
+
+
+void C_Attack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<C_Attack*>(&to_msg);
+  auto& from = static_cast<const C_Attack&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_Attack)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = from._internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    _this->_internal_set_directionx(from._internal_directionx());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = from._internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    _this->_internal_set_directiony(from._internal_directiony());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void C_Attack::CopyFrom(const C_Attack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_Attack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool C_Attack::IsInitialized() const {
+  return true;
+}
+
+void C_Attack::InternalSwap(C_Attack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(C_Attack, _impl_.directiony_)
+      + sizeof(C_Attack::_impl_.directiony_)
+      - PROTOBUF_FIELD_OFFSET(C_Attack, _impl_.directionx_)>(
+          reinterpret_cast<char*>(&_impl_.directionx_),
+          reinterpret_cast<char*>(&other->_impl_.directionx_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_Attack::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[9]);
+}
+
+// ===================================================================
+
+class S_Attack::_Internal {
+ public:
+};
+
+S_Attack::S_Attack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_Attack)
+}
+S_Attack::S_Attack(const S_Attack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_Attack* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.userid_){}
+    , decltype(_impl_.directionx_){}
+    , decltype(_impl_.directiony_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.userid_, &from._impl_.userid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.directiony_) -
+    reinterpret_cast<char*>(&_impl_.userid_)) + sizeof(_impl_.directiony_));
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_Attack)
+}
+
+inline void S_Attack::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.userid_){0u}
+    , decltype(_impl_.directionx_){0}
+    , decltype(_impl_.directiony_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+S_Attack::~S_Attack() {
+  // @@protoc_insertion_point(destructor:Protocol.S_Attack)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_Attack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void S_Attack::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_Attack::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_Attack)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.userid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.directiony_) -
+      reinterpret_cast<char*>(&_impl_.userid_)) + sizeof(_impl_.directiony_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_Attack::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 userID = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // float directionX = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          _impl_.directionx_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float directionY = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+          _impl_.directiony_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_Attack::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_Attack)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 userID = 1;
+  if (this->_internal_userid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_userid(), target);
+  }
+
+  // float directionX = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = this->_internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_directionx(), target);
+  }
+
+  // float directionY = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = this->_internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_directiony(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_Attack)
+  return target;
+}
+
+size_t S_Attack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_Attack)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 userID = 1;
+  if (this->_internal_userid() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
+  }
+
+  // float directionX = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = this->_internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float directionY = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = this->_internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_Attack::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_Attack::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_Attack::GetClassData() const { return &_class_data_; }
+
+
+void S_Attack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_Attack*>(&to_msg);
+  auto& from = static_cast<const S_Attack&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_Attack)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_userid() != 0) {
+    _this->_internal_set_userid(from._internal_userid());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directionx = from._internal_directionx();
+  uint32_t raw_directionx;
+  memcpy(&raw_directionx, &tmp_directionx, sizeof(tmp_directionx));
+  if (raw_directionx != 0) {
+    _this->_internal_set_directionx(from._internal_directionx());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_directiony = from._internal_directiony();
+  uint32_t raw_directiony;
+  memcpy(&raw_directiony, &tmp_directiony, sizeof(tmp_directiony));
+  if (raw_directiony != 0) {
+    _this->_internal_set_directiony(from._internal_directiony());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_Attack::CopyFrom(const S_Attack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_Attack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_Attack::IsInitialized() const {
+  return true;
+}
+
+void S_Attack::InternalSwap(S_Attack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(S_Attack, _impl_.directiony_)
+      + sizeof(S_Attack::_impl_.directiony_)
+      - PROTOBUF_FIELD_OFFSET(S_Attack, _impl_.userid_)>(
+          reinterpret_cast<char*>(&_impl_.userid_),
+          reinterpret_cast<char*>(&other->_impl_.userid_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_Attack::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[10]);
+}
+
+// ===================================================================
+
 class C_Attacked::_Internal {
  public:
 };
@@ -2576,7 +3124,7 @@ void C_Attacked::InternalSwap(C_Attacked* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_Attacked::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[9]);
+      file_level_metadata_Protocol_2eproto[11]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2617,6 +3165,14 @@ Arena::CreateMaybeMessage< ::Protocol::C_Move >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::S_Move*
 Arena::CreateMaybeMessage< ::Protocol::S_Move >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::S_Move >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::C_Attack*
+Arena::CreateMaybeMessage< ::Protocol::C_Attack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_Attack >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_Attack*
+Arena::CreateMaybeMessage< ::Protocol::S_Attack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_Attack >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Protocol::C_Attacked*
 Arena::CreateMaybeMessage< ::Protocol::C_Attacked >(Arena* arena) {
