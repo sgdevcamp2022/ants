@@ -81,14 +81,27 @@ void Client::RegisterSend()
         packet.set_roomid(ROOM_ID);
         packet.add_userid(USER_ID);
         buffer = ph.MakeBuffer(packet,M_InitRoom);
-
+        
+    }
+    else if(_seqNumber == 2)
+    {
+        Protocol::C_EnterRoom packet;
+        packet.set_userid(USER_ID);
+        packet.set_name("hwichan");
+        packet.set_roomid(ROOM_ID);
+        buffer = ph.MakeBuffer(packet, C_EnterRoom);
     }
     else
     {
-        Protocol::M_InitRoom packet;
-        packet.set_roomid(ROOM_ID);
-        packet.add_userid(USER_ID);
-        buffer = ph.MakeBuffer(packet, M_InitRoom);
+        Protocol::C_Move packet;
+        Protocol::MoveInfo* moveInfo= new Protocol::MoveInfo();
+        moveInfo->set_direction(Protocol::DOWN);
+        moveInfo->set_positionx(_seqNumber + 1);
+        moveInfo->set_positiony(_seqNumber + 1);
+        moveInfo->set_state(Protocol::MOVE);
+        packet.set_allocated_moveinfo(moveInfo);
+        //packet.mutable_moveinfo()->set_positionx(1);
+        buffer = ph.MakeBuffer(packet, C_Move);
     }
     
 
@@ -131,7 +144,7 @@ void Client::AfterSend(const boost::system::error_code& error, size_t transferre
     RegisterReceive();
 }
 
-void Client::AfterReceive(const boost::system::error_code& error, size_t transferredBytes)
+void Client::AfterReceive(const boost::system::error_code& error, size_t length)
 {
     if (error)
     {
@@ -151,7 +164,25 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t transfe
     }
     else
     {
-        cout << _receiveBuffer.data() << endl;
-        //RegisterSend();
+        auto data = _receiveBuffer.data();
+        if(_seqNumber==1)
+        {
+            Protocol::S_RoomCompleted packet;
+            PARSE(packet);
+            cout<<"roomid: " << packet.roomid() << "  ,  is completed: " << packet.iscompleted() << endl;
+        }
+        else if(_seqNumber==2)
+        {
+            Protocol::UserInfo packet;
+            PARSE(packet);
+            cout << "userid: " << packet.userid()<< " , direction:" << packet.mutable_moveinfo()->direction() << " , state: " << packet.mutable_moveinfo()->state() << endl;
+        }
+        else
+        {
+            Protocol::S_Move packet;
+            PARSE(packet);
+            cout << "userID: " << packet.userid() << " , position: " << packet.moveinfo().positionx() << " , " << packet.moveinfo().positiony() << endl;
+        }
+        RegisterSend();
     }
 }

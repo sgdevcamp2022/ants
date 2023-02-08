@@ -28,7 +28,7 @@ public:
 
 	void AfterSend(const boost::system::error_code& error, size_t transferredBytes, const shared_ptr<char>& sendBuffer);
 
-	void AfterReceive(const boost::system::error_code& error, size_t bytes_transferred);
+	void AfterReceive(const boost::system::error_code& error, size_t length);
 	
 private:
 	boost::asio::ip::tcp::endpoint endpoint;

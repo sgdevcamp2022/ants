@@ -25,6 +25,10 @@ Room::~Room()
 
 void Room::Enter(User* user)
 {
+    if(isStart==true)
+    {
+        return;
+    }
     userCount.fetch_add(1);
     LOCK_GUARD
     _users[user->_userID] = user;
@@ -32,6 +36,10 @@ void Room::Enter(User* user)
 
 void Room::Leave(User* user)
 {
+    if(isStart==true)
+    {
+        return;
+    }
     userCount.fetch_sub(1);
     LOCK_GUARD
     _users.erase(user->_userID);
@@ -39,7 +47,10 @@ void Room::Leave(User* user)
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
-    LOCK_GUARD
+    if(isStart==false)
+    {
+        return;
+    }
 
     for (auto& user : _users)
     {
@@ -61,7 +72,10 @@ void Room::AddUserID(unsigned int userID)
 
 bool Room::HasUser(unsigned userID)
 {
-    LOCK_GUARD
+    if(isStart==true)
+    {
+        return false;
+    }
 
     auto it=_users.find(userID);
     if(it!=_users.end())
@@ -90,7 +104,8 @@ bool Room::CanStart()
 
 void Room::InitGame()
 {
-    LOCK_GUARD
+    LOCK_GUARD;
+    isStart = true;
     for(auto it = _users.begin(); it!= _users.end(); ++it)
     {
         Protocol::UserInfo& userInfo = it->second->GetUserInfo();

@@ -81,7 +81,7 @@ public:
             break;
 
         case C_Move:
-
+            Handle_C_Move(session, data, length);
             break;
         }
     }
@@ -158,6 +158,8 @@ public:
 
     void Handle_C_Move(GameSession* session, char* data, int length)
     {
+        PacketHeader* header = reinterpret_cast<PacketHeader*>(data);
+
         Protocol::C_Move packet;
         PARSE(packet);
 
