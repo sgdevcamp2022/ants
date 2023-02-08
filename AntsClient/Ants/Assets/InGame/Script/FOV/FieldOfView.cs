@@ -26,7 +26,7 @@ public class FieldOfView : MonoBehaviour
         // ray 사이의 간격
         float angleIncrease = fov / raycount;
         // 시야 길이
-        float viewDistance = 10f;
+        float viewDistance = 13f;
 
         Vector3[] vertices = new Vector3[raycount + 1 + 1];
         Vector2[] uv = new Vector2[vertices.Length];

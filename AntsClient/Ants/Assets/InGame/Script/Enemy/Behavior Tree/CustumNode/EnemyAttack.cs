@@ -21,10 +21,20 @@ public class EnemyAttack : MonoBehaviour
     }
     public void meleeAttack()
     {
-
         float angle = Mathf.Atan2(brain.player.transform.position.y - transform.position.y, brain.player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
         GameObject attack = Instantiate(AttackPrefab, brain.player.transform.position, Quaternion.AngleAxis(angle - 20, Vector3.forward));
         attack.transform.parent = this.transform;
     }
+    public void RangeAttack()
+    {
+        float angle = Mathf.Atan2(brain.player.transform.position.y - transform.position.y, brain.player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+        GameObject attack = Instantiate(AttackPrefab, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.AngleAxis(angle , Vector3.forward));
 
+    }
+    public void PointAttack()
+    {
+
+        GameObject attack = Instantiate(AttackPrefab, brain.player.transform.position, transform.rotation);
+
+    }
 }

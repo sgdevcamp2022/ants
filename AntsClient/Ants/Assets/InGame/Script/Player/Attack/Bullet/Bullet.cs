@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] bool collisionDestroy;
     [SerializeField] float stunTime;
     public float speed;
+   
     // Start is called before the first frame update
     void Start()
     {

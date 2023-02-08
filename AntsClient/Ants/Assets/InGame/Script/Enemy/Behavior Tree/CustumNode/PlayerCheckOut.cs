@@ -7,9 +7,10 @@ public class PlayerCheckOut : MonoBehaviour
     public Brain Enemy;
     // Start is called before the first frame update
 
-
+    
     private void Start()
     {
+        
         Enemy = GetComponentInParent<Brain>();
     }
     private void OnTriggerExit2D(Collider2D collision)

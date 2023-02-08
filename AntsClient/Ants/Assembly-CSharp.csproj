@@ -222,7 +222,6 @@
     <Compile Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenProShortcuts.cs" />
     <Compile Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenTextMeshPro.cs" />
     <Compile Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenTk2d.cs" />
-    <Compile Include="Assets\InGame\Graphic\FieldOfView_Graphic\FieldOFView.cs" />
     <Compile Include="Assets\InGame\Script\Camera\CameraManager.cs" />
     <Compile Include="Assets\InGame\Script\DB\DatabaseManager.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\BasicNode\Invertor.cs" />
@@ -243,8 +242,11 @@
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\PlayerCheckIn.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\PlayerCheckOut.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\PlayerInAttackRange.cs" />
+    <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\PointAttackNode.cs" />
+    <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\RangeAttackNode.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\RecognizeNode.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\CustumNode\meleeAttackNode.cs" />
+    <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\EliteGhost\SetMine.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\PonTreeAi.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\ponNode\DestroyNode.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\ponNode\FindMoveNode.cs" />
@@ -254,12 +256,14 @@
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\ponNode\PonSetDirNode.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\ponNode\SetDirNode.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Behavior Tree\Example\ponNode\WaitNode.cs" />
+    <Compile Include="Assets\InGame\Script\Enemy\EnemyActive.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Slime\AnimationHandler_Slime.cs" />
     <Compile Include="Assets\InGame\Script\Enemy\Zombie\ZombieRecogzie.cs" />
     <Compile Include="Assets\InGame\Script\FOV\FieldOfView.cs" />
     <Compile Include="Assets\InGame\Script\FOV\PlayerFOV.cs" />
     <Compile Include="Assets\InGame\Script\GraphUpdater.cs" />
     <Compile Include="Assets\InGame\Script\Health\Health.cs" />
+    <Compile Include="Assets\InGame\Script\Map.cs" />
     <Compile Include="Assets\InGame\Script\Player\Attack\Bullet\Bullet.cs" />
     <Compile Include="Assets\InGame\Script\Player\Attack\Bullet\Bullet_Continuing.cs" />
     <Compile Include="Assets\InGame\Script\Player\Attack\Bullet\Bullet_Continuing_Box.cs" />
@@ -267,6 +271,7 @@
     <Compile Include="Assets\InGame\Script\Player\Attack\SkillInput\AdcNomalAttack.cs" />
     <Compile Include="Assets\InGame\Script\Player\Attack\SkillInput\Skill_FireBall.cs" />
     <Compile Include="Assets\InGame\Script\Player\Attack\SkillInput\Skill_Wall.cs" />
+    <Compile Include="Assets\InGame\Script\Player\EnemyActiveCheck.cs" />
     <Compile Include="Assets\InGame\Script\Player\HealthBar.cs" />
     <Compile Include="Assets\InGame\Script\Player\PlayerManager.cs" />
     <Compile Include="Assets\InGame\Script\Player\Stemina.cs" />

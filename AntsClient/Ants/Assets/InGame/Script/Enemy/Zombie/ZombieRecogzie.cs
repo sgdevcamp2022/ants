@@ -22,7 +22,7 @@ public class ZombieRecogzie : MonoBehaviour
     {
         if (collision.tag == "Enemy" && (brain.isAttacked || brain.nearPlayer))
         {
-            Debug.Log("1");
+
             Brain _brain = collision.GetComponent<Brain>();
             _brain.isAttacked = true;
         }

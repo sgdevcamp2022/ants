@@ -23,7 +23,7 @@ public class PlayerFOV : MonoBehaviour
         Vector3 aimDir = (targetposition - transform.position).normalized;
 
         fieldOfView.SetAimDir(aimDir);
-        fieldOfView.setOrigin(transform.position);
+      //fieldOfView.setOrigin(transform.position);
     }
 
     public static Vector3 GetMouseWorldPosition()

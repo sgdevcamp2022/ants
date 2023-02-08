@@ -11,10 +11,10 @@ public class DatabaseManager : MonoBehaviour
 
     public static bool isAction;
     public static bool isRestOneSec;
+    public static bool 변수이름;
+
+
     static public DatabaseManager instance;
-
-
-
     private void Awake()
     {
         if (instance != null)

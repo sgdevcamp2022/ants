@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8516147713668946971}
   - component: {fileID: 8516147713668946965}
   - component: {fileID: 8516147713668946964}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerInAttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 8516147713674377659}
   - component: {fileID: 8516147713674377653}
   - component: {fileID: 8516147713674377652}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerCheckIn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,12 +133,8 @@ GameObject:
   - component: {fileID: 8516147713853580657}
   - component: {fileID: 8516147713853580656}
   - component: {fileID: 8516147713853580663}
-  - component: {fileID: 8516147713853580662}
   - component: {fileID: 8516147713853580661}
-  - component: {fileID: 8516147713853580660}
   - component: {fileID: 8516147713853580667}
-  - component: {fileID: 8516147713853580666}
-  - component: {fileID: 8516147713853580665}
   - component: {fileID: 8516147713853580664}
   - component: {fileID: 8516147713853580671}
   - component: {fileID: 8516147713853580670}
@@ -146,7 +142,8 @@ GameObject:
   - component: {fileID: 8516147713853580668}
   - component: {fileID: 8516147713853580643}
   - component: {fileID: 8516147713853580642}
-  m_Layer: 0
+  - component: {fileID: 1564814755}
+  m_Layer: 9
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -160,8 +157,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.65999985, y: -12.42, z: 0.46}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8516147713674377659}
@@ -177,7 +174,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -188,7 +185,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 672cdc760b1ebfe4c985f3567c9710b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,7 +226,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ba60e658fd8353644b9585ceb8a2966c, type: 2}
   m_CullingMode: 0
@@ -240,22 +237,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8516147713853580662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shaderTypes: 0
-  normalStrength: 5
-  normalSmoothing: 1
-  computingNormal: 0
 --- !u!50 &8516147713853580661
 Rigidbody2D:
   serializedVersion: 4
@@ -277,32 +258,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &8516147713853580660
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 9f860bd7a719cb44fa6c09a2d7fb12bb, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0020635724, y: -0.34376335}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.875, y: 1.1875}
-    newSize: {x: 3, y: 3}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.94162714, y: 0.9375}
-  m_EdgeRadius: 0
 --- !u!114 &8516147713853580667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,37 +265,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc9a1780051eac34591aac1cb259e8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 100
   ani: {fileID: 0}
---- !u!114 &8516147713853580666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6982ea14ad88b40bf2c0f0ebad5b16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8516147713853580665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f8e79aaca880b47aa610f3e700b572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8516147713853580664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +307,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 560112f876f5746c780eca0d404e7139, type: 3}
   m_Name: 
@@ -403,7 +334,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
   m_Name: 
@@ -445,7 +376,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
   m_Name: 
@@ -467,7 +398,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
   m_Name: 
@@ -481,7 +412,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2c1f4f54b47c4e4d8e000eccebfb3d6, type: 3}
   m_Name: 
@@ -497,7 +428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516147713853580641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64fc96c78dca3a649b944a99a1af32fd, type: 3}
   m_Name: 
@@ -507,11 +438,29 @@ MonoBehaviour:
   Slime: 0
   EliteSlime: 0
   Zombie: 1
+  Ghost: 0
+  EliteGhost: 0
   IsWaiting: 0
   isEnd: 0
   isAttacked: 0
   inRecognize: 0
   nearPlayer: 0
+--- !u!58 &1564814755
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516147713853580641}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
 --- !u!1 &8516147714850252885
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +472,7 @@ GameObject:
   - component: {fileID: 8516147714850252886}
   - component: {fileID: 8516147714850252880}
   - component: {fileID: 8516147714850252887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerCheckOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}

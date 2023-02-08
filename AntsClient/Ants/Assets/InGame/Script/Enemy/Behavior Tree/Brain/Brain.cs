@@ -18,7 +18,7 @@ public class Brain : MonoBehaviour
     public Coroutine evaluateCoroutine;
     public EnemyAttack enemyAttack;
 
-    [SerializeField] bool Slime, EliteSlime, Zombie;
+    [SerializeField] bool Slime, EliteSlime, Zombie, Ghost, EliteGhost;
 
     AIPath aIPath;
 
@@ -39,7 +39,10 @@ public class Brain : MonoBehaviour
     public void ResetBrain()
     {
         StopAllCoroutines();
-        astarAI.destination = transform.position;
+        if(Zombie != true)
+        {
+            astarAI.destination = transform.position;
+        }
         IsWaiting = false;
     }
 
@@ -62,6 +65,14 @@ public class Brain : MonoBehaviour
         else if(Zombie)
         {
             ConstructBehaviourTree_Zombile();
+        }
+        else if (Ghost)
+        {
+            ConstructBehaviourTree_Ghost();
+        }
+        else if (EliteGhost)
+        {
+            ConstructBehaviourTree_EliteGhost();
         }
     }
 
@@ -122,6 +133,28 @@ public class Brain : MonoBehaviour
                 PatrolNode.Evaluate();
             }
         }
+        else if (Ghost)
+        {
+            if (isAttacked == true || nearPlayer)
+            {
+                AttackNode.Evaluate();
+            }
+            else
+            {
+                PatrolNode.Evaluate();
+            }
+        }
+        else if (EliteGhost)
+        {
+            if (isAttacked == true || nearPlayer)
+            {
+                AttackNode.Evaluate();
+            }
+            else
+            {
+                PatrolNode.Evaluate();
+            }
+        }
     }
 
 
@@ -168,7 +201,7 @@ public class Brain : MonoBehaviour
         meleeAttackNode meleeAttack = new meleeAttackNode(this);
 
         DoNothing doNothing_Patrol = new DoNothing(3f, "patrol", true, this);
-        DoNothing doNothing_Attack = new DoNothing(0.5f, "attack", false, this);
+        DoNothing doNothing_Attack = new DoNothing(1f, "attack", false, this);
         DoNothing doNothing_Chase = new DoNothing(0.5f, "chase", false, this);
 
 
@@ -177,8 +210,39 @@ public class Brain : MonoBehaviour
         PatrolNode = new Sequence(new List<Node> { doNothing_Patrol, patrol, Eed });
     }
 
+    private void ConstructBehaviourTree_Ghost()
+    {
+        EndNode Eed = new EndNode(this);
+        EndAttack endAttack = new EndAttack(this);
+
+        CheckNear checkNear = new CheckNear(this);
+        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position, -4, 4, -4, 4);
 
 
+        RangeAttackNode attack = new RangeAttackNode(this);
+        DoNothing doNothing2f_Patrol = new DoNothing(2f, "patrol", true, this);
+        DoNothing doNothing2f_Attack = new DoNothing(1f, "attack", false, this);
+
+        AttackNode = new Sequence(new List<Node> { doNothing2f_Attack, patrol,checkNear, attack, Eed });
+        PatrolNode = new Sequence(new List<Node> { doNothing2f_Patrol, patrol, Eed });
+    }
+    private void ConstructBehaviourTree_EliteGhost()
+    {
+        EndNode Eed = new EndNode(this);
+        EndAttack endAttack = new EndAttack(this);
+
+        CheckNear checkNear = new CheckNear(this);
+        PatrolNode patrol = new PatrolNode(astarAI, this.transform.position, -4, 4, -4, 4);
+        PointAttackNode attack = new PointAttackNode(this);
+
+
+        DoNothing doNothing2f_Patrol = new DoNothing(2f, "patrol", true, this);
+        DoNothing doNothing2f_Attack = new DoNothing(1f, "attack", false, this);
+
+        AttackNode = new Sequence(new List<Node> { doNothing2f_Attack, patrol, checkNear, attack, Eed });
+
+        PatrolNode = new Sequence(new List<Node> { doNothing2f_Patrol, patrol, Eed });
+    }
 
 
     public void StartWaitCoroutine(float delayTime, string upperNode, bool random)//Wait코루틴 시작 함수

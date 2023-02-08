@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - P_Bullet
   - E_Bullet
+  - Slot
+  - Active
   layers:
   - Default
   - TransparentFX

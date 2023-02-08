@@ -16,10 +16,13 @@ public class ChasePlayer : Node
     }
     public override NodeState Evaluate()
     {
+        if (!brain.nearPlayer)
+        {
+            playerPosition = brain.player.transform.position;
 
-        playerPosition = brain.player.transform.position;
+            patrolAi.destination = playerPosition;
+        }
 
-        patrolAi.destination = playerPosition;
         return NodeState.SUCCESS;
     }
 }
