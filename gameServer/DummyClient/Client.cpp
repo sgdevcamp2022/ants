@@ -91,7 +91,7 @@ void Client::RegisterSend()
         packet.set_roomid(ROOM_ID);
         buffer = ph.MakeBuffer(packet, C_EnterRoom);
     }
-    else
+    else if(_seqNumber==3)
     {
         Protocol::C_Move packet;
         Protocol::MoveInfo* moveInfo= new Protocol::MoveInfo();
@@ -103,7 +103,14 @@ void Client::RegisterSend()
         //packet.mutable_moveinfo()->set_positionx(1);
         buffer = ph.MakeBuffer(packet, C_Move);
     }
-    
+    else
+    {
+        Protocol::C_Attack packet;
+        packet.set_directionx(3.0f);
+        packet.set_directiony(2.0f);
+
+        buffer = ph.MakeBuffer(packet, C_Attack);
+    }
 
     const int size = reinterpret_cast<PacketHeader*>(buffer)->size;
     /*boost::asio::async_write(
@@ -177,12 +184,24 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             PARSE(packet);
             cout << "userid: " << packet.userid()<< " , direction:" << packet.mutable_moveinfo()->direction() << " , state: " << packet.mutable_moveinfo()->state() << endl;
         }
-        else
+        else if(_seqNumber==3)
         {
             Protocol::S_Move packet;
             PARSE(packet);
             cout << "userID: " << packet.userid() << " , position: " << packet.moveinfo().positionx() << " , " << packet.moveinfo().positiony() << endl;
         }
+        else if(_seqNumber==4)
+        {
+            Protocol::S_Attack packet;
+            PARSE(packet);
+            cout << packet.userid() << packet.directionx() << packet.directiony() << endl;
+        }
+        else
+        {
+            return;
+        }
+
+
         RegisterSend();
     }
 }

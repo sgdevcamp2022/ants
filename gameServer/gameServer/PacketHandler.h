@@ -83,6 +83,10 @@ public:
         case C_Move:
             Handle_C_Move(session, data, length);
             break;
+
+        case C_Attack:
+            Handle_C_Attack(session, data, length);
+            break;
         }
     }
     
