@@ -1,0 +1,16 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  sayHello: String!
+}
+
+type Mutation {
+  createUser(email: String!, psword: String!, nickname: String!): String!
+  deleteUser(email: String!, psword: String!): String!
+  login(email: String!, psword: String!): String!
+  sendEmail(email: String!): String!
+  checkEmail(eToken: String!, hashedToken: String!): String!
+  checkNick(nick: String!): String!
+}
