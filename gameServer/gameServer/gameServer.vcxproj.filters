@@ -48,6 +48,7 @@
     <ClCompile Include="User.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="CircularBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -80,6 +81,7 @@
     <ClInclude Include="PacketHandler.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="CircularBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\protoc-21.12-win64\bin\Protocol.proto">

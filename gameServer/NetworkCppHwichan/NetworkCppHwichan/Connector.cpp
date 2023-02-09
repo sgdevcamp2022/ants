@@ -5,7 +5,7 @@
 Connector::Connector(const char* ipAddress, const int portNumber)
     : _socket(io_context), endpoint(boost::asio::ip::address::from_string(ipAddress), portNumber)
 {
-    //별도의 스레드로 빼도 안전할까??
+    //별도의 스레드로 빼도 안전할까?? 고성능 리시브 버퍼에 락 걸고 접근하게 하면 흠~
     io_context.run();
 }
 

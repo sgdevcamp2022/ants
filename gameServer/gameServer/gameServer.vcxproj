@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="gameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="PacketHandler.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="Constant.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="PacketHandler.h" />
