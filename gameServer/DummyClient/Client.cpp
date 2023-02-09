@@ -1,29 +1,20 @@
 #include "pch.h"
 #include "Client.h"
 
-#include "GameSession.h"
-#include "PacketHandler.h"
+#include "Protocol.pb.h"
 
 
 Client::Client(boost::asio::io_context& io_context)
 : _seqNumber(0),_socket(io_context), endpoint(boost::asio::ip::address::from_string(SERVER_IP), PORT_NUMBER)
 {
-	
-
-	
-
 }
 
 Client::~Client()
 {
-	
-
-		
 }
 
 void Client::Init(const int maxSessionCount)
 {
-
 }
 
 void Client::Start()
@@ -53,17 +44,13 @@ void Client::AfterConnect(const boost::system::error_code& error)
 
 void Client::RegisterReceive()
 {
-
-
     _socket.async_read_some(
         boost::asio::buffer(_receiveBuffer),
         [this](boost::system::error_code error, size_t transferedBytes) { AfterReceive(error, transferedBytes); }
-
     );
 }
 void Client::RegisterSend()
 {
-    //네트워크에서 send는 보내는 것 뿐이야, 그렇다면 비즈니스 로직에서 어떠한 큐에 데이터를 넣고, 그 데이터를 꺼내서 전송을 하겠지 그러면 이 함수는 그냥 센드야
 
     ++_seqNumber;
     if (_seqNumber > 10)
@@ -71,8 +58,6 @@ void Client::RegisterSend()
         _socket.close();
         return;
     }
-    PacketHandler& ph = PacketHandler::GetPacketHandler();
-
 
     char* buffer = nullptr;
     if(_seqNumber ==1)
@@ -80,7 +65,7 @@ void Client::RegisterSend()
         Protocol::M_InitRoom packet;
         packet.set_roomid(ROOM_ID);
         packet.add_userid(USER_ID);
-        buffer = ph.MakeBuffer(packet,M_InitRoom);
+        buffer = MakeBuffer(packet,M_InitRoom);
         
     }
     else if(_seqNumber == 2)
@@ -89,7 +74,7 @@ void Client::RegisterSend()
         packet.set_userid(USER_ID);
         packet.set_name("hwichan");
         packet.set_roomid(ROOM_ID);
-        buffer = ph.MakeBuffer(packet, C_EnterRoom);
+        buffer = MakeBuffer(packet, C_EnterRoom);
     }
     else if(_seqNumber==3)
     {
@@ -101,7 +86,7 @@ void Client::RegisterSend()
         moveInfo->set_state(Protocol::MOVE);
         packet.set_allocated_moveinfo(moveInfo);
         //packet.mutable_moveinfo()->set_positionx(1);
-        buffer = ph.MakeBuffer(packet, C_Move);
+        buffer = MakeBuffer(packet, C_Move);
     }
     else
     {
@@ -109,35 +94,14 @@ void Client::RegisterSend()
         packet.set_directionx(3.0f);
         packet.set_directiony(2.0f);
 
-        buffer = ph.MakeBuffer(packet, C_Attack);
+        buffer = MakeBuffer(packet, C_Attack);
     }
 
     const int size = reinterpret_cast<PacketHeader*>(buffer)->size;
-    /*boost::asio::async_write(
-        socket,
-        boost::asio::buffer(buffer, size),
-        [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); }
-    );*/
 
     boost::asio::async_write(_socket, boost::asio::buffer(buffer, size),
         [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); });
 }
-
-//
-//void Client::RegisterSend()
-//{
-    
-//
-//    shared_ptr<char> buffer;
-//
-//
-//    const int size = reinterpret_cast<PacketHeader*>(buffer.get())->size;
-//    boost::asio::async_write(
-//        socket,
-//        boost::asio::buffer(buffer.get(), size),
-//        [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); }
-//    );
-//}
 
 
 void Client::AfterSend(const boost::system::error_code& error, size_t transferredBytes, char* sendBuffer)
@@ -166,7 +130,6 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
         }
 
         _socket.close();
-
         return;
     }
     else
@@ -200,8 +163,6 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
         {
             return;
         }
-
-
         RegisterSend();
     }
 }

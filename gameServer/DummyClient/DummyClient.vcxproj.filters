@@ -18,51 +18,15 @@
     <ClCompile Include="Protocol.pb.cc">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="User.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSession.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="PacketHandler.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="Session.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Protocol.pb.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSession.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="PacketHandler.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Constant.h">
@@ -73,12 +37,6 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="Session.h">
-      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
