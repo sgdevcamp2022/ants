@@ -1,8 +1,10 @@
+### 개요
 Boost/Asio 사용
 
 탑다운 슈터 게임을 위한 TCP 게임 서버
 
 
+### 프로젝트 폴더
 gameServer 폴더 내 프로젝트 별로 구분
 
 gameServer/DummyClient: 테스트용 더미 클라이언트
