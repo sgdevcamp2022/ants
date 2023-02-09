@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    public GameObject player;
     [SerializeField] private LayerMask layerMask;
     private Mesh mesh;
     Vector3 origin;
@@ -46,6 +47,7 @@ public class FieldOfView : MonoBehaviour
             }
             else
             {
+                
                 vertex = raycastHit2D.point;
             }
 
@@ -64,6 +66,7 @@ public class FieldOfView : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
+        mesh.RecalculateBounds();
     }
 
 

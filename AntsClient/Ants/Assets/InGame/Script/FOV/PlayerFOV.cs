@@ -6,24 +6,16 @@ public class PlayerFOV : MonoBehaviour
 {
 
 
-    Vector2 target;
-
     [SerializeField] private FieldOfView fieldOfView;
     // Start is called before the first frame update
-    void Start()
-    {
-        target = transform.position;
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        //마우스 위치로 생성된 FOV 회전
+
         Vector3 targetposition = GetMouseWorldPosition();
         Vector3 aimDir = (targetposition - transform.position).normalized;
 
         fieldOfView.SetAimDir(aimDir);
-      //fieldOfView.setOrigin(transform.position);
+        fieldOfView.setOrigin(transform.position);
     }
 
     public static Vector3 GetMouseWorldPosition()

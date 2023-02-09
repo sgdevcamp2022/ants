@@ -261,6 +261,7 @@
     <Compile Include="Assets\InGame\Script\Enemy\Zombie\ZombieRecogzie.cs" />
     <Compile Include="Assets\InGame\Script\FOV\FieldOfView.cs" />
     <Compile Include="Assets\InGame\Script\FOV\PlayerFOV.cs" />
+    <Compile Include="Assets\InGame\Script\FOVSetter.cs" />
     <Compile Include="Assets\InGame\Script\GraphUpdater.cs" />
     <Compile Include="Assets\InGame\Script\Health\Health.cs" />
     <Compile Include="Assets\InGame\Script\Map.cs" />
