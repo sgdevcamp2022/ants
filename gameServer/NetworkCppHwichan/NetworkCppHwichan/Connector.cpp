@@ -5,6 +5,7 @@
 Connector::Connector(const char* ipAddress, const int portNumber)
     : _socket(io_context), endpoint(boost::asio::ip::address::from_string(ipAddress), portNumber)
 {
+    //별도의 스레드로 빼도 안전할까??
     io_context.run();
 }
 
@@ -35,6 +36,7 @@ void Connector::AfterConnect(const boost::system::error_code& error)
     else
     {
         std::cout << "connected" << std::endl;
+        RegisterReceive();
     }
 }
 
@@ -87,6 +89,8 @@ void Connector::AfterReceive(const boost::system::error_code& error, size_t leng
     }
     else
     {
+        // 패킷 길이 검증 하고 고성능 RecvBuffer 만들어서 관리
+        RegisterReceive();
     }
 }
 

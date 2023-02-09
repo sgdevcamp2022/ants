@@ -88,6 +88,7 @@ extern "C" EXPORT void Connect(Connector* instance);
 
 extern "C" EXPORT void Send(Connector* instance,char* buffer, int bufferSize);
 
+extern "C" EXPORT bool HasPacket(Connector* instance);
 extern "C" EXPORT void Receive(Connector* instance, char* buffer, int bufferSize);
 
 extern "C" EXPORT int Test(Connector * instance);
