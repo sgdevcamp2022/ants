@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Connector.h"
-
+#include "CircularBuffer.h"
 
 Connector::Connector(const char* ipAddress, const int portNumber)
     : _socket(io_context), endpoint(boost::asio::ip::address::from_string(ipAddress), portNumber)
