@@ -2,8 +2,10 @@
 #include "PacketHandler.h"
 
 
-
 const int BUFFER_SIZE = 4096;
+
+#define CalcLength(point)  firstLength = BUFFER_SIZE - point; secondLength = dataLength - firstLength;
+
 
 class CircularBuffer
 {
@@ -13,7 +15,7 @@ class CircularBuffer
     //띵킹1
     //기본적으로 큐에 필요하 것은?
 
-    bool Enqueue(const char* data, int dataLength)
+    bool Enqueue(char* data, int dataLength)
     {
         if(dataLength>_freeSpace)
         {
@@ -23,18 +25,7 @@ class CircularBuffer
         _freeSpace -= dataLength;
         _usingSpace += dataLength;
 
-        if (dataLength>BUFFER_SIZE-_pushPoint)
-        {
-            int firstLength = BUFFER_SIZE - _pushPoint;
-            int secondLength = dataLength - firstLength;
-
-            memcpy(&_buffer[_pushPoint], data, firstLength);
-            memcpy(&_buffer[0], data + firstLength, secondLength);
-        }
-        else
-        {
-            memcpy(&_buffer[_pushPoint], data, dataLength);
-        }
+        DataCopy(data, dataLength, true);
 
         return true;
     }
@@ -46,12 +37,12 @@ class CircularBuffer
     };
     
     //패킷 하나 빼오기
-    void PopPacket()
+    char* PopPacket()
     {
         if(_usingSpace<sizeof(PacketHeader))
         {
             //little than header
-            return;
+            return nullptr;
         }
         PacketHeader* header = PopHeader();
 
@@ -59,59 +50,83 @@ class CircularBuffer
 
         if(_usingSpace<length)
         {
-            // completed packet is not arrive
-            return;
+            delete header;
+            return nullptr;
         }
 
         delete header;
-        Dequeue(length);
+        char* packet = Dequeue(length);
+
+        return packet;
     }
 
     PacketHeader* PopHeader()
     {
         PacketHeader* header = new PacketHeader();
-        if(BUFFER_SIZE-_popPoint<sizeof(PacketHeader))
-        {
-            int firstLength = BUFFER_SIZE - _popPoint;
-            int secondLength = sizeof(PacketHeader) - firstLength;
-
-            memcpy(header, &_buffer[_popPoint], firstLength);
-            memcpy(header + BUFFER_SIZE - _popPoint, &_buffer[0], secondLength);
-        }
-        else
-        {
-            memcpy(&_buffer[_popPoint], header, sizeof(PacketHeader));
-        }
+        
+        DataCopy(reinterpret_cast<char*>(header), sizeof(PacketHeader), false);
 
         return header;
     }
 
     char* Dequeue(int packetLength)
     {
-        //dequeue
         _usingSpace -= packetLength;
+        _freeSpace += packetLength;
+        
         //패킷 처리 끝나면 삭제하자 after receive 나 onreceive에서 ^^[][][][][][pop][][]
         char* data = new char[packetLength];
 
-        if(BUFFER_SIZE-_popPoint<packetLength)
-        {
-            int firstLength = BUFFER_SIZE - _popPoint;
-            int secondLength = packetLength - firstLength;
+        DataCopy(data, packetLength, false);
 
-            memcpy(data, &_buffer[_popPoint], firstLength);
-            memcpy(data + BUFFER_SIZE - _popPoint, &_buffer[0], secondLength);
-        }
-        else
+        if (_usingSpace == 0)
         {
-            memcpy(data, &_buffer[_popPoint], packetLength);
+            _popPoint = 0;
+            _pushPoint = 0;
         }
-        _popPoint = (_popPoint + packetLength) % BUFFER_SIZE;
-
+        
         return data;
     }
 
     int GetBufferSize() { return _usingSpace; }
 private:
+    void DataCopy(char* data, int dataLength, bool isPush)
+    {
+        int firstLength;
+        int secondLength;
+
+        if (isPush)
+        {
+            CalcLength(_pushPoint)
+
+            if (dataLength > BUFFER_SIZE - _pushPoint)
+            {
+                memcpy(&_buffer[_pushPoint], data, firstLength);
+                memcpy((_buffer).data(), (char*)data + firstLength, secondLength);
+            }
+            else
+            {
+                memcpy(&_buffer[_pushPoint], data, dataLength);
+            }
+        }
+        else
+        {
+            CalcLength(_popPoint)
+
+            if (BUFFER_SIZE - _popPoint < dataLength)
+            {
+                memcpy(data, &_buffer[_popPoint], firstLength);
+                memcpy((char*)data + firstLength, (_buffer).data(), secondLength);
+            }
+            else
+            {
+                memcpy(data, &_buffer[_popPoint], dataLength);
+            }
+        }
+
+    }
+
+
     //읽는 위치 쓰는 위치는?
     int _pushPoint=0;
     int _popPoint=0;

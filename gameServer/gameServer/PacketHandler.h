@@ -12,7 +12,7 @@ class GameSession;
 struct PacketHeader
 {
     unsigned __int16 size;
-    unsigned __int16 id; // 프로토콜ID (ex. 1=로그인, 2=이동요청)
+    unsigned __int16 id; 
 };
 
 enum :unsigned int
