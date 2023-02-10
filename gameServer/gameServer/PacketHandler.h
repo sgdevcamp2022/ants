@@ -32,7 +32,8 @@ enum :unsigned int
     C_Attack = 2005,
     S_Attack = 2006,
 
-
+    C_Attacked = 2007,
+    S_Attacked = 2008,
     
     C_TEST = 2999,
 
@@ -87,6 +88,8 @@ public:
         case C_Attack:
             Handle_C_Attack(session, data, length);
             break;
+        case C_Attacked:
+            Handle_C_Attacked(session, data, length);
         }
     }
     
@@ -109,6 +112,18 @@ public:
         const unsigned int roomID = packet.roomid();
 
         RoomManager& roomManager = RoomManager::GetRoomManager();
+
+        if(roomManager.GetRoomByRoomID(roomID)!=nullptr)
+        {
+            Protocol::S_RoomCompleted sendPacket;
+            sendPacket.set_roomid(roomID);
+            sendPacket.set_iscompleted(false);
+
+            auto buffer = MakeBuffer(sendPacket, S_RoomCompleted);
+            session->RegisterSend(buffer);
+            return;
+        }
+
         Room* room = roomManager.MakeRoom(roomID);
         room->SetMaxUserCount(packet.userid_size());
 
@@ -175,7 +190,6 @@ public:
         *(sendPacket.mutable_moveinfo()) = packet.moveinfo();
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Move);
-
         session->room->Broadcast(buffer);
     }
 
@@ -193,6 +207,20 @@ public:
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attack);
         session->room->Broadcast(buffer);
+    }
+
+    void Handle_C_Attacked(GameSession* session, char* data, int length)
+    {
+        Protocol::C_Attacked packet;
+        PARSE(packet);
+
+        Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+        Protocol::S_Attacked sendPacket;
+        sendPacket.set_userid(userInfo.userid());
+
+        auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attacked);
+        session->room->Broadcast(buffer);
+
     }
 
 

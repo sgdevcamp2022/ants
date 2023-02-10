@@ -191,8 +191,21 @@ struct C_AttackedDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_AttackedDefaultTypeInternal _C_Attacked_default_instance_;
+PROTOBUF_CONSTEXPR S_Attacked::S_Attacked(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.userid_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_AttackedDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_AttackedDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_AttackedDefaultTypeInternal() {}
+  union {
+    S_Attacked _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_AttackedDefaultTypeInternal _S_Attacked_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[12];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[13];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -294,6 +307,13 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_Attacked, _impl_.userid_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attacked, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_Attacked, _impl_.userid_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::UserInfo)},
@@ -308,6 +328,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 73, -1, -1, sizeof(::Protocol::C_Attack)},
   { 81, -1, -1, sizeof(::Protocol::S_Attack)},
   { 90, -1, -1, sizeof(::Protocol::C_Attacked)},
+  { 97, -1, -1, sizeof(::Protocol::S_Attacked)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -323,6 +344,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_C_Attack_default_instance_._instance,
   &::Protocol::_S_Attack_default_instance_._instance,
   &::Protocol::_C_Attacked_default_instance_._instance,
+  &::Protocol::_S_Attacked_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -343,16 +365,17 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "ttack\022\022\n\ndirectionX\030\001 \001(\002\022\022\n\ndirectionY\030"
   "\002 \001(\002\"B\n\010S_Attack\022\016\n\006userID\030\001 \001(\r\022\022\n\ndir"
   "ectionX\030\002 \001(\002\022\022\n\ndirectionY\030\003 \001(\002\"\034\n\nC_A"
-  "ttacked\022\016\n\006userID\030\001 \001(\r*5\n\tUserState\022\010\n\004"
-  "IDLE\020\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*2"
-  "\n\tDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022"
-  "\t\n\005RIGHT\020\003b\006proto3"
+  "ttacked\022\016\n\006userID\030\001 \001(\r\"\034\n\nS_Attacked\022\016\n"
+  "\006userID\030\001 \001(\r*5\n\tUserState\022\010\n\004IDLE\020\000\022\010\n\004"
+  "MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*2\n\tDirectio"
+  "n\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003"
+  "b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 818, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 848, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 12,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 13,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -3127,6 +3150,184 @@ void C_Attacked::InternalSwap(C_Attacked* other) {
       file_level_metadata_Protocol_2eproto[11]);
 }
 
+// ===================================================================
+
+class S_Attacked::_Internal {
+ public:
+};
+
+S_Attacked::S_Attacked(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_Attacked)
+}
+S_Attacked::S_Attacked(const S_Attacked& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_Attacked* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.userid_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.userid_ = from._impl_.userid_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_Attacked)
+}
+
+inline void S_Attacked::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.userid_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+S_Attacked::~S_Attacked() {
+  // @@protoc_insertion_point(destructor:Protocol.S_Attacked)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_Attacked::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void S_Attacked::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_Attacked::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_Attacked)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.userid_ = 0u;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_Attacked::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 userID = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_Attacked::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_Attacked)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 userID = 1;
+  if (this->_internal_userid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_userid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_Attacked)
+  return target;
+}
+
+size_t S_Attacked::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_Attacked)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 userID = 1;
+  if (this->_internal_userid() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_Attacked::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_Attacked::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_Attacked::GetClassData() const { return &_class_data_; }
+
+
+void S_Attacked::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_Attacked*>(&to_msg);
+  auto& from = static_cast<const S_Attacked&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_Attacked)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_userid() != 0) {
+    _this->_internal_set_userid(from._internal_userid());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_Attacked::CopyFrom(const S_Attacked& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_Attacked)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_Attacked::IsInitialized() const {
+  return true;
+}
+
+void S_Attacked::InternalSwap(S_Attacked* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.userid_, other->_impl_.userid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_Attacked::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[12]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
@@ -3177,6 +3378,10 @@ Arena::CreateMaybeMessage< ::Protocol::S_Attack >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::C_Attacked*
 Arena::CreateMaybeMessage< ::Protocol::C_Attacked >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::C_Attacked >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_Attacked*
+Arena::CreateMaybeMessage< ::Protocol::S_Attacked >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_Attacked >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -30,12 +30,6 @@ public:
         return true;
     }
 
-    struct PacketHeader
-    {
-        unsigned __int16 size;
-        unsigned __int16 id;
-    };
-
     //패킷 하나 빼오기
     char* PopPacket()
     {
@@ -45,7 +39,10 @@ public:
             return nullptr;
         }
         PacketHeader* header = PopHeader();
-
+        if(header==nullptr)
+        {
+            return nullptr;
+        }
         int length = header->size;
 
         if (_usingSpace < length)
@@ -62,6 +59,10 @@ public:
 
     PacketHeader* PopHeader()
     {
+        if (_usingSpace<sizeof(PacketHeader))
+        {
+            return nullptr;
+        }
         PacketHeader* header = new PacketHeader();
 
         DataCopy(reinterpret_cast<char*>(header), sizeof(PacketHeader), false);
