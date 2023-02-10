@@ -48,6 +48,9 @@
     <ClCompile Include="User.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="CircularBuffer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -65,9 +68,6 @@
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="PacketHandler.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="GameSession.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -79,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="User.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
