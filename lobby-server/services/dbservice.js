@@ -134,8 +134,8 @@ const redisService = {
     },
 
     //
-    upstate: (Nick, state) => {
-        redisCli.rename(Nick, state)
+    upstate: (Nick, newstate) => {
+        redisCli.set(Nick, newstate)
     }
 
 

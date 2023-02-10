@@ -12,8 +12,9 @@ protobuf.load("messages.proto", (err, root) => {
     if (err) {
         throw err;
     }
-    const login = root.lookupType('login');
+    const log = root.lookupType('log');
     const customerList = root.lookupType('CustomerList');
+
 
     const server = net.createServer(function (socket) {
         console.log(socket.address().address + " connected.");
@@ -22,10 +23,9 @@ protobuf.load("messages.proto", (err, root) => {
 
         socket.on('data', function (data) {
             try {
-                const message = login.decode(data);
+                const message = log.decode(data);
                 const command = message.cd;
                 const cl_data = message.token;
-
 
                 if (command === 0) {
                     emitter.emit('login', cl_data)
@@ -37,6 +37,12 @@ protobuf.load("messages.proto", (err, root) => {
                 else if (command === 3) {
                     emitter.emit('logout', cl_data)
                 }
+                else if (command === 4) {
+                    emitter.emit('fiteqip', cl_data)
+                }
+                else if (command === 5) {
+                    emitter.emit('unfiteqip', cl_data)
+                }
 
             } catch (err) {
                 console.error(err);
@@ -44,16 +50,15 @@ protobuf.load("messages.proto", (err, root) => {
         });
 
         socket.on('close', async function (data) {
-            const Nick = data
-            await lobbyctrl.logout(Nick)
-            console.log(Nick + 'client disconnted.');
+
+            console.log('client disconnted.');
         });
 
 
         emitter.on('login', async (cl_data) => {
             // const req = socket.request;
             // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-            // console.log("새로운 클라이언트 접속", ip, socket.id, req.ip);
+            console.log("새로운 클라이언트 접속========> ");
             try {
                 const token = cl_data;
                 const payload = jwt.verify(token, process.env.JWT_KEY);
@@ -98,13 +103,19 @@ protobuf.load("messages.proto", (err, root) => {
             socket.write(response);
         })
 
-        // emitter.on('logout', async (cl_data) => {
-        //     const Nick = cl_data
-        //     await lobbyctrl.logout(Nick)
+        emitter.on('logout', async (cl_data) => {
+            const Nick = cl_data
+            await lobbyctrl.logout(Nick)
 
-        // })
+        })
 
+        emitter.on('fiteqip', async (cl_data) => {
+            console.log(cl_data)
 
+        })
+        emitter.on('unfiteqip', async (cl_data) => {
+
+        })
 
 
     });

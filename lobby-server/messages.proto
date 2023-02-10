@@ -14,7 +14,8 @@ message CustomerList {
     int32 cash =4;
 }
 
-message login {
+message log {
     int32 cd = 1;
     string token = 2;
 }
+

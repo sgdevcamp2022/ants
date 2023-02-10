@@ -8,18 +8,16 @@ const lobbyctrl = {
         try {
             if (dbuser.nickname === Nick) {
                 const state = await redisService.getstate(Nick)
-                console.log(state)
                 if (state === "inlobby" || state === "gaming") {
-                    console.log("정상적인 접근이 아닙니다.2")
+                    console.log("정상적인 접근이 아닙니다. loginctrl")
                     // throw new Error("정상적인 접근이 아닙니다.");
                 }
-
                 if (state === null) {
                     await redisService.setstate(Nick)
+
                 } else {
-                    // const newstate = "inlobby"
-                    // await redisService.upstate(Nick, newstate)
-                    // 로그아웃 관련된거 만들고 활성화
+                    const newstate = "inlobby"
+                    await redisService.upstate(Nick, newstate)
                 }
                 return await mysqlService.getdata(Nick)
             }
@@ -35,8 +33,14 @@ const lobbyctrl = {
         if (state === "inlobby" || state === "gaming") {
             const newstate = "logout"
             await redisService.upstate(Nick, newstate)
+
+
         } else {
             throw new Error("유저상태 오류발생")
+        }
+        const laststate = await redisService.getstate(Nick)
+        if (laststate === "logout") {
+            return true
         }
 
     },
@@ -47,6 +51,7 @@ const lobbyctrl = {
         if (state === "inlobby") {
             const newstate = "gaming"
             await redisService.upstate(Nick, newstate)
+            //인벤토리 정보 리턴
             return true
         } else {
             throw new Error("유저상태 오류발생")
@@ -74,16 +79,17 @@ const storectrl = {
     buyitem: async (Nick, itemcode) => {
         console.log("연결성공")
 
-        const valid = await redisService.getstate(Nick)
+        const state = await redisService.getstate(Nick)
         try {
             await connection.beginTransaction();
-            if (valid === 'inlobby') {
+            if (state === 'inlobby') {
                 const price = await mysqlService.getprice(itemcode);
                 await connection.commit();
                 const cash = await mysqlService.getcash(Nick);
                 if (price > cash) {
                     return "캐시가 부족합니다."
                 }
+                console.log(`item price : ${price} // user cash : ${cash}`);
                 cash -= price
                 console.log(cash)
                 await mysqlService.upcash(cash)
