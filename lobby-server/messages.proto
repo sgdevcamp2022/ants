@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package commandpk;
+
+enum msgType {
+   login= 0;
+   buyitem=1;
+}
+
+message CustomerList {
+    string nickname =1;
+    int32 level =2;
+    int32 exp = 3;
+    int32 cash =4;
+}
+
+message login {
+    int32 cd = 1;
+    string token = 2;
+}
