@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ScreenSize : MonoBehaviour
 {
-    public void SetSize()
+
+    public void OnWindowMode()
     {
-#if UNITY_EDITOR
-        Debug.Log("size!");
-#else
         Screen.SetResolution(1920,1080,false);
-#endif
+    }
+
+    public void OffWindowMode()
+    {
+        Screen.SetResolution(1920, 1080, true);
     }
 }
