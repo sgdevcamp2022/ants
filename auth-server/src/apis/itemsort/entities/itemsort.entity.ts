@@ -9,7 +9,7 @@ export class ItemSort {
 
     @PrimaryColumn()
     @Field(() => String)
-    itemsortode: string
+    code: string
 
     @Column()
     @Field(() => String)

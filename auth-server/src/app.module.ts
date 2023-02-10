@@ -43,7 +43,7 @@ import 'dotenv/config';
       port: 3306,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PSWORD,
-      database: "antsgames",
+      database: "antsgames0",
       entities: [__dirname + "/apis/**/*.entity.*"],
       synchronize: false,
       logging: true,

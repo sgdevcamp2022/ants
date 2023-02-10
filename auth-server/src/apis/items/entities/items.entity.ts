@@ -9,7 +9,7 @@ export class Items {
 
     @PrimaryColumn()
     @Field(() => String)
-    itemcode: string
+    code: string
 
     @Column()
     @Field(() => String)

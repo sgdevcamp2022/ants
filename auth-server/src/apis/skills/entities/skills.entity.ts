@@ -9,7 +9,7 @@ export class Skills {
 
     @PrimaryColumn()
     @Field(() => String)
-    skillcode: string
+    code: string
 
     @Column()
     @Field(() => String)

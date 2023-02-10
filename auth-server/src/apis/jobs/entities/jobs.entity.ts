@@ -8,7 +8,7 @@ export class Jobs {
 
     @PrimaryColumn()
     @Field(() => String)
-    jobcode: string
+    code: string
 
     @Column()
     @Field(() => String)

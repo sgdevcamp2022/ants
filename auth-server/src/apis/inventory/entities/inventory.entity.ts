@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, Int, ObjectType } from '@nestjs/graphql'
 import { Items } from 'src/apis/items/entities/items.entity'
 import { User } from 'src/apis/users/entities/users.entity'
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm'
@@ -18,7 +18,12 @@ export class Inventory {
     item: Items
 
     @Column()
-    @Field(() => Boolean)
-    fit: boolean
+    @Field(() => String)
+    fit: string
+
+    @Column()
+    @Field(() => Int)
+    location: number
+
 
 }
