@@ -90,8 +90,7 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     else
     {
         OnReceive(transferredBytes,_receiveBuffer.data());
-        //receiveBuffer 언제 어디서 삭제할까?
-        std::cout << transferredBytes << endl;
+
         RegisterReceive();
     }
 }

@@ -58,9 +58,6 @@ void Client::RegisterSend()
         _socket.close();
         return;
     }
-    for (int i = 0; i < 10; i++)
-    {
-
 
         char* buffer = nullptr;
         if (_seqNumber == 1)
@@ -105,6 +102,7 @@ void Client::RegisterSend()
             packet.set_userid(USER_ID);
 
             buffer = MakeBuffer(packet, C_Attacked);
+            _seqNumber = 3;
         }
         else
         {
@@ -115,7 +113,6 @@ void Client::RegisterSend()
 
         boost::asio::async_write(_socket, boost::asio::buffer(buffer, size),
             [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); });
-    }
 }
 
 

@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "GameSession.h"
 
+#include "CircularBuffer.h"
 #include "PacketHandler.h"
 
-GameSession::GameSession(unsigned sessionID, boost::asio::io_context& io_context, Server* server): Session(sessionID,io_context,server)
+GameSession::GameSession(unsigned sessionID, boost::asio::io_context& io_context, Server* server):
+Session(sessionID,io_context,server), packetHandler(PacketHandler::GetPacketHandler())
 {
-    
+    _buffer = new CircularBuffer();
 }
 
 void GameSession::OnConnect()
@@ -24,13 +26,16 @@ void GameSession::OnSend()
 void GameSession::OnReceive(int numberOfBytes, char* buffer)
 {
     Session::OnReceive(numberOfBytes, buffer);
+
+    _buffer->Enqueue(buffer, numberOfBytes);
+
+    char* packet =_buffer->PopPacket();
+    while(packet !=nullptr)
+    {
+        packetHandler.HandlePacket(this, buffer, numberOfBytes);
+        packet = _buffer->PopPacket();
+    }
     
     
-    //패킷 유효성 검사 길이가 짧 거나 잘못됐으면 그냥 무시
-
-
-    //패킷 처리
-    PacketHandler& packetHandler = PacketHandler::GetPacketHandler();
-    packetHandler.HandlePacket(this, buffer, numberOfBytes);
 
 }

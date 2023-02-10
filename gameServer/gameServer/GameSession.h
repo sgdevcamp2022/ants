@@ -14,5 +14,7 @@ public:
 
     class User* user = nullptr;
     class Room* room=nullptr;
+    class PacketHandler& packetHandler;
+    class CircularBuffer* _buffer = nullptr;
 };
 
