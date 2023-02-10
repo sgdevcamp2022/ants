@@ -61,6 +61,7 @@ public:
             header = new char[sizeof(PacketHeader)];
             memcpy(header, &_buffer[_popPoint], remainSpace);
             memcpy(header + remainSpace, (_buffer).data(), sizeof(PacketHeader) - remainSpace);
+            remainedHeader= std::shared_ptr<char>(header, std::default_delete<char[]>());
         }
         else
         {
@@ -81,6 +82,7 @@ public:
             packet = new char[packetLength];
             memcpy(packet, &_buffer[_popPoint], remainSpace);
             memcpy(packet + remainSpace, (_buffer).data(), packetLength - remainSpace);
+            remainedPacket = std::shared_ptr<char>(packet, std::default_delete<char[]>());
         }
         else
         {
@@ -127,4 +129,6 @@ private:
     int _usingSpace = 0;
 
     vector<char> _buffer;
+    shared_ptr<char> remainedPacket;
+    shared_ptr<char> remainedHeader;
 };
