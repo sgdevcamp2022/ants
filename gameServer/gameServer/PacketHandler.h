@@ -218,6 +218,10 @@ public:
         Protocol::S_Attacked sendPacket;
         sendPacket.set_userid(userInfo.userid());
 
+        //체력 깎기 (user info에 체력 두고 관리해야할 듯, 수정필요)
+        //죽으면 상태 변경
+        //1명 이하로 남으면 게임 종료
+
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attacked);
         session->room->Broadcast(buffer);
 

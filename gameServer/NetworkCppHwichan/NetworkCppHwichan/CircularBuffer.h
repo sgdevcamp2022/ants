@@ -9,7 +9,14 @@ const int BUFFER_SIZE = 4096;
 class CircularBuffer
 {
 public:
-    
+
+    struct PacketHeader
+    {
+        unsigned __int16 id;
+        unsigned __int16 size;
+    };
+
+    //재밌겠다 원형 버퍼!
     CircularBuffer(int size = BUFFER_SIZE) : _pushPoint(0), _popPoint(0), _usingSpace(0), _freeSpace(size) { _buffer.resize(size); }
 
     //띵킹1
@@ -62,6 +69,7 @@ public:
             header = new char[sizeof(PacketHeader)];
             memcpy(header, &_buffer[_popPoint], remainSpace);
             memcpy(header + remainSpace, (_buffer).data(), sizeof(PacketHeader) - remainSpace);
+            remainedHeader = std::shared_ptr<char>(header, std::default_delete<char[]>());
         }
         else
         {
@@ -82,6 +90,7 @@ public:
             packet = new char[packetLength];
             memcpy(packet, &_buffer[_popPoint], remainSpace);
             memcpy(packet + remainSpace, (_buffer).data(), packetLength - remainSpace);
+            remainedPacket = std::shared_ptr<char>(packet, std::default_delete<char[]>());
         }
         else
         {
@@ -128,4 +137,6 @@ private:
     int _usingSpace = 0;
 
     vector<char> _buffer;
+    shared_ptr<char> remainedPacket;
+    shared_ptr<char> remainedHeader;
 };
