@@ -8,7 +8,7 @@ class User
 {
 public:
     User(unsigned int _userID, string _name, GameSession* _session);
-
+    ~User();
     Protocol::UserInfo& GetUserInfo();
 
 

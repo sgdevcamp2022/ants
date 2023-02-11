@@ -4,9 +4,10 @@
 #include "Protocol.pb.h"
 
 
-Client::Client(boost::asio::io_context& io_context)
+Client::Client(boost::asio::io_context& io_context, int number)
 : _seqNumber(0),_socket(io_context), endpoint(boost::asio::ip::address::from_string(SERVER_IP), PORT_NUMBER)
 {
+    a = number;
 }
 
 Client::~Client()
@@ -51,7 +52,7 @@ void Client::RegisterReceive()
 }
 void Client::RegisterSend()
 {
-
+    this_thread::sleep_for(10ms);
     ++_seqNumber;
     
     
@@ -65,17 +66,17 @@ void Client::RegisterSend()
         if (_seqNumber == 1)
         {
             Protocol::M_InitRoom packet;
-            packet.set_roomid(ROOM_ID);
-            packet.add_userid(USER_ID);
+            packet.set_roomid(ROOM_ID+a);
+            packet.add_userid(USER_ID+a);
             buffer = MakeBuffer(packet, M_InitRoom);
 
         }
         else if (_seqNumber == 2)
         {
             Protocol::C_EnterRoom packet;
-            packet.set_userid(USER_ID);
+            packet.set_userid(USER_ID+a);
             packet.set_name("hwichan");
-            packet.set_roomid(ROOM_ID);
+            packet.set_roomid(ROOM_ID+a);
             buffer = MakeBuffer(packet, C_EnterRoom);
         }
       
@@ -172,6 +173,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             Protocol::S_Attack packet;
             PARSE(packet);
             cout << packet.userid() << packet.directionx() << packet.directiony() << endl;
+            _seqNumber = 2;
         }
         else if (data->id == S_Attacked)
         {

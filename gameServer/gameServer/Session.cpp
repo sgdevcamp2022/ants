@@ -75,14 +75,14 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     {
         if( error == boost::asio::error::eof)
         {
-            OnDisconnect();
+            
         }
         else
         {
             //또다른 에러 발생
             std::cout << "error No: " << error.value() << " error Message: " << error.message() << std::endl;
         }
-
+        OnDisconnect();
         _server->CloseSession(_sessionID);
 
         return;

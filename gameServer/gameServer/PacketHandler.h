@@ -121,7 +121,7 @@ public:
             sendPacket.set_roomid(roomID);
             sendPacket.set_iscompleted(false);
 
-            auto buffer = MakeBuffer(sendPacket, S_RoomCompleted);
+            auto buffer = MakeBuffer_sharedPtr(sendPacket, S_RoomCompleted);
             session->RegisterSend(buffer);
             return;
         }
@@ -138,7 +138,7 @@ public:
         sendPacket.set_roomid(roomID);
         sendPacket.set_iscompleted(true);
 
-        auto buffer = MakeBuffer(sendPacket, S_RoomCompleted);
+        auto buffer = MakeBuffer_sharedPtr(sendPacket, S_RoomCompleted);
         session->RegisterSend(buffer);
        
     }
@@ -170,11 +170,13 @@ public:
         }
         session->room = room;
 
+        Protocol::UserInfo& userInfo = session->user->GetUserInfo();
 
-        User* user = new User(packet.userid(),packet.name(),session);
-        session->user = user;
+        userInfo.set_userid(packet.userid());
+        userInfo.set_name(packet.name());
+        
 
-        room->Enter(user);
+        room->Enter(session->user);
 
         if(room->CanStart())
         {

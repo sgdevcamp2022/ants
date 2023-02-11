@@ -10,9 +10,16 @@ Session(sessionID,io_context,server), packetHandler(PacketHandler::GetPacketHand
     _buffer = new CircularBuffer();
 }
 
+GameSession::~GameSession()
+{
+    ;
+    delete _buffer;
+}
+
 void GameSession::OnConnect()
 {
     Session::OnConnect();
+    user = new User(0,"null",this);
 
     //세션 관리하는 곳에 this 추가
 }
@@ -20,8 +27,20 @@ void GameSession::OnConnect()
 void GameSession::OnDisconnect()
 {
     Session::OnDisconnect();
-    class User* user = nullptr;
-    class Room* room = nullptr;
+
+    /*if(user !=nullptr)
+    {
+        delete user;
+    }*/
+    User* user = nullptr;
+
+    // 메모리 테스트용 Room 삭제
+    if(room!=nullptr)
+    {
+        RoomManager::DeleteRoom(room);
+    }
+    
+    Room* room = nullptr;
 }
 
 void GameSession::OnSend()
