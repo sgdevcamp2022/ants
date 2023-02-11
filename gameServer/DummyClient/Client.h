@@ -3,7 +3,7 @@
 using work_guard_type = boost::asio::executor_work_guard<boost::asio::io_context::executor_type>;
 
 
-#define PARSE(packet) if(!packet.ParseFromArray(data + sizeof(PacketHeader), length - sizeof(PacketHeader))) {return;}
+#define PARSE(packet) if(!packet.ParseFromArray(&data[1], length - sizeof(PacketHeader))) {return;}
 
 struct PacketHeader
 {
@@ -27,7 +27,8 @@ enum :unsigned int
 	C_Attack = 2005,
 	S_Attack = 2006,
 
-
+	C_Attacked = 2007,
+	S_Attacked = 2008,
 
 	C_TEST = 2999,
 
@@ -76,5 +77,7 @@ private:
 	int _seqNumber;
 	boost::asio::ip::tcp::socket _socket;
 	array<char, MAX_RECEIVE_BUFFER_LEN> _receiveBuffer;
+
+	bool test=false;
 };
 

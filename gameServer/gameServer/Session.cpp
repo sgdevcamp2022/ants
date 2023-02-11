@@ -75,7 +75,7 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     {
         if( error == boost::asio::error::eof)
         {
-           // 접속 종료, 대기 상태의 패킷도 보내게 한다면 필요 있는데 흠..
+            OnDisconnect();
         }
         else
         {
@@ -90,8 +90,7 @@ void Session::AfterReceive(const boost::system::error_code& error, size_t transf
     else
     {
         OnReceive(transferredBytes,_receiveBuffer.data());
-        //receiveBuffer 언제 어디서 삭제할까?
-        
+
         RegisterReceive();
     }
 }

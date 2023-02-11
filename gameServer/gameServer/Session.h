@@ -22,6 +22,7 @@ public:
 	void AfterConnect();
 
 	virtual void OnConnect() {}
+	virtual void OnDisconnect(){}
 	virtual void OnSend() {}
 	virtual void OnReceive(int numberOfBytes, char* buffer) {}
 private:

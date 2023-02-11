@@ -32,8 +32,11 @@ enum :unsigned int
     C_Attack = 2005,
     S_Attack = 2006,
 
+    C_Attacked = 2007,
+    S_Attacked = 2008,
 
-    
+    S_Dead = 2009,
+
     C_TEST = 2999,
 
 };
@@ -87,6 +90,8 @@ public:
         case C_Attack:
             Handle_C_Attack(session, data, length);
             break;
+        case C_Attacked:
+            Handle_C_Attacked(session, data, length);
         }
     }
     
@@ -109,6 +114,18 @@ public:
         const unsigned int roomID = packet.roomid();
 
         RoomManager& roomManager = RoomManager::GetRoomManager();
+
+        if(roomManager.GetRoomByRoomID(roomID)!=nullptr)
+        {
+            Protocol::S_RoomCompleted sendPacket;
+            sendPacket.set_roomid(roomID);
+            sendPacket.set_iscompleted(false);
+
+            auto buffer = MakeBuffer(sendPacket, S_RoomCompleted);
+            session->RegisterSend(buffer);
+            return;
+        }
+
         Room* room = roomManager.MakeRoom(roomID);
         room->SetMaxUserCount(packet.userid_size());
 
@@ -146,13 +163,18 @@ public:
             //잘못된 방 접근
             return;
         }
+        if(room->HasUser(packet.userid()))
+        {
+            //또 접근
+            return;
+        }
 
         User* user = new User(packet.userid(),packet.name(),session);
         session->user = user;
 
         room->Enter(user);
 
-        if(/*room->CanStart()*/true)
+        if(room->CanStart())
         {
             //시작
             room->InitGame();
@@ -175,7 +197,6 @@ public:
         *(sendPacket.mutable_moveinfo()) = packet.moveinfo();
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Move);
-
         session->room->Broadcast(buffer);
     }
 
@@ -193,6 +214,45 @@ public:
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attack);
         session->room->Broadcast(buffer);
+    }
+
+    void Handle_C_Attacked(GameSession* session, char* data, int length)
+    {
+        Protocol::C_Attacked packet;
+        PARSE(packet);
+
+        Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+        Protocol::S_Attacked sendPacket;
+        sendPacket.set_userid(userInfo.userid());
+
+        //체력 깎기 (user info에 체력 두고 관리해야할 듯, 수정필요)
+        int& hp =session->user->hp -= 10;
+        userInfo.set_hp(hp);
+
+        //죽으면 상태 변경
+        if(hp<=0)
+        {
+            userInfo.mutable_moveinfo()->set_state(Protocol::DEAD);
+            session->room->Dead();
+            //if(session->room->CanEnd())
+            //{
+            //    session->room->EndGame();
+
+            //    //DB 접근 최후 승자만 승리+1 나머지 패배+1
+
+            //    //room 제거
+
+            //    //return;
+            //}
+
+            auto buffer = MakeBuffer_sharedPtr(userInfo, S_Dead);
+            session->room->Broadcast(buffer);
+        }
+
+
+        auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attacked);
+        session->room->Broadcast(buffer);
+
     }
 
 

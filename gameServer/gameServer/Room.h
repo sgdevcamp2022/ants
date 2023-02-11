@@ -18,8 +18,12 @@ public:
     bool HasUser(unsigned userID);
     bool HasUserID(unsigned userID);
     bool CanStart();
+    bool CanEnd();
 
+    void Dead();
+    
     void InitGame();
+    void EndGame();
 
 private:
     unsigned int _roomID;
@@ -31,7 +35,6 @@ private:
     //필요 없을 시 삭제
     bool isStart;
     mutex mutexLock;
-    //필요 없을 시 삭제
-    std::deque< char* > sendDataQueue;
+
 };
 

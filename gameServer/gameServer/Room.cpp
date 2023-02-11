@@ -47,10 +47,12 @@ void Room::Leave(User* user)
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
-    if(isStart==false)
+    
+    if (isStart == false)
     {
         return;
     }
+    
 
     for (auto& user : _users)
     {
@@ -67,6 +69,7 @@ void Room::SetMaxUserCount(unsigned number)
 
 void Room::AddUserID(unsigned int userID)
 {
+    LOCK_GUARD
     _userList.push_back(userID);
 }
 
@@ -74,9 +77,10 @@ bool Room::HasUser(unsigned userID)
 {
     if(isStart==true)
     {
-        return false;
+        return true;
     }
 
+    LOCK_GUARD
     auto it=_users.find(userID);
     if(it!=_users.end())
     {
@@ -99,7 +103,17 @@ bool Room::HasUserID(unsigned userID)
 
 bool Room::CanStart()
 {
-    return _maxUserCount == userCount;
+    return (_maxUserCount == userCount.load())&&(isStart==false);
+}
+
+bool Room::CanEnd()
+{
+    return userCount.load() <= 1;
+}
+
+void Room::Dead()
+{
+    userCount.fetch_sub(1);
 }
 
 void Room::InitGame()
@@ -118,4 +132,12 @@ void Room::InitGame()
 
         Broadcast(buffer);
     }
+}
+
+void Room::EndGame()
+{
+    LOCK_GUARD;
+      
+    isStart = false;
+    _userList.clear();
 }
