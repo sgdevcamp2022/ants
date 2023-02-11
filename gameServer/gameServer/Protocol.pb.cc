@@ -26,6 +26,7 @@ PROTOBUF_CONSTEXPR UserInfo::UserInfo(
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.moveinfo_)*/nullptr
   , /*decltype(_impl_.userid_)*/0u
+  , /*decltype(_impl_.hp_)*/0u
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct UserInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR UserInfoDefaultTypeInternal()
@@ -218,6 +219,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::UserInfo, _impl_.userid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::UserInfo, _impl_.name_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::UserInfo, _impl_.hp_),
   PROTOBUF_FIELD_OFFSET(::Protocol::UserInfo, _impl_.moveinfo_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _internal_metadata_),
@@ -317,18 +319,18 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::UserInfo)},
-  { 9, -1, -1, sizeof(::Protocol::MoveInfo)},
-  { 19, -1, -1, sizeof(::Protocol::M_TEST)},
-  { 26, -1, -1, sizeof(::Protocol::M_InitRoom)},
-  { 34, -1, -1, sizeof(::Protocol::S_RoomCompleted)},
-  { 42, -1, -1, sizeof(::Protocol::C_TEST)},
-  { 49, -1, -1, sizeof(::Protocol::C_EnterRoom)},
-  { 58, -1, -1, sizeof(::Protocol::C_Move)},
-  { 65, -1, -1, sizeof(::Protocol::S_Move)},
-  { 73, -1, -1, sizeof(::Protocol::C_Attack)},
-  { 81, -1, -1, sizeof(::Protocol::S_Attack)},
-  { 90, -1, -1, sizeof(::Protocol::C_Attacked)},
-  { 97, -1, -1, sizeof(::Protocol::S_Attacked)},
+  { 10, -1, -1, sizeof(::Protocol::MoveInfo)},
+  { 20, -1, -1, sizeof(::Protocol::M_TEST)},
+  { 27, -1, -1, sizeof(::Protocol::M_InitRoom)},
+  { 35, -1, -1, sizeof(::Protocol::S_RoomCompleted)},
+  { 43, -1, -1, sizeof(::Protocol::C_TEST)},
+  { 50, -1, -1, sizeof(::Protocol::C_EnterRoom)},
+  { 59, -1, -1, sizeof(::Protocol::C_Move)},
+  { 66, -1, -1, sizeof(::Protocol::S_Move)},
+  { 74, -1, -1, sizeof(::Protocol::C_Attack)},
+  { 82, -1, -1, sizeof(::Protocol::S_Attack)},
+  { 91, -1, -1, sizeof(::Protocol::C_Attacked)},
+  { 98, -1, -1, sizeof(::Protocol::S_Attacked)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -348,32 +350,32 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016Protocol.proto\022\010Protocol\"N\n\010UserInfo\022\016"
-  "\n\006userID\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022$\n\010moveInfo"
-  "\030\003 \001(\0132\022.Protocol.MoveInfo\"|\n\010MoveInfo\022\""
-  "\n\005state\030\001 \001(\0162\023.Protocol.UserState\022&\n\tdi"
-  "rection\030\002 \001(\0162\023.Protocol.Direction\022\021\n\tpo"
-  "sitionX\030\003 \001(\005\022\021\n\tpositionY\030\004 \001(\005\"\025\n\006M_TE"
-  "ST\022\013\n\003msg\030\001 \001(\t\",\n\nM_InitRoom\022\016\n\006roomID\030"
-  "\001 \001(\r\022\016\n\006userID\030\002 \003(\r\"6\n\017S_RoomCompleted"
-  "\022\016\n\006roomID\030\001 \001(\r\022\023\n\013isCompleted\030\002 \001(\010\"\025\n"
-  "\006C_TEST\022\013\n\003msg\030\001 \001(\t\";\n\013C_EnterRoom\022\016\n\006u"
-  "serID\030\001 \001(\r\022\016\n\006roomID\030\002 \001(\r\022\014\n\004name\030\003 \001("
-  "\t\".\n\006C_Move\022$\n\010moveInfo\030\001 \001(\0132\022.Protocol"
-  ".MoveInfo\">\n\006S_Move\022\016\n\006userID\030\001 \001(\r\022$\n\010m"
-  "oveInfo\030\002 \001(\0132\022.Protocol.MoveInfo\"2\n\010C_A"
-  "ttack\022\022\n\ndirectionX\030\001 \001(\002\022\022\n\ndirectionY\030"
-  "\002 \001(\002\"B\n\010S_Attack\022\016\n\006userID\030\001 \001(\r\022\022\n\ndir"
-  "ectionX\030\002 \001(\002\022\022\n\ndirectionY\030\003 \001(\002\"\034\n\nC_A"
-  "ttacked\022\016\n\006userID\030\001 \001(\r\"\034\n\nS_Attacked\022\016\n"
-  "\006userID\030\001 \001(\r*5\n\tUserState\022\010\n\004IDLE\020\000\022\010\n\004"
-  "MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*2\n\tDirectio"
-  "n\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003"
-  "b\006proto3"
+  "\n\016Protocol.proto\022\010Protocol\"Z\n\010UserInfo\022\016"
+  "\n\006userID\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\n\n\002hp\030\003 \001(\r"
+  "\022$\n\010moveInfo\030\004 \001(\0132\022.Protocol.MoveInfo\"|"
+  "\n\010MoveInfo\022\"\n\005state\030\001 \001(\0162\023.Protocol.Use"
+  "rState\022&\n\tdirection\030\002 \001(\0162\023.Protocol.Dir"
+  "ection\022\021\n\tpositionX\030\003 \001(\005\022\021\n\tpositionY\030\004"
+  " \001(\005\"\025\n\006M_TEST\022\013\n\003msg\030\001 \001(\t\",\n\nM_InitRoo"
+  "m\022\016\n\006roomID\030\001 \001(\r\022\016\n\006userID\030\002 \003(\r\"6\n\017S_R"
+  "oomCompleted\022\016\n\006roomID\030\001 \001(\r\022\023\n\013isComple"
+  "ted\030\002 \001(\010\"\025\n\006C_TEST\022\013\n\003msg\030\001 \001(\t\";\n\013C_En"
+  "terRoom\022\016\n\006userID\030\001 \001(\r\022\016\n\006roomID\030\002 \001(\r\022"
+  "\014\n\004name\030\003 \001(\t\".\n\006C_Move\022$\n\010moveInfo\030\001 \001("
+  "\0132\022.Protocol.MoveInfo\">\n\006S_Move\022\016\n\006userI"
+  "D\030\001 \001(\r\022$\n\010moveInfo\030\002 \001(\0132\022.Protocol.Mov"
+  "eInfo\"2\n\010C_Attack\022\022\n\ndirectionX\030\001 \001(\002\022\022\n"
+  "\ndirectionY\030\002 \001(\002\"B\n\010S_Attack\022\016\n\006userID\030"
+  "\001 \001(\r\022\022\n\ndirectionX\030\002 \001(\002\022\022\n\ndirectionY\030"
+  "\003 \001(\002\"\034\n\nC_Attacked\022\016\n\006userID\030\001 \001(\r\"\034\n\nS"
+  "_Attacked\022\016\n\006userID\030\001 \001(\r*5\n\tUserState\022\010"
+  "\n\004IDLE\020\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003"
+  "*2\n\tDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020"
+  "\002\022\t\n\005RIGHT\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 848, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 860, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 13,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -444,6 +446,7 @@ UserInfo::UserInfo(const UserInfo& from)
       decltype(_impl_.name_){}
     , decltype(_impl_.moveinfo_){nullptr}
     , decltype(_impl_.userid_){}
+    , decltype(_impl_.hp_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -458,7 +461,9 @@ UserInfo::UserInfo(const UserInfo& from)
   if (from._internal_has_moveinfo()) {
     _this->_impl_.moveinfo_ = new ::Protocol::MoveInfo(*from._impl_.moveinfo_);
   }
-  _this->_impl_.userid_ = from._impl_.userid_;
+  ::memcpy(&_impl_.userid_, &from._impl_.userid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.hp_) -
+    reinterpret_cast<char*>(&_impl_.userid_)) + sizeof(_impl_.hp_));
   // @@protoc_insertion_point(copy_constructor:Protocol.UserInfo)
 }
 
@@ -470,6 +475,7 @@ inline void UserInfo::SharedCtor(
       decltype(_impl_.name_){}
     , decltype(_impl_.moveinfo_){nullptr}
     , decltype(_impl_.userid_){0u}
+    , decltype(_impl_.hp_){0u}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -508,7 +514,9 @@ void UserInfo::Clear() {
     delete _impl_.moveinfo_;
   }
   _impl_.moveinfo_ = nullptr;
-  _impl_.userid_ = 0u;
+  ::memset(&_impl_.userid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.hp_) -
+      reinterpret_cast<char*>(&_impl_.userid_)) + sizeof(_impl_.hp_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -536,9 +544,17 @@ const char* UserInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.MoveInfo moveInfo = 3;
+      // uint32 hp = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.MoveInfo moveInfo = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_moveinfo(), ptr);
           CHK_(ptr);
         } else
@@ -589,10 +605,16 @@ uint8_t* UserInfo::_InternalSerialize(
         2, this->_internal_name(), target);
   }
 
-  // .Protocol.MoveInfo moveInfo = 3;
+  // uint32 hp = 3;
+  if (this->_internal_hp() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_hp(), target);
+  }
+
+  // .Protocol.MoveInfo moveInfo = 4;
   if (this->_internal_has_moveinfo()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::moveinfo(this),
+      InternalWriteMessage(4, _Internal::moveinfo(this),
         _Internal::moveinfo(this).GetCachedSize(), target, stream);
   }
 
@@ -619,7 +641,7 @@ size_t UserInfo::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // .Protocol.MoveInfo moveInfo = 3;
+  // .Protocol.MoveInfo moveInfo = 4;
   if (this->_internal_has_moveinfo()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -629,6 +651,11 @@ size_t UserInfo::ByteSizeLong() const {
   // uint32 userID = 1;
   if (this->_internal_userid() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
+  }
+
+  // uint32 hp = 3;
+  if (this->_internal_hp() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_hp());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -659,6 +686,9 @@ void UserInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   if (from._internal_userid() != 0) {
     _this->_internal_set_userid(from._internal_userid());
   }
+  if (from._internal_hp() != 0) {
+    _this->_internal_set_hp(from._internal_hp());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -683,8 +713,8 @@ void UserInfo::InternalSwap(UserInfo* other) {
       &other->_impl_.name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.userid_)
-      + sizeof(UserInfo::_impl_.userid_)
+      PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.hp_)
+      + sizeof(UserInfo::_impl_.hp_)
       - PROTOBUF_FIELD_OFFSET(UserInfo, _impl_.moveinfo_)>(
           reinterpret_cast<char*>(&_impl_.moveinfo_),
           reinterpret_cast<char*>(&other->_impl_.moveinfo_));

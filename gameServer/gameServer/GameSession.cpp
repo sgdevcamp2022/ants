@@ -17,6 +17,13 @@ void GameSession::OnConnect()
     //세션 관리하는 곳에 this 추가
 }
 
+void GameSession::OnDisconnect()
+{
+    Session::OnDisconnect();
+    class User* user = nullptr;
+    class Room* room = nullptr;
+}
+
 void GameSession::OnSend()
 {
     Session::OnSend();

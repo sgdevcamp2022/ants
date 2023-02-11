@@ -12,7 +12,7 @@ public:
     Protocol::UserInfo& GetUserInfo();
 
 
-    //임시로 남겨둠
+    //임시로 남겨둠, 아니면 이 아래는 맵에서 관리?
     unsigned int _userID;
     string _name;
     GameSession* _session;
@@ -20,6 +20,7 @@ public:
     Protocol::Direction _direction;
     int _positionX;
     int _positionY;
+    int hp;
 
 private:
 

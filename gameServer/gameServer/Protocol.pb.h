@@ -281,8 +281,9 @@ class UserInfo final :
 
   enum : int {
     kNameFieldNumber = 2,
-    kMoveInfoFieldNumber = 3,
+    kMoveInfoFieldNumber = 4,
     kUserIDFieldNumber = 1,
+    kHpFieldNumber = 3,
   };
   // string name = 2;
   void clear_name();
@@ -298,7 +299,7 @@ class UserInfo final :
   std::string* _internal_mutable_name();
   public:
 
-  // .Protocol.MoveInfo moveInfo = 3;
+  // .Protocol.MoveInfo moveInfo = 4;
   bool has_moveinfo() const;
   private:
   bool _internal_has_moveinfo() const;
@@ -325,6 +326,15 @@ class UserInfo final :
   void _internal_set_userid(uint32_t value);
   public:
 
+  // uint32 hp = 3;
+  void clear_hp();
+  uint32_t hp() const;
+  void set_hp(uint32_t value);
+  private:
+  uint32_t _internal_hp() const;
+  void _internal_set_hp(uint32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.UserInfo)
  private:
   class _Internal;
@@ -336,6 +346,7 @@ class UserInfo final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::Protocol::MoveInfo* moveinfo_;
     uint32_t userid_;
+    uint32_t hp_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -2366,7 +2377,27 @@ inline void UserInfo::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.UserInfo.name)
 }
 
-// .Protocol.MoveInfo moveInfo = 3;
+// uint32 hp = 3;
+inline void UserInfo::clear_hp() {
+  _impl_.hp_ = 0u;
+}
+inline uint32_t UserInfo::_internal_hp() const {
+  return _impl_.hp_;
+}
+inline uint32_t UserInfo::hp() const {
+  // @@protoc_insertion_point(field_get:Protocol.UserInfo.hp)
+  return _internal_hp();
+}
+inline void UserInfo::_internal_set_hp(uint32_t value) {
+  
+  _impl_.hp_ = value;
+}
+inline void UserInfo::set_hp(uint32_t value) {
+  _internal_set_hp(value);
+  // @@protoc_insertion_point(field_set:Protocol.UserInfo.hp)
+}
+
+// .Protocol.MoveInfo moveInfo = 4;
 inline bool UserInfo::_internal_has_moveinfo() const {
   return this != internal_default_instance() && _impl_.moveinfo_ != nullptr;
 }

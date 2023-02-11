@@ -34,7 +34,9 @@ enum :unsigned int
 
     C_Attacked = 2007,
     S_Attacked = 2008,
-    
+
+    S_Dead = 2009,
+
     C_TEST = 2999,
 
 };
@@ -161,13 +163,18 @@ public:
             //잘못된 방 접근
             return;
         }
+        if(room->HasUser(packet.userid()))
+        {
+            //또 접근
+            return;
+        }
 
         User* user = new User(packet.userid(),packet.name(),session);
         session->user = user;
 
         room->Enter(user);
 
-        if(/*room->CanStart()*/true)
+        if(room->CanStart())
         {
             //시작
             room->InitGame();
@@ -219,8 +226,29 @@ public:
         sendPacket.set_userid(userInfo.userid());
 
         //체력 깎기 (user info에 체력 두고 관리해야할 듯, 수정필요)
+        int& hp =session->user->hp -= 10;
+        userInfo.set_hp(hp);
+
         //죽으면 상태 변경
-        //1명 이하로 남으면 게임 종료
+        if(hp<=0)
+        {
+            userInfo.mutable_moveinfo()->set_state(Protocol::DEAD);
+            session->room->Dead();
+            //if(session->room->CanEnd())
+            //{
+            //    session->room->EndGame();
+
+            //    //DB 접근 최후 승자만 승리+1 나머지 패배+1
+
+            //    //room 제거
+
+            //    //return;
+            //}
+
+            auto buffer = MakeBuffer_sharedPtr(userInfo, S_Dead);
+            session->room->Broadcast(buffer);
+        }
+
 
         auto buffer = MakeBuffer_sharedPtr(sendPacket, S_Attacked);
         session->room->Broadcast(buffer);
