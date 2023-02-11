@@ -275,13 +275,18 @@
   <ItemGroup>
     <None Include="Assets\InGame\External\Plugins\Demigiant\readme_DOTweenPro.txt" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\InGame\Libs\System.Buffers.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DemiLib\Core\DemiLib.dll" />
     <None Include="Assets\InGame\External\Es_Plugins\Easy Save 3\Change Log\Change Log.txt" />
+    <None Include="Assets\InGame\Libs\System.Memory.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTween\DOTween.dll" />
+    <None Include="Assets\InGame\Libs\ServerCore.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenPro.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\readme.txt" />
+    <None Include="Assets\InGame\Libs\Google.Protobuf.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DemiLib\Core\DemiLib.xml" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenPro.XML" />
+    <None Include="Assets\InGame\Libs\System.Runtime.CompilerServices.Unsafe.dll" />
     <None Include="Assets\InGame\External\Plugins\Demigiant\DOTween\readme.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -485,6 +490,21 @@
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>Assets\InGame\External\Plugins\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\InGame\Libs\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\InGame\Libs\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\InGame\Libs\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="ServerCore">
+      <HintPath>Assets\InGame\Libs\ServerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets\InGame\Libs\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>A:\program\2019.4.34f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
