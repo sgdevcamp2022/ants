@@ -151,7 +151,7 @@ public:
 
         Room* room = roomManager.GetRoomByRoomID(packet.roomid());
 
-        session->room = room;
+        
 
         if(room == nullptr)
         {
@@ -168,6 +168,8 @@ public:
             //또 접근
             return;
         }
+        session->room = room;
+
 
         User* user = new User(packet.userid(),packet.name(),session);
         session->user = user;
@@ -184,12 +186,18 @@ public:
 
     void Handle_C_Move(GameSession* session, char* data, int length)
     {
-        PacketHeader* header = reinterpret_cast<PacketHeader*>(data);
-
+        
+        if (ValidateUser(session) == false)
+        {
+            return;
+        }
         Protocol::C_Move packet;
         PARSE(packet);
 
+
         Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+
+
         *(userInfo.mutable_moveinfo()) = packet.moveinfo();
 
         Protocol::S_Move sendPacket;
@@ -202,6 +210,9 @@ public:
 
     void Handle_C_Attack(GameSession* session, char* data, int length)
     {
+        
+        ValidateUser(session);
+
         Protocol::C_Attack packet;
         PARSE(packet);
 
@@ -218,6 +229,12 @@ public:
 
     void Handle_C_Attacked(GameSession* session, char* data, int length)
     {
+        if(ValidateUser(session)==false)
+        {
+            return;
+        }
+
+        //나중에 공격력 있을 수도 있으니
         Protocol::C_Attacked packet;
         PARSE(packet);
 
@@ -234,19 +251,20 @@ public:
         {
             userInfo.mutable_moveinfo()->set_state(Protocol::DEAD);
             session->room->Dead();
-            //if(session->room->CanEnd())
-            //{
-            //    session->room->EndGame();
+            if(session->room->CanEnd())
+            {
+                session->room->EndGame();
 
-            //    //DB 접근 최후 승자만 승리+1 나머지 패배+1
+                //DB 접근 최후 승자만 승리+1
 
-            //    //room 제거
+                //room 제거
 
-            //    //return;
-            //}
+                //return;
+            }
 
             auto buffer = MakeBuffer_sharedPtr(userInfo, S_Dead);
             session->room->Broadcast(buffer);
+            return;
         }
 
 
@@ -255,7 +273,19 @@ public:
 
     }
 
-
+    bool ValidateUser(GameSession* session)
+    {
+        if (session->user == nullptr)
+        {
+            return false;
+        }
+        Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+        if (userInfo.moveinfo().state() == Protocol::DEAD)
+        {
+            return false;
+        }
+        return true;
+    }
 
     template<typename T>
     char* MakeBuffer(T& packet,unsigned int pakcetID )
