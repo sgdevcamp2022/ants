@@ -52,7 +52,8 @@ namespace Server
 			ushort protocolId = (ushort)MsgId.SChat;
 			Array.Copy(BitConverter.GetBytes(protocolId), 0, sendBuffer, 2, sizeof(ushort));
 			Array.Copy(chat.ToByteArray(), 0, sendBuffer, 4, size);
-			_pendingList.Add(new ArraySegment<byte>(sendBuffer));
+			session.Send(new ArraySegment<byte>(sendBuffer));
+			//_pendingList.Add(new ArraySegment<byte>(sendBuffer));
 		}
 
         public void Leave(ClientSession session)

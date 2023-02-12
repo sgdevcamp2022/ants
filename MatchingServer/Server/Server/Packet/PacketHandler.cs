@@ -13,7 +13,7 @@ class PacketHandler
 		C_Chat chatPacket = packet as C_Chat;
 		ClientSession serverSession = session as ClientSession;
 
-		//Console.WriteLine(chatPacket.Context);
+		Console.WriteLine(chatPacket.Context);
 		
 		Program._matching.Enter(serverSession);
 
