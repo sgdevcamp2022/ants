@@ -28,6 +28,11 @@ void GameSession::OnDisconnect()
 {
     Session::OnDisconnect();
 
+    if(room==nullptr)
+    {
+        user = nullptr;
+        return;
+    }
     room->Leave(user);
 
     user = nullptr;

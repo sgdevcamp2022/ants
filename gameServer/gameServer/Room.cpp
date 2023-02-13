@@ -5,7 +5,7 @@
 #include "GameSession.h"
 #include "PacketHandler.h"
 
-Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false)
+Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false),_gamethread(nullptr)
 {
 }
 
@@ -24,11 +24,15 @@ Room::~Room()
        i->second = nullptr;
    }
     
+    /*if(_gamethread!=nullptr)
+    {
+        if (_gamethread->joinable())
+        {
+            _gamethread->join();
+        }
+    }*/
+
     
-    //if(_gamethread->joinable())
-    //{
-    //    //_gamethread->join();
-    //}
 }
 
 void Room::Enter(User* user)
