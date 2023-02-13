@@ -128,7 +128,7 @@ void Room::InitGame()
 
         PacketHandler& ph= PacketHandler::GetPacketHandler();
 
-        auto buffer = ph.MakeBuffer_sharedPtr(userInfo, S_UserInfo);
+        auto buffer = ph.MakeBufferSharedPtr(userInfo, S_UserInfo);
 
         Broadcast(buffer);
     }

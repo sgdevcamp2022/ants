@@ -28,13 +28,9 @@ void GameSession::OnDisconnect()
 {
     Session::OnDisconnect();
 
-    /*if(user !=nullptr)
-    {
-        delete user;
-    }*/
     User* user = nullptr;
 
-    // 메모리 테스트용 Room 삭제
+    // 메모리 테스트용 Room 삭제 room 생성 -> 시작 -> 진행 -> 종료 로직 필요
     if(room!=nullptr)
     {
         RoomManager::DeleteRoom(room);
