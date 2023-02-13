@@ -69,7 +69,7 @@ void PacketHandler::HandleMatchingInitRoom(GameSession* session, char* data, int
         return;
     }
 
-    Room* room = roomManager.MakeRoom(roomID);
+    auto room = roomManager.MakeRoom(roomID);
     room->SetMaxUserCount(packet.userid_size());
 
     for (auto i = 0; i < packet.userid_size(); ++i)
@@ -91,7 +91,7 @@ void PacketHandler::HandleClientEnterRoom(GameSession* session, char* data, int 
     PARSE(packet);
     RoomManager& roomManager = RoomManager::GetRoomManager();
 
-    Room* room = roomManager.GetRoomByRoomID(packet.roomid());
+    auto room = roomManager.GetRoomByRoomID(packet.roomid());
 
     if (room == nullptr)
     {

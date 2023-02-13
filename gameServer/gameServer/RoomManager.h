@@ -19,14 +19,15 @@ public:
     }
     //UserID를 준다면?
 
-    static Room* MakeRoom(unsigned int roomID);
+    static shared_ptr<Room> MakeRoom(unsigned roomID);
 
-    static Room* GetRoomByRoomID(unsigned int roomID);
 
-    static void DeleteRoom(Room* room);
+    static shared_ptr<Room> GetRoomByRoomID(unsigned int roomID);
+
+    static void DeleteRoom(int roomId);
     
 private:
-    static map<unsigned int, Room*> _rooms;
+    static std::map<unsigned int, std::shared_ptr<Room>> _rooms;
     static mutex mutexLock;
 };
 

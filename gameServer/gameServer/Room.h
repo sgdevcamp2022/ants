@@ -5,7 +5,7 @@ class Room;
 class User;
 
 
-class Room
+class Room :enable_shared_from_this<Room>
 {
 public:
     Room(unsigned int roomID);
@@ -13,6 +13,7 @@ public:
     void Enter(User* user);
     void Leave(User* user);
     void Broadcast(shared_ptr<char>& buffer);
+    unsigned int GetRoomID();
     void SetMaxUserCount(unsigned int number);
     void AddUserID(unsigned int userID);
     bool HasUser(unsigned userID);
@@ -26,6 +27,7 @@ public:
     void EndGame();
 
 private:
+    void GameLoop();
     unsigned int _roomID;
     vector<unsigned int> _userList;
     unordered_map<unsigned int, User*> _users;
@@ -36,7 +38,7 @@ private:
     bool isStart;
     mutex mutexLock;
 
-    thread _gamethread;
+    thread* _gamethread;
 
 };
 

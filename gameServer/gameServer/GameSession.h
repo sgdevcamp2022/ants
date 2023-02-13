@@ -14,7 +14,7 @@ public:
     //Room포인터 두는 것 고려, (있어야 락 최소화 가능)
 
     class User* user = nullptr;
-    class Room* room=nullptr;
+    shared_ptr<class Room> room;
     class PacketHandler& packetHandler;
     class CircularBuffer* _buffer = nullptr;
 };
