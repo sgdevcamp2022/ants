@@ -6,7 +6,7 @@ class GameSession : public Session
 {
 public:
     GameSession(unsigned int sessionID, boost::asio::io_context& io_context, Server* server);
-    ~GameSession() override{}
+    virtual ~GameSession() override;
     void OnConnect() override;
     void OnDisconnect() override;
     void OnSend() override;

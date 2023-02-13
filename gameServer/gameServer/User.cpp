@@ -19,6 +19,13 @@ User::User(unsigned userID, string name, GameSession* session):_userID(userID),_
 
 }
 
+User::~User()
+{
+    delete userInfo;
+    userInfo = nullptr;
+
+}
+
 Protocol::UserInfo& User::GetUserInfo()
 {
     return *userInfo;

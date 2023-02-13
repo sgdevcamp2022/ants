@@ -6,16 +6,21 @@
 
 int main()
 {
-    this_thread::sleep_for(1s);
-    boost::asio::io_context io_context;
+    vector<thread> workerThreads;
 
-    Client client(io_context);
+    for (int i = 0; i < 1000; i++)
+    {
+        workerThreads.emplace_back(thread([&,i]() {this_thread::sleep_for(1s);
+        boost::asio::io_context io_context;
 
-    client.Start();
-    io_context.run();
+        Client client(io_context, i);
 
+        client.Start();
+        io_context.run();
+            }));
+    }
+    
     getchar();
 
-    
 
 }

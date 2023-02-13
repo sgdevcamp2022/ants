@@ -38,7 +38,7 @@ enum :unsigned int
 class Client
 {
 public:
-	Client(boost::asio::io_context& io_context);
+	Client(boost::asio::io_context& io_context, int number);
 		
 	~Client();
 	
@@ -77,7 +77,7 @@ private:
 	int _seqNumber;
 	boost::asio::ip::tcp::socket _socket;
 	array<char, MAX_RECEIVE_BUFFER_LEN> _receiveBuffer;
-
+	int a;
 	bool test=false;
 };
 
