@@ -46,13 +46,7 @@ namespace Server
 			{
 				Context = $"{session.SessionId} is enter the matching Sever\nCurrent waiter is {_sessions.Count}"
 			};
-			ushort size = (ushort)chat.CalculateSize();
-			byte[] sendBuffer = new byte[size + 4];
-			Array.Copy(BitConverter.GetBytes(size + 4), 0, sendBuffer, 0, sizeof(ushort));
-			ushort protocolId = (ushort)MsgId.SChat;
-			Array.Copy(BitConverter.GetBytes(protocolId), 0, sendBuffer, 2, sizeof(ushort));
-			Array.Copy(chat.ToByteArray(), 0, sendBuffer, 4, size);
-			session.Send(new ArraySegment<byte>(sendBuffer));
+			session.Send(chat);
 			//_pendingList.Add(new ArraySegment<byte>(sendBuffer));
 		}
 
@@ -60,8 +54,6 @@ namespace Server
         {
             // 플레이어 제거하고
             _sessions.Remove(session);
-
-            
         }
 
 		public void checkAwaiter()
@@ -70,9 +62,6 @@ namespace Server
             {
                 Console.WriteLine("jackPot");
             }
-
-			
-
 		}
 
         //public void Move(ClientSession session, C_Move packet)
