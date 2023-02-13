@@ -21,10 +21,10 @@ class PacketManager
 		
 	public void Register()
 	{		
-		_onRecv.Add((ushort)MsgId.SChat, MakePacket<S_Chat>);
-		_handler.Add((ushort)MsgId.SChat, PacketHandler.S_ChatHandler);		
-		_onRecv.Add((ushort)MsgId.SEnterGame, MakePacket<S_EnterGame>);
-		_handler.Add((ushort)MsgId.SEnterGame, PacketHandler.S_EnterGameHandler);
+		_onRecv.Add((ushort)MsgId.MTest, MakePacket<M_Test>);
+		_handler.Add((ushort)MsgId.MTest, PacketHandler.M_TestHandler);		
+		_onRecv.Add((ushort)MsgId.MInitroom, MakePacket<M_Initroom>);
+		_handler.Add((ushort)MsgId.MInitroom, PacketHandler.M_InitroomHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

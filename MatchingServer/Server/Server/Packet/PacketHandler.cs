@@ -8,12 +8,12 @@ using System.Text;
 
 class PacketHandler
 {
-	public static void C_ChatHandler(PacketSession session, IMessage packet)
+	public static void C_TestHandler(PacketSession session, IMessage packet)
 	{
-		C_Chat chatPacket = packet as C_Chat;
+		C_Test chatPacket = packet as C_Test;
 		ClientSession serverSession = session as ClientSession;
 
-		Console.WriteLine(chatPacket.Context);
+		Console.WriteLine(chatPacket.Msg);
 		
 		Program._matching.Enter(serverSession);
 

@@ -37,7 +37,7 @@ namespace PacketGenerator
 					continue;
 
 				string name = names[0];
-				if (name.StartsWith("S_"))
+				if (name.StartsWith("M_"))
 				{
 					string[] words = name.Split("_");
 
@@ -45,7 +45,7 @@ namespace PacketGenerator
 					foreach (string word in words)
 						msgName += FirstCharToUpper(word);
 
-					string packetName = $"S_{msgName.Substring(1)}";
+					string packetName = $"M_{msgName.Substring(1)}";
 					clientRegister += string.Format(PacketFormat.managerRegisterFormat, msgName, packetName);
 				}
 				else if (name.StartsWith("C_"))
