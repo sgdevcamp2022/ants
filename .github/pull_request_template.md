@@ -1,5 +1,5 @@
-##Motivation
+## 작업 내용
 
-##key CHanage
+## 스크린샷 (Optional)
 
-##To Reviewers
+## To Reviewers

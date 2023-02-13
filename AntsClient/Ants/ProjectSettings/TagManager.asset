@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Item
+  - Obstracle
+  - Enemy
+  - P_Bullet
+  - E_Bullet
   layers:
   - Default
   - TransparentFX
@@ -14,11 +18,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Mask
+  - BehindMask
+  - Obstracle
+  - Player
+  - Black
   - 
   - 
   - 
