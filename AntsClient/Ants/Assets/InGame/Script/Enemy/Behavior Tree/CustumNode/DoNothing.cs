@@ -5,29 +5,30 @@ using UnityEngine;
 public class DoNothing : Node
 {
     private float delayTime;
-    private SlimeBrain ai;
+    private Brain ai;
     private string upper;
-
-    public DoNothing(float delayTime, string upperNode , SlimeBrain brain)
+    private bool isRandom;
+    public DoNothing(float delayTime, string upperNode ,bool random, Brain brain)
     {
         this.delayTime = delayTime;
         this.ai = brain;
         upper = upperNode;
+        isRandom = random;
     }
 
     public override NodeState Evaluate()
     {
         if (ai.IsWaiting)
         {
-            Debug.Log("기다림 끝");
+
             ai.IsWaiting = false;
             return NodeState.SUCCESS;
         }
         else
         {
-            Debug.Log("기다리기");
+
             ai.IsWaiting = true;
-            ai.StartWaitCoroutine(delayTime, upper);
+            ai.StartWaitCoroutine(delayTime, upper, isRandom);
             return NodeState.FAILURE;
         }
     }

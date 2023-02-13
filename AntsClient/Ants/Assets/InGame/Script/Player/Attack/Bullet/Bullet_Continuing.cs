@@ -7,6 +7,7 @@ public class Bullet_Continuing : MonoBehaviour
     [SerializeField] float holdingTime;
     [SerializeField] float damage;
     [SerializeField] float attackCycle;
+    [SerializeField] float stunTime;
     [SerializeField] public float speed;
     CircleCollider2D circleCollider;
     // Start is called before the first frame update
@@ -28,12 +29,12 @@ public class Bullet_Continuing : MonoBehaviour
         if (collision.tag == "Enemy" && this.transform.tag == "P_Bullet")
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
         }
         if (collision.tag == "Player" && this.transform.tag == "E_Bullet")
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
         }
     }
 

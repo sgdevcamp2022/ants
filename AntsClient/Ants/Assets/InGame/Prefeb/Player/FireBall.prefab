@@ -157,4 +157,5 @@ MonoBehaviour:
   holdingTime: 4
   damage: 5
   attackCycle: 0.5
+  stunTime: 0.5
   speed: 1

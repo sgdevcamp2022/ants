@@ -168,3 +168,4 @@ MonoBehaviour:
   damage: 3
   attackCycle: 0.5
   speed: 0
+  stunTime: 0.5

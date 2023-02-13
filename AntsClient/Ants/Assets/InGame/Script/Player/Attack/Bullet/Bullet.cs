@@ -6,7 +6,9 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float damage;
     [SerializeField] bool collisionDestroy;
+    [SerializeField] float stunTime;
     public float speed;
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +39,13 @@ public class Bullet : MonoBehaviour
         if (collision.tag == "Enemy" && this.transform.tag == "P_Bullet")
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
             Destroy(gameObject);
         }
         if (collision.tag == "Player" && this.transform.tag == "E_Bullet")
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
             Destroy(gameObject);
         }
     }
