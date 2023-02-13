@@ -64,7 +64,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 672cdc760b1ebfe4c985f3567c9710b7, type: 2}
+  - {fileID: 2100000, guid: 42279f620116ee84b988e49e94305c6b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ Animator:
   m_GameObject: {fileID: 1510880860806874581}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e0a2b35aa21369742b11a1c7d8062004, type: 2}
+  m_Controller: {fileID: 9100000, guid: a09d14989a9471c48a62fb65808d7091, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c1f4f54b47c4e4d8e000eccebfb3d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackPrefab: {fileID: 6216418036809250993, guid: efeb152682f0b9f46aafafd60f387bf4,
+  AttackPrefab: {fileID: 6216418036809250993, guid: 94f213642793bf14e9f91b9b6c3f56dc,
     type: 3}
   x: 0
   y: -0.7
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1510880860806874581}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fc96c78dca3a649b944a99a1af32fd, type: 3}
+  m_Script: {fileID: 11500000, guid: bf8b5880722b6344c87046175f18f312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1510880861526175747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e092beed9399f2342bc34f3aef4e490f, type: 3}
+  m_Script: {fileID: 11500000, guid: e492479b9fdd9e74784a19b00860ebb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 0}
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4981398948830446739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4584898eec1a0444896ff049b19385b1, type: 3}
+  m_Script: {fileID: 11500000, guid: dbeadb2d7cd9b274a9b8a4384cb2fc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 0}
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4981398949076594852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f1b69484b2f0294e9054a5ec4951d86, type: 3}
+  m_Script: {fileID: 11500000, guid: 6725f0b4115b59448af4151c547771f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 0}
@@ -580,6 +580,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4981398949198457446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: affec09341131f04a88cc9175a6d2dea, type: 3}
+  m_Script: {fileID: 11500000, guid: 35d0710df978e1f4ab1594cd052caff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

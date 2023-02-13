@@ -32,19 +32,9 @@ MonoBehaviour:
     - Assembly-CSharp
     - AllIn1SpriteShaderAssembly
     - AstarPathfindingProject
-    - PhotonUnityNetworking.Demos
-    - PhotonUnityNetworking.Utilities
-    - PhotonChat
-    - PhotonUnityNetworking
-    - PhotonRealtime
     - AstarPathfindingProjectEditor
     - PsdPlugin
     - PackageToolsEditor
-    - PhotonUnityNetworking.Editor
-    - PunDemos.DemoHubEditor
-    - PhotonUnityNetworking.Utilities.PhotonPlayer.Editor
-    - PhotonUnityNetworking.Utilities.Culling.Editor
-    - PunDemos.DemoSlotcarEditor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

@@ -62,7 +62,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 672cdc760b1ebfe4c985f3567c9710b7, type: 2}
+  - {fileID: 2100000, guid: 42279f620116ee84b988e49e94305c6b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4261736516812209843}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fc96c78dca3a649b944a99a1af32fd, type: 3}
+  m_Script: {fileID: 11500000, guid: bf8b5880722b6344c87046175f18f312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
@@ -303,7 +303,7 @@ MonoBehaviour:
   EliteGhost: 0
   IsWaiting: 0
   isEnd: 0
-  isAttacked: 1
+  isAttacked: 0
   inRecognize: 0
   nearPlayer: 0
 --- !u!114 &4261736516812209859
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4261736517661510501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e092beed9399f2342bc34f3aef4e490f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b3d8daea2165a642ad3e197dfc67199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 0}
+  nearPlayer: 0

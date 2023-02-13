@@ -61,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 672cdc760b1ebfe4c985f3567c9710b7, type: 2}
+  - {fileID: 2100000, guid: 42279f620116ee84b988e49e94305c6b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +104,7 @@ Animator:
   m_GameObject: {fileID: 3185200120935487458}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e5c0b9da5a26bfe4b85fcb2edca59937, type: 2}
+  m_Controller: {fileID: 9100000, guid: 07262bce3a9e282449795dcbe612cf87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c1f4f54b47c4e4d8e000eccebfb3d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackPrefab: {fileID: 24575492172939254, guid: e7697799df4303840b5dade4ce6d9ede,
+  AttackPrefab: {fileID: 24575492172939254, guid: a11c5705491b20e4195c45cbdf10063f,
     type: 3}
   x: 0
   y: -0.7
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3185200120935487458}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fc96c78dca3a649b944a99a1af32fd, type: 3}
+  m_Script: {fileID: 11500000, guid: bf8b5880722b6344c87046175f18f312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3185200121247998516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e092beed9399f2342bc34f3aef4e490f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b3d8daea2165a642ad3e197dfc67199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 0}
+  nearPlayer: 0

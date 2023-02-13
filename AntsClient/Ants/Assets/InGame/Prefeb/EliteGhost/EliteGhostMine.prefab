@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7989003139211863729}
-  - component: {fileID: 390056965633624736}
+  - component: {fileID: 186163034167766468}
   m_Layer: 9
   m_Name: EliteGhostMine
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &390056965633624736
+--- !u!114 &186163034167766468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,8 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7989003139211863728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef7ccc715698204fac83f21e41acf78, type: 3}
+  m_Script: {fileID: 11500000, guid: 78bd9dc41b5ca644e9e138539eb139f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mine: {fileID: 5881038588115977176, guid: 7e734dcf3b37b0e49b52909e89626f31, type: 3}
-  time: 0.3
+  mine: {fileID: 5881038588115977176, guid: 5f3e1cbda8d0f9448aeda404770f2bb9, type: 3}
+  time: 0.5
