@@ -156,7 +156,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             PARSE(packet);
             cout<<"roomid: " << packet.roomid() << "  ,  is completed: " << packet.iscompleted() << endl;
         }
-        else if(data->id == S_UserInfo)
+        else if(data->id == S_StartGame)
         {
             Protocol::UserInfo packet;
             PARSE(packet);

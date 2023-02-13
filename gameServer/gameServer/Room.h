@@ -36,5 +36,7 @@ private:
     bool isStart;
     mutex mutexLock;
 
+    thread _gamethread;
+
 };
 

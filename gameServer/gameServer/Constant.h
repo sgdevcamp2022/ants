@@ -8,3 +8,9 @@ const unsigned short PORT_NUMBER = 10006;
 const int MAX_RECEIVE_BUFFER_LEN = 512;
 
 const int MAX_PACKET_COUNT = 3000;
+
+#define HANDLE_EXCEPTION \
+    catch (const std::exception& exception) { \
+        std::cerr << "Error: " << exception.what() << std::endl; \
+        exit(1); \
+    }
