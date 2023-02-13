@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    public GameObject player;
     [SerializeField] private LayerMask layerMask;
     private Mesh mesh;
     Vector3 origin;
@@ -26,7 +27,7 @@ public class FieldOfView : MonoBehaviour
         // ray 사이의 간격
         float angleIncrease = fov / raycount;
         // 시야 길이
-        float viewDistance = 10f;
+        float viewDistance = 13f;
 
         Vector3[] vertices = new Vector3[raycount + 1 + 1];
         Vector2[] uv = new Vector2[vertices.Length];
@@ -46,6 +47,7 @@ public class FieldOfView : MonoBehaviour
             }
             else
             {
+                
                 vertex = raycastHit2D.point;
             }
 
@@ -64,6 +66,7 @@ public class FieldOfView : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
+        mesh.RecalculateBounds();
     }
 
 

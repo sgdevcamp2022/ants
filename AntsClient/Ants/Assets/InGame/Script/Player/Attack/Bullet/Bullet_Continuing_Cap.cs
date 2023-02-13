@@ -7,8 +7,11 @@ public class Bullet_Continuing_Cap : MonoBehaviour
     [SerializeField] float holdingTime;
     [SerializeField] float damage;
     [SerializeField] float attackCycle;
+    [SerializeField] float stunTime;
     [SerializeField] public float speed;
     CapsuleCollider2D capsuleCollider2D;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +31,12 @@ public class Bullet_Continuing_Cap : MonoBehaviour
         if (collision.tag == "Enemy" && this.transform.tag == "P_Bullet" )
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
         }
         if (collision.tag == "Player" && this.transform.tag == "E_Bullet")
         {
             Health health = collision.GetComponent<Health>();
-            health.Hit(damage);
+            health.Hit(damage, stunTime);
         }
     }
 

@@ -156,4 +156,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   collisionDestroy: 1
+  stunTime: 0.3
   speed: 8

@@ -4,6 +4,7 @@ using UnityEngine;
 using Pathfinding;
 public class SlimeBrain : MonoBehaviour
 {
+    /*
 
     Sequence AttackNode;
     Sequence PatrolNode;
@@ -137,5 +138,5 @@ public class SlimeBrain : MonoBehaviour
 
 
 
-
+    */
 }
