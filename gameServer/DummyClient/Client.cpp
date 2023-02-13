@@ -52,7 +52,7 @@ void Client::RegisterReceive()
 }
 void Client::RegisterSend()
 {
-    this_thread::sleep_for(10ms);
+    this_thread::sleep_for(100ms);
     ++_seqNumber;
     
     
