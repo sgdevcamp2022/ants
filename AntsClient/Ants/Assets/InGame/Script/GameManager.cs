@@ -8,15 +8,24 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerPrefab;
     public GameObject FovPrefab;
     public GameObject SceneCamera;
-    public GameObject setPlace;
+    public GameObject setPlace1;
+    public GameObject setPlace2;
+    public GameObject setPlace3;
+    public GameObject setPlace4;
+
+    public GameObject Ui;
     private void Awake()
     {
-
         PhotonNetwork.IsMessageQueueRunning = false;
-        SpawnPlayer();
+        SpawnPlayer(setPlace1);
+        Ui.SetActive(false);
+
+        Black.SetActive(true);
+
+
         Invoke("chek", 1);
     }
-    public void SpawnPlayer()
+    public void SpawnPlayer(GameObject setPlace)
     {
         GameObject myFov =  PhotonNetwork.Instantiate(FovPrefab.name, new Vector2(0, 0), Quaternion.identity);
 
@@ -40,10 +49,13 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public GameObject Black;
     void chek()
     {
 
-
+        Ui.SetActive(true);
+        Black.SetActive(false);
+        
         PhotonNetwork.IsMessageQueueRunning = true;
     }
 }

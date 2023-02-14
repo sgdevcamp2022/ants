@@ -109,6 +109,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
+
     }
     #endregion
 
