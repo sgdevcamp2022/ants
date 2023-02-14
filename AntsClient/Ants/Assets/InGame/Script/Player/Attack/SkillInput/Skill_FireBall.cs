@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class Skill_FireBall : MonoBehaviour
 {
+    public PhotonView photonView;
     public GameObject bullet;
     public Transform pos;
     public float _cooltime = 1;
@@ -19,12 +20,12 @@ public class Skill_FireBall : MonoBehaviour
         _curtime -= Time.deltaTime;
         if (_curtime <= 0)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && photonView.IsMine)
             {
+                PhotonNetwork.Instantiate(bullet.name, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), transform.rotation);
+                PhotonNetwork.Instantiate(bullet.name, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), Quaternion.Euler(0, 0, z + 30));
+                PhotonNetwork.Instantiate(bullet.name, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), Quaternion.Euler(0, 0, z - 30));
 
-                Instantiate(bullet, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), transform.rotation);
-                Instantiate(bullet, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), Quaternion.Euler(0, 0, z + 30));
-                Instantiate(bullet, new Vector3(pos.transform.position.x, pos.transform.position.y, -1), Quaternion.Euler(0, 0, z - 30));
                 _curtime = _cooltime;
             }
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class FieldOfView : MonoBehaviour
 {
+    public PhotonView photonView;
     public GameObject player;
     [SerializeField] private LayerMask layerMask;
     private Mesh mesh;
@@ -20,53 +21,62 @@ public class FieldOfView : MonoBehaviour
 
     private void Update()
     {
-        // 생성할 Ray수, 수가 늘어날수록 부드러워짐
-        int raycount = 1000;
-        // ray를 생성할 시작 각도
-        float angle = startingAngle;
-        // ray 사이의 간격
-        float angleIncrease = fov / raycount;
-        // 시야 길이
-        float viewDistance = 13f;
+        if(player != null)
+        {  // 생성할 Ray수, 수가 늘어날수록 부드러워짐
+            int raycount = 1000;
+            // ray를 생성할 시작 각도
+            float angle = startingAngle;
+            // ray 사이의 간격
+            float angleIncrease = fov / raycount;
+            // 시야 길이
+            float viewDistance = 13f;
 
-        Vector3[] vertices = new Vector3[raycount + 1 + 1];
-        Vector2[] uv = new Vector2[vertices.Length];
-        int[] triangles = new int[raycount * 3];
+            Vector3[] vertices = new Vector3[raycount + 1 + 1];
+            Vector2[] uv = new Vector2[vertices.Length];
+            int[] triangles = new int[raycount * 3];
 
-        vertices[0] = origin;
+            vertices[0] = origin;
 
-        int vertexIndex = 1;
-        int triangleIndex = 0;
-        for (int i = 0; i <= raycount; i++)
-        {
-            Vector3 vertex;
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, layerMask);
-            if (raycastHit2D.collider == null)
+            int vertexIndex = 1;
+            int triangleIndex = 0;
+            for (int i = 0; i <= raycount; i++)
             {
-                vertex = origin + GetVectorFromAngle(angle) * viewDistance;
-            }
-            else
-            {
-                
-                vertex = raycastHit2D.point;
-            }
+                Vector3 vertex;
+                RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, layerMask);
+                if (raycastHit2D.collider == null)
+                {
+                    vertex = origin + GetVectorFromAngle(angle) * viewDistance;
+                }
+                else
+                {
 
-            vertices[vertexIndex] = vertex;
+                    vertex = raycastHit2D.point;
+                }
 
-            if (i > 0)
-            {
-                triangles[triangleIndex + 0] = 0;
-                triangles[triangleIndex + 1] = vertexIndex - 1;
-                triangles[triangleIndex + 2] = vertexIndex;
-                triangleIndex += 3;
+                vertices[vertexIndex] = vertex;
+
+                if (i > 0)
+                {
+                    triangles[triangleIndex + 0] = 0;
+                    triangles[triangleIndex + 1] = vertexIndex - 1;
+                    triangles[triangleIndex + 2] = vertexIndex;
+                    triangleIndex += 3;
+                }
+                vertexIndex++;
+                angle -= angleIncrease;
             }
-            vertexIndex++;
-            angle -= angleIncrease;
+            mesh.vertices = vertices;
+            mesh.uv = uv;
+            mesh.triangles = triangles;
+            mesh.RecalculateBounds();
+
         }
-        mesh.vertices = vertices;
-        mesh.uv = uv;
-        mesh.triangles = triangles;
-        mesh.RecalculateBounds();
+        else
+        {
+            if (photonView.IsMine)
+                player = GameObject.FindWithTag("Player");
+        }
+      
     }
 
 

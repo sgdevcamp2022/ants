@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 public class AdcNomalAttack : MonoBehaviour
 {
+    public PhotonView photonView;
     public GameObject bullet;
     public Transform pos;
     public float _cooltime = 1;
@@ -19,9 +20,9 @@ public class AdcNomalAttack : MonoBehaviour
         _curtime -= Time.deltaTime;
         if (_curtime <= 0)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && photonView.IsMine)
             {
-                Instantiate(bullet, pos.position, transform.rotation);
+                PhotonNetwork.Instantiate(bullet.name, this.transform.position, transform.rotation);
                 _curtime = _cooltime;
             }
            
