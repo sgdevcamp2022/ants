@@ -5,7 +5,7 @@
 #include "GameSession.h"
 #include "PacketHandler.h"
 
-Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false),_gamethread(nullptr)
+Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false)
 {
 }
 
@@ -171,7 +171,7 @@ void Room::InitGame()
     auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_StartGame);
     Broadcast(buffer);
 
-    _gamethread = new thread([this](){
+    thread* _gamethread = new thread([this](){
         GameLoop();
         EndGame();
         RoomManager::DeleteRoom(_roomID);

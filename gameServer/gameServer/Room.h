@@ -37,8 +37,7 @@ private:
     //필요 없을 시 삭제
     bool isStart;
     mutex mutexLock;
-
-    thread* _gamethread;
+    
 
 };
 
