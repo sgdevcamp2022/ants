@@ -102,7 +102,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
         myList.Clear();
     }
-
+        
     public void Disconnect() => PhotonNetwork.Disconnect();
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -186,9 +186,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void JoinRPC()
     {
         PhotonNetwork.LoadLevel("InGame");
+
     }
     #endregion
-
 
 
 
