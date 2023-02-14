@@ -25,11 +25,8 @@ public:
     static shared_ptr<Room> GetRoomByRoomID(unsigned int roomID);
 
     static void DeleteRoom(int roomId);
-    static void AddThread(thread* thread);
-    static void DeleteThread();
 private:
     static std::map<unsigned int, std::shared_ptr<Room>> _rooms;
     static mutex mutexLock;
-    static deque<thread*> _threads;
 };
 

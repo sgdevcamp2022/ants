@@ -171,11 +171,12 @@ void Room::InitGame()
     auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_StartGame);
     Broadcast(buffer);
 
-    thread* _gamethread = new thread([this](){
+    thread gamethread([this](){
         GameLoop();
         EndGame();
         RoomManager::DeleteRoom(_roomID);
     });
+    gamethread.detach();
 }
 
 void Room::EndGame()
