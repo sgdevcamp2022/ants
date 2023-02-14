@@ -19,6 +19,13 @@ int main()
 
     server.Start();
 
+    while(true)
+    {
+        this_thread::sleep_for(3s);
+        RoomManager::DeleteThread();
+
+    }
+
 
     
     // 패킷 구조체에 데이터 넣고 버퍼에 넣어주기, 앞 쪽에 헤더 넣고

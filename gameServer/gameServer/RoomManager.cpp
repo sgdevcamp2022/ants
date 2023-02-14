@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "User.h"
 
+deque<thread*> RoomManager::_threads;
 map<unsigned int, shared_ptr<Room>> RoomManager::_rooms;
 mutex RoomManager::mutexLock;
 
@@ -42,4 +43,27 @@ void RoomManager::DeleteRoom(int roomId)
         return;
     }
     _rooms.erase(it);
+}
+
+void RoomManager::AddThread(thread* thread)
+{
+    LOCK_GUARD;
+    _threads.push_back(thread);
+}
+
+
+void RoomManager::DeleteThread()
+{
+    LOCK_GUARD;
+
+    for (auto it = _threads.begin(); it != _threads.end(); ++it)
+    {
+        if((*it)->joinable())
+        {
+            (*it)->join();
+        }
+        delete* it;
+
+        it = _threads.erase(it) - 1;
+    }
 }
