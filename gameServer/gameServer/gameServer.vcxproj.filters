@@ -51,6 +51,9 @@
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="CircularBuffer.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

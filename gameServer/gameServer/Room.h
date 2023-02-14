@@ -5,7 +5,7 @@ class Room;
 class User;
 
 
-class Room :enable_shared_from_this<Room>
+class Room
 {
 public:
     Room(unsigned int roomID);
@@ -27,10 +27,12 @@ public:
     void EndGame();
 
 private:
+    friend class Game;
     void GameLoop();
     unsigned int _roomID;
     vector<unsigned int> _userList;
     unordered_map<unsigned int, User*> _users;
+    shared_ptr<Game> _game;
 
     int _maxUserCount;
     atomic<int> userCount;
