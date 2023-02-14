@@ -11,15 +11,34 @@ namespace MoreMountains.CorgiEngine
 
         public float fullHealth;
         public float nowHealth;
-
+        bool once;
+        private void Awake()
+        {
+            once = true;
+        }
         private void Start()
         {
-            fullHealth = health.HP;
+            
+
         }
         void Update()
         {
-            nowHealth = health.HP;
-            healthBar.fillAmount = nowHealth / fullHealth;
+            if(health != null)
+            {
+                if (once)
+                {
+                    once = false;
+                    fullHealth = health.HP;
+                }
+
+                nowHealth = health.HP;
+                healthBar.fillAmount = nowHealth / fullHealth;
+            }
+            else
+            {
+                health = GameObject.FindWithTag("Player").GetComponent<Health>();
+            }
+
 
         }
     }

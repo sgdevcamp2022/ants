@@ -16,6 +16,10 @@ public class CameraManager : MonoBehaviour
             Vector3 moveVector = new Vector3(dir.x * cameraSpeed * Time.deltaTime, dir.y * cameraSpeed * Time.deltaTime, 0.0f);
             this.transform.Translate(moveVector);
         }
+        else
+        {
+            player = GameObject.FindWithTag("Player");
+        }
 
     }
 }

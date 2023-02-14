@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private float walkSpeed;
@@ -13,6 +14,10 @@ public class PlayerManager : MonoBehaviour
 
     float xInput;
     float yInput;
+
+    public PlayerFOV playerFOV;
+
+    public PhotonView photonView;
 
     public float angle;
     public GameObject target;
@@ -33,13 +38,27 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         rigidbody2D.velocity = Vector3.zero;
-            
-        xInput = Input.GetAxisRaw("Horizontal");
-        yInput = Input.GetAxisRaw("Vertical");
+     
+        
+        if(playerFOV.enabled == false)
+        {
+                if(SceneManager.GetActiveScene().name == "InGame")
+            {
+                playerFOV.enabled = true;
+            }
+        }
 
-        PlayerMovement();
-        PlayerState();
-        PlayerAnimator();
+
+
+        if (photonView.IsMine)
+        {
+            xInput = Input.GetAxisRaw("Horizontal");
+            yInput = Input.GetAxisRaw("Vertical");
+            PlayerMovement();
+            PlayerState();
+            PlayerAnimator();
+        }
+
 
 
         //스테미나가 음수가 되지 않도록 제한함.
