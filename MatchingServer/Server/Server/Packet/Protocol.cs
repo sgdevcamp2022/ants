@@ -31,7 +31,7 @@ namespace Google.Protobuf.Protocol {
             "LlByb3RvY29sLlVzZXJTdGF0ZRImCglkaXJlY3Rpb24YAiABKA4yEy5Qcm90",
             "b2NvbC5EaXJlY3Rpb24SEQoJcG9zaXRpb25YGAMgASgFEhEKCXBvc2l0aW9u",
             "WRgEIAEoBSIVCgZNX1Rlc3QSCwoDbXNnGAEgASgJIiwKCk1fSW5pdHJvb20S",
-            "DgoGcm9vbUlEGAEgASgNEg4KBnVzZXJJRBgCIAMoDSI2Cg9TX1Jvb21Db21w",
+            "DgoGcm9vbUlEGAEgASgNEg4KBnVzZXJJRBgCIAMoDSI2Cg9TX1Jvb21jb21w",
             "bGV0ZWQSDgoGcm9vbUlEGAEgASgNEhMKC2lzQ29tcGxldGVkGAIgASgIIhUK",
             "BkNfVGVzdBILCgNtc2cYASABKAkiOwoLQ19FbnRlclJvb20SDgoGdXNlcklE",
             "GAEgASgNEg4KBnJvb21JRBgCIAEoDRIMCgRuYW1lGAMgASgJIi4KBkNfTW92",
@@ -43,10 +43,10 @@ namespace Google.Protobuf.Protocol {
             "CgpDX0F0dGFja2VkEg4KBnVzZXJJRBgBIAEoDSIcCgpTX0F0dGFja2VkEg4K",
             "BnVzZXJJRBgBIAEoDSo1CglVc2VyU3RhdGUSCAoESURMRRAAEggKBE1PVkUQ",
             "ARIKCgZBdHRhY2sQAhIICgRERUFEEAMqMgoJRGlyZWN0aW9uEgYKAlVQEAAS",
-            "CAoERE9XThABEggKBExFRlQQAhIJCgVSSUdIVBADKkQKBU1zZ0lkEgoKBk1f",
-            "VEVTVBAAEg4KCk1fSU5JVFJPT00QARITCg9TX1JPT01DT01QTEVURUQQAhIK",
-            "CgZDX1RFU1QQA0IbqgIYR29vZ2xlLlByb3RvYnVmLlByb3RvY29sYgZwcm90",
-            "bzM="));
+            "CAoERE9XThABEggKBExFRlQQAhIJCgVSSUdIVBADKlIKBU1zZ0lkEgkKBWVt",
+            "cHR5EAASCwoGTV9URVNUEM8PEg8KCk1fSU5JVFJPT00Q6AcSFAoPU19ST09N",
+            "Q09NUExFVEVEEOkHEgoKBkNfVEVTVBADQhuqAhhHb29nbGUuUHJvdG9idWYu",
+            "UHJvdG9jb2xiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Protobuf.Protocol.UserState), typeof(global::Google.Protobuf.Protocol.Direction), typeof(global::Google.Protobuf.Protocol.MsgId), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -54,7 +54,7 @@ namespace Google.Protobuf.Protocol {
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.MoveInfo), global::Google.Protobuf.Protocol.MoveInfo.Parser, new[]{ "State", "Direction", "PositionX", "PositionY" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.M_Test), global::Google.Protobuf.Protocol.M_Test.Parser, new[]{ "Msg" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.M_Initroom), global::Google.Protobuf.Protocol.M_Initroom.Parser, new[]{ "RoomID", "UserID" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_RoomCompleted), global::Google.Protobuf.Protocol.S_RoomCompleted.Parser, new[]{ "RoomID", "IsCompleted" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_Roomcompleted), global::Google.Protobuf.Protocol.S_Roomcompleted.Parser, new[]{ "RoomID", "IsCompleted" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_Test), global::Google.Protobuf.Protocol.C_Test.Parser, new[]{ "Msg" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_EnterRoom), global::Google.Protobuf.Protocol.C_EnterRoom.Parser, new[]{ "UserID", "RoomID", "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_Move), global::Google.Protobuf.Protocol.C_Move.Parser, new[]{ "MoveInfo" }, null, null, null, null),
@@ -84,9 +84,10 @@ namespace Google.Protobuf.Protocol {
   }
 
   public enum MsgId {
-    [pbr::OriginalName("M_TEST")] MTest = 0,
-    [pbr::OriginalName("M_INITROOM")] MInitroom = 1,
-    [pbr::OriginalName("S_ROOMCOMPLETED")] SRoomcompleted = 2,
+    [pbr::OriginalName("empty")] Empty = 0,
+    [pbr::OriginalName("M_TEST")] MTest = 1999,
+    [pbr::OriginalName("M_INITROOM")] MInitroom = 1000,
+    [pbr::OriginalName("S_ROOMCOMPLETED")] SRoomcompleted = 1001,
     [pbr::OriginalName("C_TEST")] CTest = 3,
   }
 
@@ -807,11 +808,11 @@ namespace Google.Protobuf.Protocol {
 
   }
 
-  public sealed partial class S_RoomCompleted : pb::IMessage<S_RoomCompleted> {
-    private static readonly pb::MessageParser<S_RoomCompleted> _parser = new pb::MessageParser<S_RoomCompleted>(() => new S_RoomCompleted());
+  public sealed partial class S_Roomcompleted : pb::IMessage<S_Roomcompleted> {
+    private static readonly pb::MessageParser<S_Roomcompleted> _parser = new pb::MessageParser<S_Roomcompleted>(() => new S_Roomcompleted());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<S_RoomCompleted> Parser { get { return _parser; } }
+    public static pb::MessageParser<S_Roomcompleted> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -824,22 +825,22 @@ namespace Google.Protobuf.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_RoomCompleted() {
+    public S_Roomcompleted() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_RoomCompleted(S_RoomCompleted other) : this() {
+    public S_Roomcompleted(S_Roomcompleted other) : this() {
       roomID_ = other.roomID_;
       isCompleted_ = other.isCompleted_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public S_RoomCompleted Clone() {
-      return new S_RoomCompleted(this);
+    public S_Roomcompleted Clone() {
+      return new S_Roomcompleted(this);
     }
 
     /// <summary>Field number for the "roomID" field.</summary>
@@ -866,11 +867,11 @@ namespace Google.Protobuf.Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as S_RoomCompleted);
+      return Equals(other as S_Roomcompleted);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(S_RoomCompleted other) {
+    public bool Equals(S_Roomcompleted other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -929,7 +930,7 @@ namespace Google.Protobuf.Protocol {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(S_RoomCompleted other) {
+    public void MergeFrom(S_Roomcompleted other) {
       if (other == null) {
         return;
       }

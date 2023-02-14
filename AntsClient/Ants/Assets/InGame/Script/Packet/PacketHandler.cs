@@ -7,17 +7,17 @@ using UnityEngine;
 
 class PacketHandler
 {
-	public static void S_ChatHandler(PacketSession session, IMessage packet)
+	public static void M_TestHandler(PacketSession session, IMessage packet)
 	{
-		S_Chat chatPacket = packet as S_Chat;
+		M_Test chatPacket = packet as M_Test;
 		ServerSession serverSession = session as ServerSession;
 
-		Debug.Log(chatPacket.Context);
+		Debug.Log(chatPacket.Msg);
 	}
 
-	public static void S_EnterGameHandler(PacketSession session, IMessage packet)
+	public static void M_InitroomHandler(PacketSession session, IMessage packet)
 	{
-		S_EnterGame enterGamePacket = packet as S_EnterGame;
+		M_Initroom enterGamePacket = packet as M_Initroom;
 		ServerSession serverSession = session as ServerSession;
 	}
 }

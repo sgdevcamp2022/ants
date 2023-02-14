@@ -13,9 +13,9 @@ public class NetworkManager : MonoBehaviour
 
 	public void requestMatching()
 	{
-		C_Chat chat = new C_Chat()
+		C_Test chat = new C_Test()
 		{
-			Context = $"simple UserID : {_session}"
+			Msg = $"simple UserID : {_session}"
 		};
 
 		Send(chat);
@@ -53,7 +53,7 @@ public class NetworkManager : MonoBehaviour
 		string host = Dns.GetHostName();
 		IPHostEntry ipHost = Dns.GetHostEntry(host);
 		IPAddress ipAddr = ipHost.AddressList[0];
-		IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
+		IPEndPoint endPoint = new IPEndPoint(ipAddr, 10005);
 		
 		Connector connector = new Connector();
 

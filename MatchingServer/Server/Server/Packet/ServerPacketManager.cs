@@ -21,6 +21,8 @@ class PacketManager
 		
 	public void Register()
 	{		
+		_onRecv.Add((ushort)MsgId.SRoomcompleted, MakePacket<S_Roomcompleted>);
+		_handler.Add((ushort)MsgId.SRoomcompleted, PacketHandler.S_RoomcompletedHandler);		
 		_onRecv.Add((ushort)MsgId.CTest, MakePacket<C_Test>);
 		_handler.Add((ushort)MsgId.CTest, PacketHandler.C_TestHandler);
 	}

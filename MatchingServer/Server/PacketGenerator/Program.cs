@@ -59,6 +59,17 @@ namespace PacketGenerator
 					string packetName = $"C_{msgName.Substring(1)}";
 					serverRegister += string.Format(PacketFormat.managerRegisterFormat, msgName, packetName);
 				}
+				else if (name.StartsWith("S_"))
+				{
+					string[] words = name.Split("_");
+
+					string msgName = "";
+					foreach (string word in words)
+						msgName += FirstCharToUpper(word);
+
+					string packetName = $"S_{msgName.Substring(1)}";
+					serverRegister += string.Format(PacketFormat.managerRegisterFormat, msgName, packetName);
+				}
 			}
 
 			string clientManagerText = string.Format(PacketFormat.managerFormat, clientRegister);

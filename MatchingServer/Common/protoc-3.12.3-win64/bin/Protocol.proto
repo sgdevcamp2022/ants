@@ -22,9 +22,10 @@ enum Direction
 }
 
 enum MsgId {
-    M_TEST = 0;
-    M_INITROOM = 1;
-    S_ROOMCOMPLETED = 2;
+    empty = 0;
+    M_TEST = 1999;
+    M_INITROOM = 1000;
+    S_ROOMCOMPLETED = 1001;
     C_TEST = 3;
   }
 
@@ -59,7 +60,7 @@ message M_Initroom
     repeated uint32 userID=2;
 }
 
-message S_RoomCompleted
+message S_Roomcompleted
 {
     uint32 roomID=1;
     bool isCompleted = 2;

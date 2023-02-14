@@ -10,6 +10,7 @@ namespace Server
     
     class Matching
     {
+		const int MAX_PLAYER = 5;
 		List<ClientSession> _sessions = new List<ClientSession>();
 
 		//참고
@@ -42,9 +43,9 @@ namespace Server
 			session.matching = this;
 
 			//메세지 보내기
-			S_Chat chat = new S_Chat()
+			M_Test chat = new M_Test()
 			{
-				Context = $"{session.SessionId} is enter the matching Sever\nCurrent waiter is {_sessions.Count}"
+				Msg = $"{session.SessionId} is enter the matching Sever\nCurrent waiter is {_sessions.Count}"
 			};
 			session.Send(chat);
 			//_pendingList.Add(new ArraySegment<byte>(sendBuffer));
@@ -58,11 +59,18 @@ namespace Server
 
 		public void checkAwaiter()
         {
-            if (_sessions.Count==5)
+            if (_sessions.Count==MAX_PLAYER)
             {
                 Console.WriteLine("jackPot");
             }
 		}
+
+		public void testPakcket()
+        {
+			
+
+			
+        }
 
         //public void Move(ClientSession session, C_Move packet)
         //{
