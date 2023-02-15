@@ -20,11 +20,9 @@ class PacketManager
 	Dictionary<ushort, Action<PacketSession, IMessage>> _handler = new Dictionary<ushort, Action<PacketSession, IMessage>>();
 		
 	public void Register()
-	{		
-		_onRecv.Add((ushort)MsgId.MTest, MakePacket<M_Test>);
-		_handler.Add((ushort)MsgId.MTest, PacketHandler.M_TestHandler);		
-		_onRecv.Add((ushort)MsgId.MInitroom, MakePacket<M_Initroom>);
-		_handler.Add((ushort)MsgId.MInitroom, PacketHandler.M_InitroomHandler);
+	{
+		_onRecv.Add((ushort)MsgId.SMove, MakePacket<S_Move>);
+		_handler.Add((ushort)MsgId.SMove, PacketHandler.S_MoveHandler);
 	}
 
 	public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer)

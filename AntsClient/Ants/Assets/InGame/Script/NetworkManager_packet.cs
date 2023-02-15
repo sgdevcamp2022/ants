@@ -8,6 +8,7 @@ using Google.Protobuf;
 using Google.Protobuf.Protocol;
 public class NetworkManager_packet : MonoBehaviour
 {
+	public GameObject player;
 	ServerSession _session = new ServerSession();
 	public void requestMatching()
 	{
@@ -17,9 +18,39 @@ public class NetworkManager_packet : MonoBehaviour
 		};
 		Send(chat);
 	}
-	public void Connect()
+	public void MyPlace()
 	{
-		Init("125.139.108.207", 10005);
+		C_Move move = new C_Move()
+		{
+			MoveInfo = new MoveInfo { State = UserState.Move, Direction = Direction.Down, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+		};
+		Send(move);
+	}
+
+	public void myButton()
+    {
+		InvokeRepeating("MyPlace", 0.33f, 0.33f);
+	}
+    private void Start()
+    {
+
+    }
+
+
+    public void Connect()
+	{
+		Init("172.30.1.36", 10006);
+	}
+	public void EnterRoom()
+    {
+		C_Enterroom enterRoom = new C_Enterroom()
+		{
+			RoomID = 220,
+			UserID = 100,
+			Name = "yaho"
+		};
+		Send(enterRoom);
+
 	}
 	public void Send(IMessage packet)
 	{
@@ -46,7 +77,7 @@ public class NetworkManager_packet : MonoBehaviour
 		string host = Dns.GetHostName();
 		IPHostEntry ipHost = Dns.GetHostEntry(host);
 		IPAddress ipAddr = ipHost.AddressList[0];
-		IPEndPoint endPoint = new IPEndPoint(ipAddr, 10005);
+		IPEndPoint endPoint = new IPEndPoint(ipAddr, 10006);
 
 		Connector connector = new Connector();
 		connector.Connect(endPoint,

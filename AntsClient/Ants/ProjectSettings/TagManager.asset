@@ -11,6 +11,7 @@ TagManager:
   - Slot
   - Active
   - FOV
+  - Player2
   layers:
   - Default
   - TransparentFX

@@ -19,7 +19,7 @@ public class AdcNomalAttack_PVP : MonoBehaviour
         _curtime -= Time.deltaTime;
         if (_curtime <= 0)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 Instantiate(bullet, this.transform.position, transform.rotation);
                 _curtime = _cooltime;
