@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 public class Health : MonoBehaviour
 {
     public float HP;
@@ -19,6 +21,11 @@ public class Health : MonoBehaviour
         if (HP <= 0)
         {
             Destroy(this.gameObject);
+            if(this.tag == "Player")
+            {
+                PhotonNetwork.Disconnect();
+                SceneManager.LoadScene("SampleScene");
+            }
         }
     }
     public void Hit(float damage, float time)
