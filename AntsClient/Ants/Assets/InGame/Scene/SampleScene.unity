@@ -385,19 +385,7 @@ MonoBehaviour:
   RoomPanel: {fileID: 910015009}
   ListText: {fileID: 2020924898}
   RoomInfoText: {fileID: 931623984}
-  ChatText:
-  - {fileID: 1951789320}
-  - {fileID: 1656296005}
-  - {fileID: 1874698018}
-  - {fileID: 1545043794}
-  - {fileID: 1893302274}
-  - {fileID: 1391176847}
-  - {fileID: 679018595}
-  - {fileID: 166441500}
-  - {fileID: 619125150}
-  - {fileID: 784927108}
-  - {fileID: 895993146}
-  - {fileID: 1705200860}
+  ChatText: []
   ChatInput: {fileID: 1115473765}
   StatusText: {fileID: 1029676632}
   PV: {fileID: 194483780}
