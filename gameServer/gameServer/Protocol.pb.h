@@ -2434,14 +2434,27 @@ class S_Attacked final :
   enum : int {
     kUserIDFieldNumber = 1,
   };
-  // uint32 userID = 1;
-  void clear_userid();
-  uint32_t userid() const;
-  void set_userid(uint32_t value);
+  // repeated uint32 userID = 1;
+  int userid_size() const;
   private:
-  uint32_t _internal_userid() const;
-  void _internal_set_userid(uint32_t value);
+  int _internal_userid_size() const;
   public:
+  void clear_userid();
+  private:
+  uint32_t _internal_userid(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
+      _internal_userid() const;
+  void _internal_add_userid(uint32_t value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
+      _internal_mutable_userid();
+  public:
+  uint32_t userid(int index) const;
+  void set_userid(int index, uint32_t value);
+  void add_userid(uint32_t value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
+      userid() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
+      mutable_userid();
 
   // @@protoc_insertion_point(class_scope:Protocol.S_Attacked)
  private:
@@ -2451,7 +2464,8 @@ class S_Attacked final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint32_t userid_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t > userid_;
+    mutable std::atomic<int> _userid_cached_byte_size_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3437,24 +3451,51 @@ inline void C_Attacked::set_userid(uint32_t value) {
 
 // S_Attacked
 
-// uint32 userID = 1;
-inline void S_Attacked::clear_userid() {
-  _impl_.userid_ = 0u;
+// repeated uint32 userID = 1;
+inline int S_Attacked::_internal_userid_size() const {
+  return _impl_.userid_.size();
 }
-inline uint32_t S_Attacked::_internal_userid() const {
+inline int S_Attacked::userid_size() const {
+  return _internal_userid_size();
+}
+inline void S_Attacked::clear_userid() {
+  _impl_.userid_.Clear();
+}
+inline uint32_t S_Attacked::_internal_userid(int index) const {
+  return _impl_.userid_.Get(index);
+}
+inline uint32_t S_Attacked::userid(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.S_Attacked.userID)
+  return _internal_userid(index);
+}
+inline void S_Attacked::set_userid(int index, uint32_t value) {
+  _impl_.userid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:Protocol.S_Attacked.userID)
+}
+inline void S_Attacked::_internal_add_userid(uint32_t value) {
+  _impl_.userid_.Add(value);
+}
+inline void S_Attacked::add_userid(uint32_t value) {
+  _internal_add_userid(value);
+  // @@protoc_insertion_point(field_add:Protocol.S_Attacked.userID)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
+S_Attacked::_internal_userid() const {
   return _impl_.userid_;
 }
-inline uint32_t S_Attacked::userid() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_Attacked.userID)
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >&
+S_Attacked::userid() const {
+  // @@protoc_insertion_point(field_list:Protocol.S_Attacked.userID)
   return _internal_userid();
 }
-inline void S_Attacked::_internal_set_userid(uint32_t value) {
-  
-  _impl_.userid_ = value;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
+S_Attacked::_internal_mutable_userid() {
+  return &_impl_.userid_;
 }
-inline void S_Attacked::set_userid(uint32_t value) {
-  _internal_set_userid(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_Attacked.userID)
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint32_t >*
+S_Attacked::mutable_userid() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.S_Attacked.userID)
+  return _internal_mutable_userid();
 }
 
 #ifdef __GNUC__

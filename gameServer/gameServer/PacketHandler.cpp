@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "PacketHandler.h"
 
+#include "Game.h"
+
 void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
 {
     
@@ -110,14 +112,8 @@ void PacketHandler::HandleClientEnterRoom(GameSession* session, char* data, int 
     }
     session->room = room;
     
-    try
-    {
-        session->user->SetUserId(packet.userid());
-        session->user->SetName(packet.name());
-    } HANDLE_EXCEPTION;
-
-    // Room에서 Init 후 게임 스레드 만들고 거기서 관리해야함
-    room->Enter(session->user);
+    
+    room->Enter(session,packet.userid(),packet.name());
 
     if (room->CanStart())
     {
@@ -136,13 +132,11 @@ void PacketHandler::HandleClientMove(GameSession* session, char* data, int lengt
     Protocol::C_Move packet;
     PARSE(packet);
 
-    try
-    {
-        session->user->SetMoveInfo(packet.moveinfo());
-    } HANDLE_EXCEPTION;
+    session->game->UserMove(session->userId, packet);
+    
 
     Protocol::S_Move sendPacket;
-    sendPacket.set_userid(session->user->GetUserId());
+    sendPacket.set_userid(session->userId);
     sendPacket.mutable_moveinfo()->CopyFrom(packet.moveinfo());
 
     auto buffer = MakeBufferSharedPtr(sendPacket, S_Move);
@@ -158,7 +152,7 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
 
     //필요시 유저 상태 공격으로 변경
     Protocol::S_Attack sendPacket;
-    sendPacket.set_userid(session->user->GetUserId());
+    sendPacket.set_userid(session->userId);
     sendPacket.set_directionx(packet.directionx());
     sendPacket.set_directiony(packet.directiony());
 
@@ -179,7 +173,7 @@ void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int l
 
     
     Protocol::S_Attacked sendPacket;
-    sendPacket.set_userid(session->user->GetUserId());
+    //sendPacket.set_userid(session->user->GetUserId());
 
 
 
@@ -215,12 +209,7 @@ void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int l
 
 bool PacketHandler::ValidateUser(GameSession* session)
 {
-    if (session->user == nullptr)
-    {
-        return false;
-    }
-
-    if (session->user->GetReferenceMoveInfo().state() == Protocol::DEAD)
+    if (session->game == nullptr)
     {
         return false;
     }

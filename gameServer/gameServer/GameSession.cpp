@@ -12,14 +12,13 @@ Session(sessionID,io_context,server), packetHandler(PacketHandler::GetPacketHand
 
 GameSession::~GameSession()
 {
-    ;
     delete _buffer;
 }
 
 void GameSession::OnConnect()
 {
     Session::OnConnect();
-    user = new User(0,"null",this);
+
 
     //세션 관리하는 곳에 this 추가
 }
@@ -30,13 +29,11 @@ void GameSession::OnDisconnect()
 
     if(room==nullptr)
     {
-        user = nullptr;
         return;
     }
-    room->Leave(user);
-
-    user = nullptr;
-    
+    room->Leave(userId);
+    userId = NULL;
+    game = nullptr;
     room = nullptr;
 }
 

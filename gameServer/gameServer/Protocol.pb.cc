@@ -207,7 +207,8 @@ struct C_AttackedDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_AttackedDefaultTypeInternal _C_Attacked_default_instance_;
 PROTOBUF_CONSTEXPR S_Attacked::S_Attacked(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.userid_)*/0u
+    /*decltype(_impl_.userid_)*/{}
+  , /*decltype(_impl_._userid_cached_byte_size_)*/{0}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_AttackedDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_AttackedDefaultTypeInternal()
@@ -391,7 +392,7 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\030\001 \001(\002\022\022\n\ndirectionY\030\002 \001(\002\"B\n\010S_Attack\022\016"
   "\n\006userID\030\001 \001(\r\022\022\n\ndirectionX\030\002 \001(\002\022\022\n\ndi"
   "rectionY\030\003 \001(\002\"\034\n\nC_Attacked\022\016\n\006userID\030\001"
-  " \001(\r\"\034\n\nS_Attacked\022\016\n\006userID\030\001 \001(\r*5\n\tUs"
+  " \001(\r\"\034\n\nS_Attacked\022\016\n\006userID\030\001 \003(\r*5\n\tUs"
   "erState\022\010\n\004IDLE\020\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022"
   "\010\n\004DEAD\020\003*2\n\tDirection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001"
   "\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003b\006proto3"
@@ -3428,11 +3429,11 @@ S_Attacked::S_Attacked(const S_Attacked& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_Attacked* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.userid_){}
+      decltype(_impl_.userid_){from._impl_.userid_}
+    , /*decltype(_impl_._userid_cached_byte_size_)*/{0}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.userid_ = from._impl_.userid_;
   // @@protoc_insertion_point(copy_constructor:Protocol.S_Attacked)
 }
 
@@ -3441,7 +3442,8 @@ inline void S_Attacked::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.userid_){0u}
+      decltype(_impl_.userid_){arena}
+    , /*decltype(_impl_._userid_cached_byte_size_)*/{0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -3457,6 +3459,7 @@ S_Attacked::~S_Attacked() {
 
 inline void S_Attacked::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.userid_.~RepeatedField();
 }
 
 void S_Attacked::SetCachedSize(int size) const {
@@ -3469,7 +3472,7 @@ void S_Attacked::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.userid_ = 0u;
+  _impl_.userid_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3479,10 +3482,13 @@ const char* S_Attacked::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint32 userID = 1;
+      // repeated uint32 userID = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_userid(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 8) {
+          _internal_add_userid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3516,10 +3522,13 @@ uint8_t* S_Attacked::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_userid(), target);
+  // repeated uint32 userID = 1;
+  {
+    int byte_size = _impl_._userid_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteUInt32Packed(
+          1, _internal_userid(), byte_size, target);
+    }
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3538,9 +3547,18 @@ size_t S_Attacked::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
+  // repeated uint32 userID = 1;
+  {
+    size_t data_size = ::_pbi::WireFormatLite::
+      UInt32Size(this->_impl_.userid_);
+    if (data_size > 0) {
+      total_size += 1 +
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
+    }
+    int cached_size = ::_pbi::ToCachedSize(data_size);
+    _impl_._userid_cached_byte_size_.store(cached_size,
+                                    std::memory_order_relaxed);
+    total_size += data_size;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -3561,9 +3579,7 @@ void S_Attacked::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_userid() != 0) {
-    _this->_internal_set_userid(from._internal_userid());
-  }
+  _this->_impl_.userid_.MergeFrom(from._impl_.userid_);
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -3581,7 +3597,7 @@ bool S_Attacked::IsInitialized() const {
 void S_Attacked::InternalSwap(S_Attacked* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.userid_, other->_impl_.userid_);
+  _impl_.userid_.InternalSwap(&other->_impl_.userid_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_Attacked::GetMetadata() const {

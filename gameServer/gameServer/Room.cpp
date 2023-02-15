@@ -13,47 +13,35 @@ Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), is
 
 Room::~Room()
 {
-
-   for (auto i = _users.begin(); i != _users.end(); ++i)
-   {
-       if (i->second == nullptr)
-       {
-           continue;
-       }
-       Leave(i->second);
-       i->second = nullptr;
-   }
+    _game = nullptr;
 }
 
-void Room::Enter(User* user)
+void Room::Enter(GameSession* session, unsigned int userId, string userName)
 {
     if(isStart==true)
     {
         return;
     }
     userCount.fetch_add(1);
-    LOCK_GUARD
-    _users[user->GetUserId()] = user;
-    _game->AddUser(user);
+    {
+        LOCK_GUARD;
+        _gameSessions[userId] = session;
+    }
+    _game->AddUser(userId, userName);
+    session->userId = userId;
+    session->game = _game.get();
 }
 
-void Room::Leave(User* user)
+void Room::Leave(unsigned int userId)
 {
-    if(user==nullptr)
-    {
-        return;
-    }
     LOCK_GUARD
-    auto it = _users.find(user->GetUserId());
-    if (it == _users.end())
+    auto count = _gameSessions.erase(userId);
+    if (count)
     {
-        return;
+        userCount.fetch_sub(1);
     }
-    it->second = nullptr;
-    userCount.fetch_sub(1);
-    
-    delete user;
 }
+
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
@@ -62,9 +50,9 @@ void Room::Broadcast(shared_ptr<char>& buffer)
         return;
     }
 
-    for (auto& user : _users)
+    for (auto& session : _gameSessions)
     {
-        user.second->_session->RegisterSend(buffer);
+        session.second->RegisterSend(buffer);
     }
 }
 
@@ -86,28 +74,15 @@ void Room::AddUserID(unsigned int userID)
 
 bool Room::HasUser(unsigned userID)
 {
-    if(isStart==true)
-    {
-        return true;
-    }
-
     LOCK_GUARD
-    auto it=_users.find(userID);
-    if(it!=_users.end())
-    {
-        return true;
-    }
-    return false;
+    return _gameSessions.count(userID) > 0;
 }
 
 bool Room::HasUserID(unsigned userID)
 {
-    for(auto it =_userList.begin(); it!=_userList.end(); ++it)
-    {
-        if(*it==userID)
-        {
-            return true;
-        }
+    auto it = find(_userList.begin(), _userList.end(), userID);
+    if (it != _userList.end()) {
+        return true;
     }
     return false;
 }
@@ -122,29 +97,15 @@ bool Room::CanEnd()
     return userCount.load() < 1 && isStart==true;
 }
 
-void Room::Dead()
-{
-    userCount.fetch_sub(1);
-}
-
 void Room::InitGame()
 {
     {
         LOCK_GUARD;
         isStart = true;
     }
-    Protocol::S_GameStart packet;
+    
     
     _game->Init(_maxUserCount);
-
-    for (auto it = _users.begin(); it != _users.end(); ++it)
-    {
-        packet.add_user()->CopyFrom(it->second->GetUserInfo());
-    }
-
-
-    auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_StartGame);
-    Broadcast(buffer);
 
     thread gamethread([this](){
         GameLoop();
@@ -162,11 +123,25 @@ void Room::EndGame()
 
 }
 
+void Room::AddProjectile(int ownerId, float x, float y, float speed, float direction, float damage)
+{
+    _game->AddProjectile(ownerId,x,y,speed,direction,damage);
+}
+
 void Room::GameLoop()
 {
     while (CanEnd()==false)
     {
         _game->Tick();
+        //AddProjectile(1, 1, 1, 1, 1, 1);
+        Protocol::S_Attacked packet = _game->GetAttackedPacket();
+        if(packet.userid_size()>0)
+        {
+            auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_Attacked);
+            Broadcast(buffer);
+        }
+
+
         this_thread::sleep_for(100ms);
     }
 }
