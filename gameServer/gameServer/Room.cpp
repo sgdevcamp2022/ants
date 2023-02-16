@@ -130,18 +130,19 @@ void Room::AddProjectile(int ownerId, float x, float y, float speed, float direc
 
 void Room::GameLoop()
 {
+    chrono::milliseconds loopDuration(100);
+
     while (CanEnd()==false)
     {
+        auto startTime = chrono::steady_clock::now();
         _game->Tick();
-        //AddProjectile(1, 1, 1, 1, 1, 1);
-        Protocol::S_Attacked packet = _game->GetAttackedPacket();
-        if(packet.userid_size()>0)
+
+        auto elapsedTime = chrono::steady_clock::now() - startTime;
+
+        if(elapsedTime<loopDuration)
         {
-            auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_Attacked);
-            Broadcast(buffer);
+            this_thread::sleep_for(loopDuration - elapsedTime);
         }
-
-
-        this_thread::sleep_for(100ms);
+        
     }
 }
