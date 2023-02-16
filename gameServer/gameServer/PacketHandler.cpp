@@ -32,7 +32,8 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
         break;
 
     case C_Attack:
-        HandleClientAttack(session, data, length);
+        //HandleClientAttack(session, data, length);
+        HandleClientAttackAdvanced(session, data, length);
         break;
     case C_Attacked:
         HandleClientAttacked(session, data, length);
@@ -170,6 +171,15 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
 
     auto buffer = MakeBufferSharedPtr(sendPacket, S_Attack);
     session->room->Broadcast(buffer);
+}
+
+void PacketHandler::HandleClientAttackAdvanced(GameSession* session, char* data, int length)
+{
+    ValidateUser(session);
+
+    Protocol::C_Attack packet;
+    PARSE(packet);
+    session->game->AddProjectile(session->userId, PROJECTILE_SPEED, packet.directionx(), packet.directiony(), 10);
 }
 
 void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int length)

@@ -9,7 +9,8 @@ const int MAX_RECEIVE_BUFFER_LEN = 512;
 
 const int MAX_PACKET_COUNT = 3000;
 
-const int TICK_IN_A_SECOND = 10;
+const int TICK_IN_A_SECOND = 30;
+const float PROJECTILE_SPEED = 0.1333;
 
 #define HANDLE_EXCEPTION \
     catch (const std::exception& exception) { \

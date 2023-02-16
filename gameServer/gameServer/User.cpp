@@ -45,6 +45,16 @@ string User::GetName()
     return _userInfo.name();
 }
 
+int User::GetHp()
+{
+    return _userInfo.hp();
+}
+
+const Protocol::MoveInfo& User::GetReferenceMoveInfo()
+{
+    return _moveInfo;
+}
+
 float User::GetDistance(float x, float y)
 {
     return (_positionX - x) * (_positionX - x) + (_positionY - y) * (_positionY - y);
@@ -68,6 +78,11 @@ void User::SetPosition(const float& x, const float& y)
     //*_userInfo.mutable_moveinfo() = _moveInfo;
 }
 
+void User::SetDirection(Protocol::Direction direction)
+{
+    _moveInfo.set_direction(direction);
+}
+
 void User::SetMoveInfo(const Protocol::MoveInfo moveInfo)
 {
     _isMoved = true;
@@ -77,7 +92,6 @@ void User::SetMoveInfo(const Protocol::MoveInfo moveInfo)
 
 void User::SetHp(unsigned int& hp)
 {
-    LOCK_GUARD
     _userInfo.set_hp(hp);
 }
 

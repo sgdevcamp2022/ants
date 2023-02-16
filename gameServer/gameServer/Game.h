@@ -18,11 +18,15 @@ public:
     void CalculateUserPosition(User* user);
 
     void AddUser(unsigned int userID, string name);
-    void AddProjectile(int ownerId,float x, float y, float speed, float direction, float damage);
+    void AddProjectile(int ownerId, float speed, float directionX, float directionY, float damage);
     void Remove(unsigned int userID);
 
     void UserMove(unsigned int userID,Protocol::C_Move& moveInfo);
     void UserMoveBroadcast();
+    void AttackedBroadcast();
+    void DeadBroadcast();
+
+    void Dead(unsigned int userID);
 
     Protocol::S_Attacked GetAttackedPacket();
 
@@ -33,6 +37,7 @@ private:
     list<Projectile> _projectiles;
     mutex mutexLock;
     Protocol::S_Attacked _attackedPacket;
+    Protocol::S_Dead _deadPacket;
     Protocol::S_MoveAdvanced _movePacket;
     
 };

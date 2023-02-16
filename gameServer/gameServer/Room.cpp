@@ -110,7 +110,9 @@ void Room::InitGame()
     thread gamethread([this](){
         GameLoop();
         EndGame();
-        //Broadcast(PacketHandler::MakeBufferSharedPtr(Protocol::S_GameEnd(), S_EndGame));
+        
+
+        _game = nullptr;
         RoomManager::DeleteRoom(_roomID);
     });
     gamethread.detach();
@@ -123,10 +125,6 @@ void Room::EndGame()
 
 }
 
-void Room::AddProjectile(int ownerId, float x, float y, float speed, float direction, float damage)
-{
-    _game->AddProjectile(ownerId,x,y,speed,direction,damage);
-}
 
 void Room::GameLoop()
 {
