@@ -63,6 +63,15 @@ void Game::Tick()
     UserMoveBroadcast();
     _movePacket.clear_move();
     _attackedPacket.clear_userid();
+
+    {
+        LOCK_GUARD;
+        for (auto& it : _users) {
+            CalculateUserPosition(it.second);
+        }
+    }
+    
+
     ProjectileTick();
 
 }
@@ -117,6 +126,63 @@ User* Game::CheckCollision(Projectile& projectile)
     return nullptr;
 }
 
+void Game::CalculateUserPosition(User* user)
+{
+    // Get the user's current position and movement parameters
+    
+    float x = user->GetX();
+    float y = user->GetY();
+    float distance = 0.0666f;
+    Protocol::Direction direction = user->GetDirection();
+
+
+    float dx = 0.0f;
+    float dy = 0.0f;
+    switch (direction) {
+    case Protocol::UP:
+        dy = distance;
+        break;
+    case Protocol::DOWN:
+        dy = -distance;
+        break;
+    case Protocol::LEFT:
+        dx = -distance;
+        break;
+    case Protocol::RIGHT:
+        dx = distance;
+        break;
+    case Protocol::UP_LEFT:
+        dx = -distance * 0.707;
+        dy = distance * 0.707;
+        break;
+    case Protocol::UP_RIGHT:
+        dx = distance * 0.707;
+        dy = distance* 0.707;
+        break;
+    case Protocol::DOWN_LEFT:
+        dx = -distance* 0.707;
+        dy = -distance * 0.707;
+        break;
+    case Protocol::DOWN_RIGHT:
+        dx = distance * 0.707;
+        dy = -distance * 0.707;
+        break;
+    case Protocol::NONE:
+        // do nothing
+        break;
+    default:
+        // invalid direction
+        break;
+    }
+
+    // Update the user's position based on the change in position
+    x += dx;
+    y += dy;
+    user->SetPosition(x, y);
+
+    std::cout << user->GetX() << " , " << user->GetY() << endl;
+}
+
 void Game::AddUser(unsigned userID, string name)
 {
     LOCK_GUARD;
@@ -145,15 +211,23 @@ void Game::Remove(unsigned userID)
 void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
 {
     LOCK_GUARD;
-    _users[userID]->SetMoveInfo(packet.moveinfo());
+    //검증 필요, 방향이 바뀌었을 때 + 위치가 기존보다 크게 변경되지 않을 때(딜레이 생각)
+    auto user = _users[userID];
+
+
+    if(user->GetDirection()==packet.moveinfo().direction()&&user->GetDistance(packet.moveinfo().positionx(),packet.moveinfo().positiony())<0.00666f)
+    {
+        return;
+    }
+
+    //패킷 무조건 넣지 말고 검증 후 계산 하는 것도 필요
+    user->SetMoveInfo(packet.moveinfo());
 
     Protocol::S_Move sendPacket;
     sendPacket.set_userid(userID);
     sendPacket.mutable_moveinfo()->CopyFrom(packet.moveinfo());
 
     _movePacket.add_move()->Swap(&sendPacket);
-
-    cout << "add to packet" << endl;
 }
 
 Protocol::S_Attacked Game::GetAttackedPacket()
@@ -171,5 +245,4 @@ void Game::UserMoveBroadcast()
     }
     auto buffer = PacketHandler::MakeBufferSharedPtr(_movePacket, S_MoveAdvanced);
     _room->Broadcast(buffer);
-    cout << "boradcast packet" << endl;
 }

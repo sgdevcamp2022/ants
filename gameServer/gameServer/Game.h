@@ -15,6 +15,7 @@ public:
     void Tick();
     void ProjectileTick();
     User* CheckCollision(Projectile& projectile);
+    void CalculateUserPosition(User* user);
 
     void AddUser(unsigned int userID, string name);
     void AddProjectile(int ownerId,float x, float y, float speed, float direction, float damage);

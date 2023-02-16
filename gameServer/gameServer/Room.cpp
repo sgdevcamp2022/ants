@@ -130,7 +130,7 @@ void Room::AddProjectile(int ownerId, float x, float y, float speed, float direc
 
 void Room::GameLoop()
 {
-    chrono::milliseconds loopDuration(100);
+    chrono::milliseconds loopDuration(33);
 
     while (CanEnd()==false)
     {
@@ -141,6 +141,7 @@ void Room::GameLoop()
 
         if(elapsedTime<loopDuration)
         {
+            cout << "sleep" << endl;
             this_thread::sleep_for(loopDuration - elapsedTime);
         }
         

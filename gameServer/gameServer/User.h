@@ -16,6 +16,10 @@ public:
     unsigned int GetUserId();
     string GetName();
     const Protocol::MoveInfo& GetReferenceMoveInfo();
+    float GetX() { return _moveInfo.positionx(); }
+    float GetY() { return _moveInfo.positiony(); }
+    Protocol::Direction GetDirection() { return _moveInfo.direction(); }
+
     float GetDistance(float x, float y);
 
     void SetUserId(const unsigned int id);

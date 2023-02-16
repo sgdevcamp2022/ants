@@ -152,7 +152,6 @@ void PacketHandler::HandleClientMoveAdvanced(GameSession* session, char* data, i
     }
     Protocol::C_Move packet;
     PARSE(packet);
-    cout << "recv packet" << endl;
     session->game->UserMove(session->userId, packet);
 }
 
@@ -223,6 +222,11 @@ void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int l
 bool PacketHandler::ValidateUser(GameSession* session)
 {
     if (session->game == nullptr)
+    {
+        return false;
+    }
+
+    if(session->userId==NULL)
     {
         return false;
     }

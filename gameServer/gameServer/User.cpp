@@ -63,15 +63,16 @@ void User::SetName(const string name)
 
 void User::SetPosition(const float& x, const float& y)
 {
-
-    _userInfo.mutable_moveinfo()->set_positionx(x);
-    _userInfo.mutable_moveinfo()->set_positiony(y);
+    _moveInfo.set_positionx(x);
+    _moveInfo.set_positiony(y);
+    //*_userInfo.mutable_moveinfo() = _moveInfo;
 }
 
 void User::SetMoveInfo(const Protocol::MoveInfo moveInfo)
 {
-
-    _userInfo.mutable_moveinfo()->CopyFrom(moveInfo);
+    _isMoved = true;
+    _moveInfo.CopyFrom(moveInfo);
+    //*_userInfo.mutable_moveinfo() = _moveInfo;
 }
 
 void User::SetHp(unsigned int& hp)
