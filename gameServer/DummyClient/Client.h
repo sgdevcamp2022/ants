@@ -26,6 +26,7 @@ enum :unsigned int
 
 	C_Move = 2004,
 	S_Move = 2005,
+	S_MoveAdvanced = 2105,
 
 	C_Attack = 2006,
 	S_Attack = 2007,
@@ -38,6 +39,7 @@ enum :unsigned int
 	C_TEST = 2999,
 
 };
+
 
 
 

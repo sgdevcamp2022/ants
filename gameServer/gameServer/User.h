@@ -36,5 +36,6 @@ private:
     int _hp;
     float _positionX;
     float _positionY;
+    bool _isMoved;
 };
 

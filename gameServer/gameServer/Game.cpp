@@ -10,6 +10,14 @@ Game::Game(Room* room) : _room(room)
 
 Game::~Game()
 {
+    for (auto& it : _users) {
+        if (it.second == nullptr)
+        {
+            continue;
+        }
+        delete it.second;
+    }
+    _users.clear();
     _room = nullptr;
 }
 
@@ -39,14 +47,22 @@ void Game::Init(int maxUserCount)
 void Game::End()
 {
     LOCK_GUARD;
+    for (auto& it : _users) {
+        if(it.second==nullptr)
+        {
+            continue;
+        }
+        delete it.second;
+    }
     _users.clear();
     _projectiles.clear();
 }
 
 void Game::Tick()
 {
-    cout << "usesr num: " << _users.size() << endl;
-    attackedPacket.clear_userid();
+    UserMoveBroadcast();
+    _movePacket.clear_move();
+    _attackedPacket.clear_userid();
     ProjectileTick();
 
 }
@@ -66,7 +82,7 @@ void Game::ProjectileTick()
                 hitUser->UserAttacked(10);
                 //사망 감지
 
-                attackedPacket.add_userid(hitUser->GetUserId());
+                _attackedPacket.add_userid(hitUser->GetUserId());
             }
             {
                 LOCK_GUARD;
@@ -130,10 +146,30 @@ void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
 {
     LOCK_GUARD;
     _users[userID]->SetMoveInfo(packet.moveinfo());
+
+    Protocol::S_Move sendPacket;
+    sendPacket.set_userid(userID);
+    sendPacket.mutable_moveinfo()->CopyFrom(packet.moveinfo());
+
+    _movePacket.add_move()->Swap(&sendPacket);
+
+    cout << "add to packet" << endl;
 }
 
 Protocol::S_Attacked Game::GetAttackedPacket()
 {
     LOCK_GUARD;
-    return attackedPacket;
+    return _attackedPacket;
+}
+
+void Game::UserMoveBroadcast()
+{
+    LOCK_GUARD;
+    if(_movePacket.move_size()<1)
+    {
+        return;
+    }
+    auto buffer = PacketHandler::MakeBufferSharedPtr(_movePacket, S_MoveAdvanced);
+    _room->Broadcast(buffer);
+    cout << "boradcast packet" << endl;
 }

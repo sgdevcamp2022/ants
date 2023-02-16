@@ -82,6 +82,9 @@ extern S_GameStartDefaultTypeInternal _S_GameStart_default_instance_;
 class S_Move;
 struct S_MoveDefaultTypeInternal;
 extern S_MoveDefaultTypeInternal _S_Move_default_instance_;
+class S_MoveAdvanced;
+struct S_MoveAdvancedDefaultTypeInternal;
+extern S_MoveAdvancedDefaultTypeInternal _S_MoveAdvanced_default_instance_;
 class S_RoomCompleted;
 struct S_RoomCompletedDefaultTypeInternal;
 extern S_RoomCompletedDefaultTypeInternal _S_RoomCompleted_default_instance_;
@@ -102,6 +105,7 @@ template<> ::Protocol::S_Attack* Arena::CreateMaybeMessage<::Protocol::S_Attack>
 template<> ::Protocol::S_Attacked* Arena::CreateMaybeMessage<::Protocol::S_Attacked>(Arena*);
 template<> ::Protocol::S_GameStart* Arena::CreateMaybeMessage<::Protocol::S_GameStart>(Arena*);
 template<> ::Protocol::S_Move* Arena::CreateMaybeMessage<::Protocol::S_Move>(Arena*);
+template<> ::Protocol::S_MoveAdvanced* Arena::CreateMaybeMessage<::Protocol::S_MoveAdvanced>(Arena*);
 template<> ::Protocol::S_RoomCompleted* Arena::CreateMaybeMessage<::Protocol::S_RoomCompleted>(Arena*);
 template<> ::Protocol::UserInfo* Arena::CreateMaybeMessage<::Protocol::UserInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -139,12 +143,17 @@ enum Direction : int {
   DOWN = 1,
   LEFT = 2,
   RIGHT = 3,
+  UP_LEFT = 4,
+  UP_RIGHT = 5,
+  DOWN_LEFT = 6,
+  DOWN_RIGHT = 7,
+  NONE = 8,
   Direction_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   Direction_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool Direction_IsValid(int value);
 constexpr Direction Direction_MIN = UP;
-constexpr Direction Direction_MAX = RIGHT;
+constexpr Direction Direction_MAX = NONE;
 constexpr int Direction_ARRAYSIZE = Direction_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Direction_descriptor();
@@ -285,9 +294,10 @@ class UserInfo final :
 
   enum : int {
     kNameFieldNumber = 2,
-    kMoveInfoFieldNumber = 4,
+    kMoveInfoFieldNumber = 5,
     kUserIDFieldNumber = 1,
-    kHpFieldNumber = 3,
+    kStateFieldNumber = 3,
+    kHpFieldNumber = 4,
   };
   // string name = 2;
   void clear_name();
@@ -303,7 +313,7 @@ class UserInfo final :
   std::string* _internal_mutable_name();
   public:
 
-  // .Protocol.MoveInfo moveInfo = 4;
+  // .Protocol.MoveInfo moveInfo = 5;
   bool has_moveinfo() const;
   private:
   bool _internal_has_moveinfo() const;
@@ -330,7 +340,16 @@ class UserInfo final :
   void _internal_set_userid(uint32_t value);
   public:
 
-  // uint32 hp = 3;
+  // .Protocol.UserState state = 3;
+  void clear_state();
+  ::Protocol::UserState state() const;
+  void set_state(::Protocol::UserState value);
+  private:
+  ::Protocol::UserState _internal_state() const;
+  void _internal_set_state(::Protocol::UserState value);
+  public:
+
+  // uint32 hp = 4;
   void clear_hp();
   uint32_t hp() const;
   void set_hp(uint32_t value);
@@ -350,6 +369,7 @@ class UserInfo final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::Protocol::MoveInfo* moveinfo_;
     uint32_t userid_;
+    int state_;
     uint32_t hp_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -479,21 +499,11 @@ class MoveInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kStateFieldNumber = 1,
-    kDirectionFieldNumber = 2,
-    kPositionXFieldNumber = 3,
-    kPositionYFieldNumber = 4,
+    kDirectionFieldNumber = 1,
+    kPositionXFieldNumber = 2,
+    kPositionYFieldNumber = 3,
   };
-  // .Protocol.UserState state = 1;
-  void clear_state();
-  ::Protocol::UserState state() const;
-  void set_state(::Protocol::UserState value);
-  private:
-  ::Protocol::UserState _internal_state() const;
-  void _internal_set_state(::Protocol::UserState value);
-  public:
-
-  // .Protocol.Direction direction = 2;
+  // .Protocol.Direction direction = 1;
   void clear_direction();
   ::Protocol::Direction direction() const;
   void set_direction(::Protocol::Direction value);
@@ -502,7 +512,7 @@ class MoveInfo final :
   void _internal_set_direction(::Protocol::Direction value);
   public:
 
-  // float positionX = 3;
+  // float positionX = 2;
   void clear_positionx();
   float positionx() const;
   void set_positionx(float value);
@@ -511,7 +521,7 @@ class MoveInfo final :
   void _internal_set_positionx(float value);
   public:
 
-  // float positionY = 4;
+  // float positionY = 3;
   void clear_positiony();
   float positiony() const;
   void set_positiony(float value);
@@ -528,7 +538,6 @@ class MoveInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int state_;
     int direction_;
     float positionx_;
     float positiony_;
@@ -1834,6 +1843,163 @@ class S_Move final :
 };
 // -------------------------------------------------------------------
 
+class S_MoveAdvanced final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_MoveAdvanced) */ {
+ public:
+  inline S_MoveAdvanced() : S_MoveAdvanced(nullptr) {}
+  ~S_MoveAdvanced() override;
+  explicit PROTOBUF_CONSTEXPR S_MoveAdvanced(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_MoveAdvanced(const S_MoveAdvanced& from);
+  S_MoveAdvanced(S_MoveAdvanced&& from) noexcept
+    : S_MoveAdvanced() {
+    *this = ::std::move(from);
+  }
+
+  inline S_MoveAdvanced& operator=(const S_MoveAdvanced& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_MoveAdvanced& operator=(S_MoveAdvanced&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_MoveAdvanced& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_MoveAdvanced* internal_default_instance() {
+    return reinterpret_cast<const S_MoveAdvanced*>(
+               &_S_MoveAdvanced_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(S_MoveAdvanced& a, S_MoveAdvanced& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_MoveAdvanced* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_MoveAdvanced* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_MoveAdvanced* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_MoveAdvanced>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_MoveAdvanced& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_MoveAdvanced& from) {
+    S_MoveAdvanced::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_MoveAdvanced* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_MoveAdvanced";
+  }
+  protected:
+  explicit S_MoveAdvanced(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMoveFieldNumber = 1,
+  };
+  // repeated .Protocol.S_Move move = 1;
+  int move_size() const;
+  private:
+  int _internal_move_size() const;
+  public:
+  void clear_move();
+  ::Protocol::S_Move* mutable_move(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::S_Move >*
+      mutable_move();
+  private:
+  const ::Protocol::S_Move& _internal_move(int index) const;
+  ::Protocol::S_Move* _internal_add_move();
+  public:
+  const ::Protocol::S_Move& move(int index) const;
+  ::Protocol::S_Move* add_move();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::S_Move >&
+      move() const;
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_MoveAdvanced)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::S_Move > move_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class C_Attack final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_Attack) */ {
  public:
@@ -1882,7 +2048,7 @@ class C_Attack final :
                &_C_Attack_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(C_Attack& a, C_Attack& b) {
     a.Swap(&b);
@@ -2041,7 +2207,7 @@ class S_Attack final :
                &_S_Attack_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(S_Attack& a, S_Attack& b) {
     a.Swap(&b);
@@ -2211,7 +2377,7 @@ class C_Attacked final :
                &_C_Attacked_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(C_Attacked& a, C_Attacked& b) {
     a.Swap(&b);
@@ -2359,7 +2525,7 @@ class S_Attacked final :
                &_S_Attacked_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(S_Attacked& a, S_Attacked& b) {
     a.Swap(&b);
@@ -2552,7 +2718,27 @@ inline void UserInfo::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.UserInfo.name)
 }
 
-// uint32 hp = 3;
+// .Protocol.UserState state = 3;
+inline void UserInfo::clear_state() {
+  _impl_.state_ = 0;
+}
+inline ::Protocol::UserState UserInfo::_internal_state() const {
+  return static_cast< ::Protocol::UserState >(_impl_.state_);
+}
+inline ::Protocol::UserState UserInfo::state() const {
+  // @@protoc_insertion_point(field_get:Protocol.UserInfo.state)
+  return _internal_state();
+}
+inline void UserInfo::_internal_set_state(::Protocol::UserState value) {
+  
+  _impl_.state_ = value;
+}
+inline void UserInfo::set_state(::Protocol::UserState value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:Protocol.UserInfo.state)
+}
+
+// uint32 hp = 4;
 inline void UserInfo::clear_hp() {
   _impl_.hp_ = 0u;
 }
@@ -2572,7 +2758,7 @@ inline void UserInfo::set_hp(uint32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.UserInfo.hp)
 }
 
-// .Protocol.MoveInfo moveInfo = 4;
+// .Protocol.MoveInfo moveInfo = 5;
 inline bool UserInfo::_internal_has_moveinfo() const {
   return this != internal_default_instance() && _impl_.moveinfo_ != nullptr;
 }
@@ -2666,27 +2852,7 @@ inline void UserInfo::set_allocated_moveinfo(::Protocol::MoveInfo* moveinfo) {
 
 // MoveInfo
 
-// .Protocol.UserState state = 1;
-inline void MoveInfo::clear_state() {
-  _impl_.state_ = 0;
-}
-inline ::Protocol::UserState MoveInfo::_internal_state() const {
-  return static_cast< ::Protocol::UserState >(_impl_.state_);
-}
-inline ::Protocol::UserState MoveInfo::state() const {
-  // @@protoc_insertion_point(field_get:Protocol.MoveInfo.state)
-  return _internal_state();
-}
-inline void MoveInfo::_internal_set_state(::Protocol::UserState value) {
-  
-  _impl_.state_ = value;
-}
-inline void MoveInfo::set_state(::Protocol::UserState value) {
-  _internal_set_state(value);
-  // @@protoc_insertion_point(field_set:Protocol.MoveInfo.state)
-}
-
-// .Protocol.Direction direction = 2;
+// .Protocol.Direction direction = 1;
 inline void MoveInfo::clear_direction() {
   _impl_.direction_ = 0;
 }
@@ -2706,7 +2872,7 @@ inline void MoveInfo::set_direction(::Protocol::Direction value) {
   // @@protoc_insertion_point(field_set:Protocol.MoveInfo.direction)
 }
 
-// float positionX = 3;
+// float positionX = 2;
 inline void MoveInfo::clear_positionx() {
   _impl_.positionx_ = 0;
 }
@@ -2726,7 +2892,7 @@ inline void MoveInfo::set_positionx(float value) {
   // @@protoc_insertion_point(field_set:Protocol.MoveInfo.positionX)
 }
 
-// float positionY = 4;
+// float positionY = 3;
 inline void MoveInfo::clear_positiony() {
   _impl_.positiony_ = 0;
 }
@@ -3317,6 +3483,50 @@ inline void S_Move::set_allocated_moveinfo(::Protocol::MoveInfo* moveinfo) {
 
 // -------------------------------------------------------------------
 
+// S_MoveAdvanced
+
+// repeated .Protocol.S_Move move = 1;
+inline int S_MoveAdvanced::_internal_move_size() const {
+  return _impl_.move_.size();
+}
+inline int S_MoveAdvanced::move_size() const {
+  return _internal_move_size();
+}
+inline void S_MoveAdvanced::clear_move() {
+  _impl_.move_.Clear();
+}
+inline ::Protocol::S_Move* S_MoveAdvanced::mutable_move(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.S_MoveAdvanced.move)
+  return _impl_.move_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::S_Move >*
+S_MoveAdvanced::mutable_move() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.S_MoveAdvanced.move)
+  return &_impl_.move_;
+}
+inline const ::Protocol::S_Move& S_MoveAdvanced::_internal_move(int index) const {
+  return _impl_.move_.Get(index);
+}
+inline const ::Protocol::S_Move& S_MoveAdvanced::move(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.S_MoveAdvanced.move)
+  return _internal_move(index);
+}
+inline ::Protocol::S_Move* S_MoveAdvanced::_internal_add_move() {
+  return _impl_.move_.Add();
+}
+inline ::Protocol::S_Move* S_MoveAdvanced::add_move() {
+  ::Protocol::S_Move* _add = _internal_add_move();
+  // @@protoc_insertion_point(field_add:Protocol.S_MoveAdvanced.move)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::S_Move >&
+S_MoveAdvanced::move() const {
+  // @@protoc_insertion_point(field_list:Protocol.S_MoveAdvanced.move)
+  return _impl_.move_;
+}
+
+// -------------------------------------------------------------------
+
 // C_Attack
 
 // float directionX = 1;
@@ -3501,6 +3711,8 @@ S_Attacked::mutable_userid() {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

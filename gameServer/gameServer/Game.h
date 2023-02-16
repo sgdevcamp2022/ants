@@ -21,7 +21,7 @@ public:
     void Remove(unsigned int userID);
 
     void UserMove(unsigned int userID,Protocol::C_Move& moveInfo);
-
+    void UserMoveBroadcast();
 
     Protocol::S_Attacked GetAttackedPacket();
 
@@ -31,6 +31,9 @@ private:
     unordered_map<unsigned int, User*> _users;
     list<Projectile> _projectiles;
     mutex mutexLock;
-    Protocol::S_Attacked attackedPacket;
+    Protocol::S_Attacked _attackedPacket;
+    Protocol::S_MoveAdvanced _movePacket;
     
 };
+
+

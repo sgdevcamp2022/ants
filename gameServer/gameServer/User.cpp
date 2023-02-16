@@ -2,15 +2,14 @@
 #include "User.h"
 
 User::User(unsigned userID, string name)
-:_userID(userID),_name(name),_hp(100),_positionX(0),_positionY(0)
+:_userID(userID),_name(name),_hp(100),_positionX(0),_positionY(0),_isMoved(false)
 {
 
     _userInfo.set_userid(userID);
     _userInfo.set_name(name);
     _userInfo.set_hp(100);
+    _userInfo.set_state(Protocol::IDLE);
 
-
-    _moveInfo.set_state(Protocol::IDLE);
     _moveInfo.set_direction(Protocol::DOWN);
     _moveInfo.set_positionx(0.f);
     _moveInfo.set_positiony(0.f);

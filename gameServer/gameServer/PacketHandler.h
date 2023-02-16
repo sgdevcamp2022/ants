@@ -30,6 +30,7 @@ enum :unsigned int
 
     C_Move = 2004,
     S_Move = 2005,
+    S_MoveAdvanced=2105,
 
     C_Attack = 2006,
     S_Attack = 2007,
@@ -70,6 +71,7 @@ public:
     void HandleClientEnterRoom(GameSession* session, char* data, int length);
 
     void HandleClientMove(GameSession* session, char* data, int length);
+    void HandleClientMoveAdvanced(GameSession* session, char* data, int length);
 
     void HandleClientAttack(GameSession* session, char* data, int length);
 

@@ -27,7 +27,8 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
         break;
 
     case C_Move:
-        HandleClientMove(session, data, length);
+        //HandleClientMove(session, data, length);
+        HandleClientMoveAdvanced(session, data, length);
         break;
 
     case C_Attack:
@@ -143,6 +144,18 @@ void PacketHandler::HandleClientMove(GameSession* session, char* data, int lengt
     session->room->Broadcast(buffer);
 }
 
+void PacketHandler::HandleClientMoveAdvanced(GameSession* session, char* data, int length)
+{
+    if (ValidateUser(session) == false)
+    {
+        return;
+    }
+    Protocol::C_Move packet;
+    PARSE(packet);
+    cout << "recv packet" << endl;
+    session->game->UserMove(session->userId, packet);
+}
+
 void PacketHandler::HandleClientAttack(GameSession* session, char* data, int length)
 {
     ValidateUser(session);
@@ -150,7 +163,7 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
     Protocol::C_Attack packet;
     PARSE(packet);
 
-    //필요시 유저 상태 공격으로 변경
+    //나중에 쿨타임 같은 거 추가하려면 게임에 함수 추가
     Protocol::S_Attack sendPacket;
     sendPacket.set_userid(session->userId);
     sendPacket.set_directionx(packet.directionx());
