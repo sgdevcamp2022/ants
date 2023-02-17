@@ -19,32 +19,67 @@ enum Direction
     DOWN = 1;
     LEFT = 2;
     RIGHT = 3;
+    UP_LEFT=4;
+    UP_RIGHT=5;
+    DOWN_LEFT=6;
+    DOWN_RIGHT=7;
+    NONE=8;
 }
 
 enum MsgId {
     empty = 0;
-    M_TEST = 1999;
+
     M_INITROOM = 1000;
     S_ROOMCOMPLETED = 1001;
-    C_TEST = 3;
+    
+    M_TEST = 1999;
+
+    C_ENTERROOM = 2000;
+    S_STARTGAME = 2001;
+
+    C_USERINFO = 2002;
+    S_USERINFO = 2003;
+
+    C_MOVE = 2004;
+    S_MOVE = 2005;
+    S_MOVEADVANCED = 2105;
+
+    C_ATTACK = 2006;
+    S_ATTACK = 2007;
+
+    C_ATTACKED = 2008;
+    S_ATTACKED = 2009;
+
+    S_DEAD = 2010;
+    S_GAMEEND = 2011;
+
+    C_TEST = 2999;
   }
 
 //------게임 서버----------
 
-message UserInfo
+message C_Userinfo
 {
     uint32 userID=1;
     string name=2;
-    uint32 hp=3;
-    MoveInfo moveInfo=4;
+    UserState state=3;
+    uint32 hp=4;
+    Moveinfo moveInfo=5;
+}
+message S_Userinfo
+{
+    uint32 userID=1;
+    string name=2;
+    UserState state=3;
+    uint32 hp=4;
+    Moveinfo moveInfo=5;
 }
 
-message MoveInfo
+message Moveinfo
 {
-    UserState state=1;
-    Direction direction=2;
-    int32 positionX=3;
-    int32 positionY=4;
+    Direction direction=1;
+    float positionX=2;
+    float positionY=3;
 }
 
 
@@ -72,22 +107,37 @@ message C_Test
     string msg=1;
 }
 
-message C_EnterRoom
+message C_Enterroom
 {
     uint32 userID=1;
     uint32 roomID=2;
     string name=3;
 }
 
+message S_Startgame
+{
+    repeated S_Userinfo user=1;
+}
+
+message S_Gameend 
+{
+    uint32 userID=1;
+}
+
 message C_Move
 {
-    MoveInfo moveInfo=1;
+    Moveinfo moveinfo=1;
 }
 
 message S_Move
 {
     uint32 userID=1;
-    MoveInfo moveInfo=2;
+    Moveinfo moveinfo=2;
+}
+
+message S_Moveadvanced
+{
+    repeated S_Move move=1;
 }
 
 message C_Attack
@@ -103,12 +153,17 @@ message S_Attack
     float directionY=3;
 }
 
-
 message C_Attacked
 {
     uint32 userID=1;
 }
+
 message S_Attacked
 {
-    uint32 userID=1;
+    repeated uint32 userID=1;
 }
+
+message S_Dead
+{
+    repeated uint32 userID=1;
+}    

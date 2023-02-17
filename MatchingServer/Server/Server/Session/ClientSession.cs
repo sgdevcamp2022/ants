@@ -33,7 +33,7 @@ namespace Server
 		public override void OnConnected(EndPoint endPoint)
 		{
 			
-			Console.WriteLine($"{this.GetType().Name} OnConnected : {endPoint}");
+			Console.WriteLine($"{nameof(endPoint)} OnConnected : {endPoint}");
         }
 
 		public override void OnRecvPacket(ArraySegment<byte> buffer)
@@ -44,6 +44,7 @@ namespace Server
 
 		public override void OnDisconnected(EndPoint endPoint)
 		{
+			matching.Leave(this);//이미 지워서 없음 아항!
 			SessionManager.Instance.Remove(this);
 
 			Console.WriteLine($"OnDisconnected : {endPoint}");

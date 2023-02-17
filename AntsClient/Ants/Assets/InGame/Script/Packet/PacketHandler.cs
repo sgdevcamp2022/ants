@@ -20,4 +20,21 @@ class PacketHandler
 		M_Initroom enterGamePacket = packet as M_Initroom;
 		ServerSession serverSession = session as ServerSession;
 	}
+
+	public static void S_DeadHandler(PacketSession session, IMessage packet)
+	{
+        
+		M_Initroom enterGamePacket = packet as M_Initroom;
+		ServerSession serverSession = session as ServerSession;
+	}
+
+	
+
+		public static void S_MoveadvancedHandler(PacketSession session, IMessage packet)
+	{
+		S_Moveadvanced d = new S_Moveadvanced {  }
+		d.Move.Add(new S_Move { MoveInfo =  , UserID = new MoveInfo { Direction =, PositionX } })
+		M_Initroom enterGamePacket = packet as M_Initroom;
+		ServerSession serverSession = session as ServerSession;
+	}
 }

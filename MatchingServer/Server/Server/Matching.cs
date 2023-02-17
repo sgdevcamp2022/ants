@@ -12,6 +12,7 @@ namespace Server
     {
 		const int MAX_PLAYER = 5;
 		List<ClientSession> _sessions = new List<ClientSession>();
+		List<M_Initroom> gameRooms = new List<M_Initroom>();
 
 		//참고
 		JobQueue _jobQueue = new JobQueue();
@@ -39,8 +40,8 @@ namespace Server
 		public void Enter(ClientSession session)
 		{
 			// 플레이어 추가하고
-			_sessions.Add(session);
 			session.matching = this;
+			_sessions.Add(session);
 
 			//메세지 보내기
 			M_Test chat = new M_Test()
@@ -54,6 +55,7 @@ namespace Server
         public void Leave(ClientSession session)
         {
             // 플레이어 제거하고
+            Console.WriteLine("Leave Player");
             _sessions.Remove(session);
         }
 
@@ -62,32 +64,50 @@ namespace Server
             if (_sessions.Count==MAX_PLAYER)
             {
                 Console.WriteLine("jackPot");
+				
             }
 		}
-
-		public void testPakcket()
+		public void SendCompleted()
         {
-			
-
 			
         }
 
-        //public void Move(ClientSession session, C_Move packet)
-        //{
-        //	// 좌표 바꿔주고
-        //	session.PosX = packet.posX;
-        //	session.PosY = packet.posY;
-        //	session.PosZ = packet.posZ;
+		public void testPakcket()
+        {
+			//삭제할 것
+			M_Initroom packet = new M_Initroom
+			{
+				RoomID = 220,
 
-        //	// 모두에게 알린다
-        //	S_BroadcastMove move = new S_BroadcastMove();
-        //	move.playerId = session.SessionId;
-        //	move.posX = session.PosX;
-        //	move.posY = session.PosY;
-        //	move.posZ = session.PosZ;
-        //	Broadcast(move.Write());
-        //}
-    }
+			};
+			
+			packet.UserID.Add(100);
+			packet.UserID.Add(101);
+			packet.UserID.Add(102);
+
+
+			Program._gamerServerSession.Send(packet);
+
+
+
+		}
+
+		//public void Move(ClientSession session, C_Move packet)
+		//{
+		//	// 좌표 바꿔주고
+		//	session.PosX = packet.posX;
+		//	session.PosY = packet.posY;
+		//	session.PosZ = packet.posZ;
+
+		//	// 모두에게 알린다
+		//	S_BroadcastMove move = new S_BroadcastMove();
+		//	move.playerId = session.SessionId;
+		//	move.posX = session.PosX;
+		//	move.posY = session.PosY;
+		//	move.posZ = session.PosZ;
+		//	Broadcast(move.Write());
+		//}
+	}
 
 
 }

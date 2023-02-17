@@ -7,7 +7,7 @@ using UnityEngine;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager_packet : MonoBehaviour
 {
 	ServerSession _session = new ServerSession();
 
@@ -22,7 +22,7 @@ public class NetworkManager : MonoBehaviour
 	}
 	public void Connect()
     {
-		Init();
+		Init("fe80::2861:e491:b695:a291%15", 10005);
 	}
 	public void Send(IMessage packet)
 	{
@@ -61,8 +61,9 @@ public class NetworkManager : MonoBehaviour
 			() => { return _session; },
 			1);
 	}
-	public void Init(IPAddress ipAddr, int portNumber)
+	public void Init(string ipAddrString, int portNumber)
 	{
+		IPAddress ipAddr = IPAddress.Parse(ipAddrString);
 		IPEndPoint endPoint = new IPEndPoint(ipAddr, portNumber);
 
 		Connector connector = new Connector();

@@ -255,7 +255,7 @@
     <Compile Include="Assets\InGame\Script\FOV\PlayerFOV.cs" />
     <Compile Include="Assets\InGame\Script\GraphUpdater.cs" />
     <Compile Include="Assets\InGame\Script\Health\Health.cs" />
-    <Compile Include="Assets\InGame\Script\NetworkManager.cs" />
+    <Compile Include="Assets\InGame\Script\NetworkManager_packet.cs" />
     <Compile Include="Assets\InGame\Script\Packet\ClientPacketManager.cs" />
     <Compile Include="Assets\InGame\Script\Packet\PacketHandler.cs" />
     <Compile Include="Assets\InGame\Script\Packet\PacketQueue.cs" />

@@ -23,6 +23,32 @@ class PacketManager
 	{		
 		_onRecv.Add((ushort)MsgId.SRoomcompleted, MakePacket<S_Roomcompleted>);
 		_handler.Add((ushort)MsgId.SRoomcompleted, PacketHandler.S_RoomcompletedHandler);		
+		_onRecv.Add((ushort)MsgId.CEnterroom, MakePacket<C_Enterroom>);
+		_handler.Add((ushort)MsgId.CEnterroom, PacketHandler.C_EnterroomHandler);		
+		_onRecv.Add((ushort)MsgId.SStartgame, MakePacket<S_Startgame>);
+		_handler.Add((ushort)MsgId.SStartgame, PacketHandler.S_StartgameHandler);		
+		_onRecv.Add((ushort)MsgId.CUserinfo, MakePacket<C_Userinfo>);
+		_handler.Add((ushort)MsgId.CUserinfo, PacketHandler.C_UserinfoHandler);		
+		_onRecv.Add((ushort)MsgId.SUserinfo, MakePacket<S_Userinfo>);
+		_handler.Add((ushort)MsgId.SUserinfo, PacketHandler.S_UserinfoHandler);		
+		_onRecv.Add((ushort)MsgId.CMove, MakePacket<C_Move>);
+		_handler.Add((ushort)MsgId.CMove, PacketHandler.C_MoveHandler);		
+		_onRecv.Add((ushort)MsgId.SMove, MakePacket<S_Move>);
+		_handler.Add((ushort)MsgId.SMove, PacketHandler.S_MoveHandler);		
+		_onRecv.Add((ushort)MsgId.SMoveadvanced, MakePacket<S_Moveadvanced>);
+		_handler.Add((ushort)MsgId.SMoveadvanced, PacketHandler.S_MoveadvancedHandler);		
+		_onRecv.Add((ushort)MsgId.CAttack, MakePacket<C_Attack>);
+		_handler.Add((ushort)MsgId.CAttack, PacketHandler.C_AttackHandler);		
+		_onRecv.Add((ushort)MsgId.SAttack, MakePacket<S_Attack>);
+		_handler.Add((ushort)MsgId.SAttack, PacketHandler.S_AttackHandler);		
+		_onRecv.Add((ushort)MsgId.CAttacked, MakePacket<C_Attacked>);
+		_handler.Add((ushort)MsgId.CAttacked, PacketHandler.C_AttackedHandler);		
+		_onRecv.Add((ushort)MsgId.SAttacked, MakePacket<S_Attacked>);
+		_handler.Add((ushort)MsgId.SAttacked, PacketHandler.S_AttackedHandler);		
+		_onRecv.Add((ushort)MsgId.SDead, MakePacket<S_Dead>);
+		_handler.Add((ushort)MsgId.SDead, PacketHandler.S_DeadHandler);		
+		_onRecv.Add((ushort)MsgId.SGameend, MakePacket<S_Gameend>);
+		_handler.Add((ushort)MsgId.SGameend, PacketHandler.S_GameendHandler);		
 		_onRecv.Add((ushort)MsgId.CTest, MakePacket<C_Test>);
 		_handler.Add((ushort)MsgId.CTest, PacketHandler.C_TestHandler);
 	}
