@@ -31,6 +31,7 @@ public:
     void SetHp(unsigned  int& hp);
 
     void UserAttacked(unsigned int damage);
+    bool _isMoved;
 private:
 
     Protocol::UserInfo _userInfo;
@@ -42,6 +43,6 @@ private:
     int _hp;
     float _positionX;
     float _positionY;
-    bool _isMoved;
+    
 };
 

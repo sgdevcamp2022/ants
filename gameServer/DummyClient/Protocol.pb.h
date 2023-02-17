@@ -1647,15 +1647,55 @@ class S_GameEnd final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUserIDFieldNumber = 1,
+    kUserIDFieldNumber = 3,
+    kWinnerIDFieldNumber = 2,
+    kMessageTypeFieldNumber = 1,
   };
-  // uint32 userID = 1;
-  void clear_userid();
-  uint32_t userid() const;
-  void set_userid(uint32_t value);
+  // repeated string userID = 3;
+  int userid_size() const;
   private:
-  uint32_t _internal_userid() const;
-  void _internal_set_userid(uint32_t value);
+  int _internal_userid_size() const;
+  public:
+  void clear_userid();
+  const std::string& userid(int index) const;
+  std::string* mutable_userid(int index);
+  void set_userid(int index, const std::string& value);
+  void set_userid(int index, std::string&& value);
+  void set_userid(int index, const char* value);
+  void set_userid(int index, const char* value, size_t size);
+  std::string* add_userid();
+  void add_userid(const std::string& value);
+  void add_userid(std::string&& value);
+  void add_userid(const char* value);
+  void add_userid(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& userid() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_userid();
+  private:
+  const std::string& _internal_userid(int index) const;
+  std::string* _internal_add_userid();
+  public:
+
+  // string winnerID = 2;
+  void clear_winnerid();
+  const std::string& winnerid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_winnerid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_winnerid();
+  PROTOBUF_NODISCARD std::string* release_winnerid();
+  void set_allocated_winnerid(std::string* winnerid);
+  private:
+  const std::string& _internal_winnerid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_winnerid(const std::string& value);
+  std::string* _internal_mutable_winnerid();
+  public:
+
+  // int32 messageType = 1;
+  void clear_messagetype();
+  int32_t messagetype() const;
+  void set_messagetype(int32_t value);
+  private:
+  int32_t _internal_messagetype() const;
+  void _internal_set_messagetype(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.S_GameEnd)
@@ -1666,7 +1706,9 @@ class S_GameEnd final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint32_t userid_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> userid_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr winnerid_;
+    int32_t messagetype_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3595,24 +3637,149 @@ S_GameStart::user() const {
 
 // S_GameEnd
 
-// uint32 userID = 1;
-inline void S_GameEnd::clear_userid() {
-  _impl_.userid_ = 0u;
+// int32 messageType = 1;
+inline void S_GameEnd::clear_messagetype() {
+  _impl_.messagetype_ = 0;
 }
-inline uint32_t S_GameEnd::_internal_userid() const {
+inline int32_t S_GameEnd::_internal_messagetype() const {
+  return _impl_.messagetype_;
+}
+inline int32_t S_GameEnd::messagetype() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_GameEnd.messageType)
+  return _internal_messagetype();
+}
+inline void S_GameEnd::_internal_set_messagetype(int32_t value) {
+  
+  _impl_.messagetype_ = value;
+}
+inline void S_GameEnd::set_messagetype(int32_t value) {
+  _internal_set_messagetype(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_GameEnd.messageType)
+}
+
+// string winnerID = 2;
+inline void S_GameEnd::clear_winnerid() {
+  _impl_.winnerid_.ClearToEmpty();
+}
+inline const std::string& S_GameEnd::winnerid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_GameEnd.winnerID)
+  return _internal_winnerid();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_GameEnd::set_winnerid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.winnerid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_GameEnd.winnerID)
+}
+inline std::string* S_GameEnd::mutable_winnerid() {
+  std::string* _s = _internal_mutable_winnerid();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_GameEnd.winnerID)
+  return _s;
+}
+inline const std::string& S_GameEnd::_internal_winnerid() const {
+  return _impl_.winnerid_.Get();
+}
+inline void S_GameEnd::_internal_set_winnerid(const std::string& value) {
+  
+  _impl_.winnerid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_GameEnd::_internal_mutable_winnerid() {
+  
+  return _impl_.winnerid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_GameEnd::release_winnerid() {
+  // @@protoc_insertion_point(field_release:Protocol.S_GameEnd.winnerID)
+  return _impl_.winnerid_.Release();
+}
+inline void S_GameEnd::set_allocated_winnerid(std::string* winnerid) {
+  if (winnerid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.winnerid_.SetAllocated(winnerid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.winnerid_.IsDefault()) {
+    _impl_.winnerid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_GameEnd.winnerID)
+}
+
+// repeated string userID = 3;
+inline int S_GameEnd::_internal_userid_size() const {
+  return _impl_.userid_.size();
+}
+inline int S_GameEnd::userid_size() const {
+  return _internal_userid_size();
+}
+inline void S_GameEnd::clear_userid() {
+  _impl_.userid_.Clear();
+}
+inline std::string* S_GameEnd::add_userid() {
+  std::string* _s = _internal_add_userid();
+  // @@protoc_insertion_point(field_add_mutable:Protocol.S_GameEnd.userID)
+  return _s;
+}
+inline const std::string& S_GameEnd::_internal_userid(int index) const {
+  return _impl_.userid_.Get(index);
+}
+inline const std::string& S_GameEnd::userid(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.S_GameEnd.userID)
+  return _internal_userid(index);
+}
+inline std::string* S_GameEnd::mutable_userid(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.S_GameEnd.userID)
+  return _impl_.userid_.Mutable(index);
+}
+inline void S_GameEnd::set_userid(int index, const std::string& value) {
+  _impl_.userid_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::set_userid(int index, std::string&& value) {
+  _impl_.userid_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::set_userid(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.userid_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::set_userid(int index, const char* value, size_t size) {
+  _impl_.userid_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Protocol.S_GameEnd.userID)
+}
+inline std::string* S_GameEnd::_internal_add_userid() {
+  return _impl_.userid_.Add();
+}
+inline void S_GameEnd::add_userid(const std::string& value) {
+  _impl_.userid_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::add_userid(std::string&& value) {
+  _impl_.userid_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::add_userid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.userid_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:Protocol.S_GameEnd.userID)
+}
+inline void S_GameEnd::add_userid(const char* value, size_t size) {
+  _impl_.userid_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:Protocol.S_GameEnd.userID)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+S_GameEnd::userid() const {
+  // @@protoc_insertion_point(field_list:Protocol.S_GameEnd.userID)
   return _impl_.userid_;
 }
-inline uint32_t S_GameEnd::userid() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_GameEnd.userID)
-  return _internal_userid();
-}
-inline void S_GameEnd::_internal_set_userid(uint32_t value) {
-  
-  _impl_.userid_ = value;
-}
-inline void S_GameEnd::set_userid(uint32_t value) {
-  _internal_set_userid(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_GameEnd.userID)
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+S_GameEnd::mutable_userid() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.S_GameEnd.userID)
+  return &_impl_.userid_;
 }
 
 // -------------------------------------------------------------------

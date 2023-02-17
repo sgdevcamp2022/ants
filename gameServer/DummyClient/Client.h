@@ -35,11 +35,11 @@ enum :unsigned int
 	S_Attacked = 2009,
 
 	S_Dead = 2010,
+	S_GameEnd = 2011,
 
 	C_TEST = 2999,
 
 };
-
 
 
 

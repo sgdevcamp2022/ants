@@ -24,7 +24,7 @@ Game::~Game()
 
 void Game::Init(int maxUserCount)
 {
- 
+
     if (!_room)
     {
         return;
@@ -49,14 +49,14 @@ void Game::End()
     LOCK_GUARD;
 
     for (auto& it : _users) {
-        if(it.second==nullptr)
+        if (it.second == nullptr)
         {
             continue;
         }
-        Protocol::S_GameEnd packet;
-        packet.set_userid(it.first);
-        auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_GameEnd);
-        _room->Broadcast(buffer);
+        //Protocol::S_GameEnd packet;
+        //packet.set_userid(it.first);
+        //auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_GameEnd);
+        //_room->Broadcast(buffer);
 
         delete it.second;
     }
@@ -79,7 +79,7 @@ void Game::Tick()
             CalculateUserPosition(it.second);
         }
     }
-    
+
 
     ProjectileTick();
 
@@ -87,30 +87,28 @@ void Game::Tick()
 
 void Game::ProjectileTick()
 {
-    LOCK_GUARD;
-    for( auto it =_projectiles.begin(); it!= _projectiles.end();)
+    std::list<Projectile>::iterator it = _projectiles.begin();
+    while (it != _projectiles.end())
     {
         it->Tick();
 
         User* hitUser = CheckCollision(*it);
 
-        if(it->CanErase() || hitUser)
+        if (it->CanErase() || hitUser)
         {
-            if(hitUser !=nullptr)
+            if (hitUser != nullptr)
             {
                 hitUser->UserAttacked(10);
                 _attackedPacket.add_userid(hitUser->GetUserId());
                 //사망 감지
-                if(hitUser->GetHp()<0)
+                if (hitUser->GetHp() < 0)
                 {
                     //사망처리
-                    Dead(it->GetOwnerId());
+                    Dead(hitUser->GetUserId());
                 }
-
             }
-            
+
             it = _projectiles.erase(it);
-            
             cout << "projectile delete" << endl;
         }
         else
@@ -122,30 +120,30 @@ void Game::ProjectileTick()
 
 User* Game::CheckCollision(Projectile& projectile)
 {
-    
-    for (auto it = _users.begin(); it!=_users.end(); ++it)
+
+    for (auto it = _users.begin(); it != _users.end(); ++it)
     {
-        if(projectile.GetOwnerId()==it->second->GetUserId())
+        if (projectile.GetOwnerId() == it->second->GetUserId())
         {
             continue;
         }
 
         float distance = it->second->GetDistance(projectile.GetX(), projectile.GetY());
-        if(distance<1.0f)
+        if (distance < 1.0f)
         {
             return it->second;
         }
     }
-    
+
     return nullptr;
 }
 
 void Game::CalculateUserPosition(User* user)
 {
-       
+
     float x = user->GetX();
     float y = user->GetY();
-    float distance = 0.0666f;
+    float distance = 0.0666;
     Protocol::Direction direction = user->GetDirection();
 
 
@@ -170,10 +168,10 @@ void Game::CalculateUserPosition(User* user)
         break;
     case Protocol::UP_RIGHT:
         dx = distance * 0.707;
-        dy = distance* 0.707;
+        dy = distance * 0.707;
         break;
     case Protocol::DOWN_LEFT:
-        dx = -distance* 0.707;
+        dx = -distance * 0.707;
         dy = -distance * 0.707;
         break;
     case Protocol::DOWN_RIGHT:
@@ -192,8 +190,6 @@ void Game::CalculateUserPosition(User* user)
     x += dx;
     y += dy;
     user->SetPosition(x, y);
-
-    std::cout << user->GetX() << " , " << user->GetY() << endl;
 }
 
 void Game::AddUser(unsigned userID, string name)
@@ -208,7 +204,7 @@ void Game::AddProjectile(int ownerId, float speed, float directionX, float direc
 {
     LOCK_GUARD;
     auto user = _users[ownerId];
-    Projectile projectile(ownerId,user->GetX(), user->GetY(), speed, directionX, directionY,damage);
+    Projectile projectile(ownerId, user->GetX(), user->GetY(), speed, directionX, directionY, damage);
     _projectiles.push_back(projectile);
 }
 
@@ -227,22 +223,15 @@ void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
     LOCK_GUARD;
 
     auto user = _users[userID];
-
-    // 방향이 같고 차이가 크지 않으면 무시
-    if (user->GetDirection() == packet.moveinfo().direction() && user->GetDistance(packet.moveinfo().positionx(), packet.moveinfo().positiony()) < 0.00666f)
+    /*if (user->GetDirection() == packet.moveinfo().direction() && user->GetDistance(packet.moveinfo().positionx(), packet.moveinfo().positiony()) < 0.00666f)
     {
         return;
-    }
-    // 너무 값이 다르다면 핵으로 판단 하고 처리
+    }*/
     
-    float x = packet.moveinfo().positionx()*0.5 + user->GetX()*0.5;
-    float y = packet.moveinfo().positiony() * 0.5 + user->GetY() * 0.5;
+    user->SetMoveInfo(packet.moveinfo());
+       
 
-    user->SetPosition(x, y);
-    user->SetDirection(packet.moveinfo().direction());
-
-   
-   
+    std::cout<<"Direction: " << user->GetDirection() << user->GetX() << " , " << user->GetY() << endl;
 
     Protocol::S_Move sendPacket;
     sendPacket.set_userid(userID);
@@ -260,13 +249,19 @@ Protocol::S_Attacked Game::GetAttackedPacket()
 void Game::UserMoveBroadcast()
 {
     LOCK_GUARD;
-    if(_movePacket.move_size()<1)
+    if (_movePacket.move_size() < 1)
     {
         return;
     }
     auto buffer = PacketHandler::MakeBufferSharedPtr(_movePacket, S_MoveAdvanced);
     _room->Broadcast(buffer);
 }
+
+void Game::UserMovedBroadcast()
+{
+    
+}
+
 
 void Game::AttackedBroadcast()
 {
@@ -298,7 +293,7 @@ void Game::Dead(unsigned userID)
         _users.erase(it);
     }
     _deadPacket.add_userid(userID);
-    if(_users.size()<=1)
+    if (_users.size() <= 1)
     {
         End();
     }

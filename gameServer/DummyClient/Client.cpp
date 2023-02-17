@@ -54,7 +54,26 @@ void Client::RegisterSend()
 {
     this_thread::sleep_for(100ms);
     ++_seqNumber;
-    
+
+   /* Protocol::S_GameEnd packet;
+
+    packet.set_messagetype(7);
+    packet.set_winnerid("2");
+    packet.add_userid("1");
+    packet.add_userid("2");
+    packet.add_userid("3");
+
+
+    unsigned int size = packet.ByteSizeLong();
+
+    char* buffer = new char[packet.ByteSizeLong()];
+
+    packet.SerializeToArray(buffer,size );*/
+
+
+    /*****************************************************************/
+
+
     
     if (_seqNumber > 10)
     {
@@ -90,12 +109,15 @@ void Client::RegisterSend()
             packet.set_allocated_moveinfo(moveInfo);
             //packet.mutable_moveinfo()->set_positionx(1);
             buffer = MakeBuffer(packet, C_Move);
+            _seqNumber = 2;
         }
         else if (_seqNumber == 4)
         {
             Protocol::C_Attack packet;
             packet.set_directionx(3.0f);
             packet.set_directiony(2.0f);
+            cout << "attack" << endl;
+            _seqNumber = 2;
 
             buffer = MakeBuffer(packet, C_Attack);
         }
@@ -115,6 +137,8 @@ void Client::RegisterSend()
 
         boost::asio::async_write(_socket, boost::asio::buffer(buffer, size),
             [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); });
+
+
 }
 
 
@@ -172,6 +196,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             Protocol::S_MoveAdvanced packet;
             PARSE(packet);
             cout << "userID: " << packet.move(0).userid() << " , position: " << packet.move(0).moveinfo().positionx() << " , " << packet.move(0).moveinfo().positionx() << endl;
+            _seqNumber = 2;
         }
         else if(data->id == S_Attack)
         {

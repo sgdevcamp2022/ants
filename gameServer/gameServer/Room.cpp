@@ -139,7 +139,7 @@ void Room::GameLoop()
 
         if(elapsedTime<loopDuration)
         {
-            cout << "sleep" << endl;
+
             this_thread::sleep_for(loopDuration - elapsedTime);
         }
         

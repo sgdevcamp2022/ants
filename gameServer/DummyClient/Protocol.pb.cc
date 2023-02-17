@@ -138,7 +138,9 @@ struct S_GameStartDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_GameStartDefaultTypeInternal _S_GameStart_default_instance_;
 PROTOBUF_CONSTEXPR S_GameEnd::S_GameEnd(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.userid_)*/0u
+    /*decltype(_impl_.userid_)*/{}
+  , /*decltype(_impl_.winnerid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.messagetype_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_GameEndDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_GameEndDefaultTypeInternal()
@@ -337,6 +339,8 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_GameEnd, _impl_.messagetype_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_GameEnd, _impl_.winnerid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_GameEnd, _impl_.userid_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_Move, _internal_metadata_),
@@ -409,14 +413,14 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 50, -1, -1, sizeof(::Protocol::C_EnterRoom)},
   { 59, -1, -1, sizeof(::Protocol::S_GameStart)},
   { 66, -1, -1, sizeof(::Protocol::S_GameEnd)},
-  { 73, -1, -1, sizeof(::Protocol::C_Move)},
-  { 80, -1, -1, sizeof(::Protocol::S_Move)},
-  { 88, -1, -1, sizeof(::Protocol::S_MoveAdvanced)},
-  { 95, -1, -1, sizeof(::Protocol::C_Attack)},
-  { 103, -1, -1, sizeof(::Protocol::S_Attack)},
-  { 112, -1, -1, sizeof(::Protocol::C_Attacked)},
-  { 119, -1, -1, sizeof(::Protocol::S_Attacked)},
-  { 126, -1, -1, sizeof(::Protocol::S_Dead)},
+  { 75, -1, -1, sizeof(::Protocol::C_Move)},
+  { 82, -1, -1, sizeof(::Protocol::S_Move)},
+  { 90, -1, -1, sizeof(::Protocol::S_MoveAdvanced)},
+  { 97, -1, -1, sizeof(::Protocol::C_Attack)},
+  { 105, -1, -1, sizeof(::Protocol::S_Attack)},
+  { 114, -1, -1, sizeof(::Protocol::C_Attacked)},
+  { 121, -1, -1, sizeof(::Protocol::S_Attacked)},
+  { 128, -1, -1, sizeof(::Protocol::S_Dead)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -452,26 +456,27 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "ted\030\002 \001(\010\"\025\n\006C_TEST\022\013\n\003msg\030\001 \001(\t\";\n\013C_En"
   "terRoom\022\016\n\006userID\030\001 \001(\r\022\016\n\006roomID\030\002 \001(\r\022"
   "\014\n\004name\030\003 \001(\t\"/\n\013S_GameStart\022 \n\004user\030\001 \003"
-  "(\0132\022.Protocol.UserInfo\"\033\n\tS_GameEnd\022\016\n\006u"
-  "serID\030\001 \001(\r\".\n\006C_Move\022$\n\010moveInfo\030\001 \001(\0132"
-  "\022.Protocol.MoveInfo\">\n\006S_Move\022\016\n\006userID\030"
-  "\001 \001(\r\022$\n\010moveInfo\030\002 \001(\0132\022.Protocol.MoveI"
-  "nfo\"0\n\016S_MoveAdvanced\022\036\n\004move\030\001 \003(\0132\020.Pr"
-  "otocol.S_Move\"2\n\010C_Attack\022\022\n\ndirectionX\030"
-  "\001 \001(\002\022\022\n\ndirectionY\030\002 \001(\002\"B\n\010S_Attack\022\016\n"
-  "\006userID\030\001 \001(\r\022\022\n\ndirectionX\030\002 \001(\002\022\022\n\ndir"
-  "ectionY\030\003 \001(\002\"\034\n\nC_Attacked\022\016\n\006userID\030\001 "
-  "\001(\r\"\034\n\nS_Attacked\022\016\n\006userID\030\001 \003(\r\"\030\n\006S_D"
-  "ead\022\016\n\006userID\030\001 \003(\r*5\n\tUserState\022\010\n\004IDLE"
-  "\020\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*v\n\tDi"
-  "rection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005R"
-  "IGHT\020\003\022\013\n\007UP_LEFT\020\004\022\014\n\010UP_RIGHT\020\005\022\r\n\tDOW"
-  "N_LEFT\020\006\022\016\n\nDOWN_RIGHT\020\007\022\010\n\004NONE\020\010b\006prot"
-  "o3"
+  "(\0132\022.Protocol.UserInfo\"B\n\tS_GameEnd\022\023\n\013m"
+  "essageType\030\001 \001(\005\022\020\n\010winnerID\030\002 \001(\t\022\016\n\006us"
+  "erID\030\003 \003(\t\".\n\006C_Move\022$\n\010moveInfo\030\001 \001(\0132\022"
+  ".Protocol.MoveInfo\">\n\006S_Move\022\016\n\006userID\030\001"
+  " \001(\r\022$\n\010moveInfo\030\002 \001(\0132\022.Protocol.MoveIn"
+  "fo\"0\n\016S_MoveAdvanced\022\036\n\004move\030\001 \003(\0132\020.Pro"
+  "tocol.S_Move\"2\n\010C_Attack\022\022\n\ndirectionX\030\001"
+  " \001(\002\022\022\n\ndirectionY\030\002 \001(\002\"B\n\010S_Attack\022\016\n\006"
+  "userID\030\001 \001(\r\022\022\n\ndirectionX\030\002 \001(\002\022\022\n\ndire"
+  "ctionY\030\003 \001(\002\"\034\n\nC_Attacked\022\016\n\006userID\030\001 \001"
+  "(\r\"\034\n\nS_Attacked\022\016\n\006userID\030\001 \003(\r\"\030\n\006S_De"
+  "ad\022\016\n\006userID\030\001 \003(\r*5\n\tUserState\022\010\n\004IDLE\020"
+  "\000\022\010\n\004MOVE\020\001\022\n\n\006Attack\020\002\022\010\n\004DEAD\020\003*v\n\tDir"
+  "ection\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RI"
+  "GHT\020\003\022\013\n\007UP_LEFT\020\004\022\014\n\010UP_RIGHT\020\005\022\r\n\tDOWN"
+  "_LEFT\020\006\022\016\n\nDOWN_RIGHT\020\007\022\010\n\004NONE\020\010b\006proto"
+  "3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1082, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1121, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 17,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -2417,11 +2422,21 @@ S_GameEnd::S_GameEnd(const S_GameEnd& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_GameEnd* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.userid_){}
+      decltype(_impl_.userid_){from._impl_.userid_}
+    , decltype(_impl_.winnerid_){}
+    , decltype(_impl_.messagetype_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.userid_ = from._impl_.userid_;
+  _impl_.winnerid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.winnerid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_winnerid().empty()) {
+    _this->_impl_.winnerid_.Set(from._internal_winnerid(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.messagetype_ = from._impl_.messagetype_;
   // @@protoc_insertion_point(copy_constructor:Protocol.S_GameEnd)
 }
 
@@ -2430,9 +2445,15 @@ inline void S_GameEnd::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.userid_){0u}
+      decltype(_impl_.userid_){arena}
+    , decltype(_impl_.winnerid_){}
+    , decltype(_impl_.messagetype_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.winnerid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.winnerid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 S_GameEnd::~S_GameEnd() {
@@ -2446,6 +2467,8 @@ S_GameEnd::~S_GameEnd() {
 
 inline void S_GameEnd::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.userid_.~RepeatedPtrField();
+  _impl_.winnerid_.Destroy();
 }
 
 void S_GameEnd::SetCachedSize(int size) const {
@@ -2458,7 +2481,9 @@ void S_GameEnd::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.userid_ = 0u;
+  _impl_.userid_.Clear();
+  _impl_.winnerid_.ClearToEmpty();
+  _impl_.messagetype_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2468,11 +2493,36 @@ const char* S_GameEnd::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint32 userID = 1;
+      // int32 messageType = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.messagetype_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string winnerID = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_winnerid();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_GameEnd.winnerID"));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated string userID = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_userid();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_GameEnd.userID"));
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -2505,10 +2555,30 @@ uint8_t* S_GameEnd::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
+  // int32 messageType = 1;
+  if (this->_internal_messagetype() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_userid(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_messagetype(), target);
+  }
+
+  // string winnerID = 2;
+  if (!this->_internal_winnerid().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_winnerid().data(), static_cast<int>(this->_internal_winnerid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_GameEnd.winnerID");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_winnerid(), target);
+  }
+
+  // repeated string userID = 3;
+  for (int i = 0, n = this->_internal_userid_size(); i < n; i++) {
+    const auto& s = this->_internal_userid(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_GameEnd.userID");
+    target = stream->WriteString(3, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2527,9 +2597,24 @@ size_t S_GameEnd::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
+  // repeated string userID = 3;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.userid_.size());
+  for (int i = 0, n = _impl_.userid_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      _impl_.userid_.Get(i));
+  }
+
+  // string winnerID = 2;
+  if (!this->_internal_winnerid().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_winnerid());
+  }
+
+  // int32 messageType = 1;
+  if (this->_internal_messagetype() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_messagetype());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -2550,8 +2635,12 @@ void S_GameEnd::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_userid() != 0) {
-    _this->_internal_set_userid(from._internal_userid());
+  _this->_impl_.userid_.MergeFrom(from._impl_.userid_);
+  if (!from._internal_winnerid().empty()) {
+    _this->_internal_set_winnerid(from._internal_winnerid());
+  }
+  if (from._internal_messagetype() != 0) {
+    _this->_internal_set_messagetype(from._internal_messagetype());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -2569,8 +2658,15 @@ bool S_GameEnd::IsInitialized() const {
 
 void S_GameEnd::InternalSwap(S_GameEnd* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.userid_, other->_impl_.userid_);
+  _impl_.userid_.InternalSwap(&other->_impl_.userid_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.winnerid_, lhs_arena,
+      &other->_impl_.winnerid_, rhs_arena
+  );
+  swap(_impl_.messagetype_, other->_impl_.messagetype_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_GameEnd::GetMetadata() const {

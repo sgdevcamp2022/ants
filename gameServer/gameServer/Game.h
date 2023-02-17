@@ -23,6 +23,7 @@ public:
 
     void UserMove(unsigned int userID,Protocol::C_Move& moveInfo);
     void UserMoveBroadcast();
+    void UserMovedBroadcast();
     void AttackedBroadcast();
     void DeadBroadcast();
 
@@ -32,6 +33,8 @@ public:
 
 private:
 
+    int test = 1;;
+
     Room*_room;
     unordered_map<unsigned int, User*> _users;
     list<Projectile> _projectiles;
@@ -39,7 +42,9 @@ private:
     Protocol::S_Attacked _attackedPacket;
     Protocol::S_Dead _deadPacket;
     Protocol::S_MoveAdvanced _movePacket;
-    
+    Protocol::S_MoveAdvanced packet;
+
+    int moveSendTick = 0;
 };
 
 
