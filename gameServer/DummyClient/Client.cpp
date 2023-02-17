@@ -52,7 +52,7 @@ void Client::RegisterReceive()
 }
 void Client::RegisterSend()
 {
-    this_thread::sleep_for(10ms);
+    this_thread::sleep_for(100ms);
     ++_seqNumber;
     
     
@@ -87,7 +87,6 @@ void Client::RegisterSend()
             moveInfo->set_direction(Protocol::DOWN);
             moveInfo->set_positionx(_seqNumber + 1);
             moveInfo->set_positiony(_seqNumber + 1);
-            moveInfo->set_state(Protocol::MOVE);
             packet.set_allocated_moveinfo(moveInfo);
             //packet.mutable_moveinfo()->set_positionx(1);
             buffer = MakeBuffer(packet, C_Move);
@@ -156,17 +155,23 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             PARSE(packet);
             cout<<"roomid: " << packet.roomid() << "  ,  is completed: " << packet.iscompleted() << endl;
         }
-        else if(data->id == S_UserInfo)
+        else if(data->id == S_StartGame)
         {
             Protocol::UserInfo packet;
             PARSE(packet);
-            cout << "userid: " << packet.userid()<< " , direction:" << packet.mutable_moveinfo()->direction() << " , state: " << packet.mutable_moveinfo()->state() << endl;
+            cout << "userid: " << packet.userid()<< " , direction:" << packet.mutable_moveinfo()->direction() << " , state: " << packet.state() << endl;
         }
         else if(data->id == S_Move)
         {
             Protocol::S_Move packet;
             PARSE(packet);
             cout << "userID: " << packet.userid() << " , position: " << packet.moveinfo().positionx() << " , " << packet.moveinfo().positiony() << endl;
+        }
+        else if (data->id == S_MoveAdvanced)
+        {
+            Protocol::S_MoveAdvanced packet;
+            PARSE(packet);
+            cout << "userID: " << packet.move(0).userid() << " , position: " << packet.move(0).moveinfo().positionx() << " , " << packet.move(0).moveinfo().positionx() << endl;
         }
         else if(data->id == S_Attack)
         {
@@ -179,7 +184,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
         {
             Protocol::S_Attacked packet;
             PARSE(packet);
-            cout << "user id: " << packet.userid() << " in attacked" << endl;
+            cout << "user id: " << packet.userid(0) << " in attacked" << endl;
             _seqNumber = 2;
 
         }
@@ -187,7 +192,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
         {
             Protocol::UserInfo packet;
             PARSE(packet);
-            cout << "userid: " << packet.userid() << " Dead! state:" << packet.mutable_moveinfo()->state() << endl;
+            cout << "userid: " << packet.userid() << " Dead! state:" << packet.state() << endl;
             return;
         }
         RegisterSend();

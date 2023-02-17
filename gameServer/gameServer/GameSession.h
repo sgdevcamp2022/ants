@@ -11,11 +11,11 @@ public:
     void OnDisconnect() override;
     void OnSend() override;
     void OnReceive(int numberOfBytes, char* buffer) override;
-    //Room포인터 두는 것 고려, (있어야 락 최소화 가능)
-
-    class User* user = nullptr;
-    class Room* room=nullptr;
+    unsigned int userId;
+    shared_ptr<class Room> room;
+    class Game* game;
     class PacketHandler& packetHandler;
+private:
+
     class CircularBuffer* _buffer = nullptr;
 };
-

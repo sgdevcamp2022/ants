@@ -10,6 +10,7 @@ struct PacketHeader
 	unsigned __int16 size;
 	unsigned __int16 id; // 프로토콜ID (ex. 1=로그인, 2=이동요청)
 };
+
 enum :unsigned int
 {
 	M_InitRoom = 1000,
@@ -18,21 +19,28 @@ enum :unsigned int
 	M_TEST = 1999,
 
 	C_EnterRoom = 2000,
-	C_UserInfo = 2001,
-	S_UserInfo = 2002,
+	S_StartGame = 2001,
 
-	C_Move = 2003,
-	S_Move = 2004,
+	C_UserInfo = 2002,
+	S_UserInfo = 2003,
 
-	C_Attack = 2005,
-	S_Attack = 2006,
+	C_Move = 2004,
+	S_Move = 2005,
+	S_MoveAdvanced = 2105,
 
-	C_Attacked = 2007,
-	S_Attacked = 2008,
+	C_Attack = 2006,
+	S_Attack = 2007,
+
+	C_Attacked = 2008,
+	S_Attacked = 2009,
+
+	S_Dead = 2010,
 
 	C_TEST = 2999,
 
 };
+
+
 
 
 class Client

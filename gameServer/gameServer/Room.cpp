@@ -4,62 +4,61 @@
 #include"User.h"
 #include "GameSession.h"
 #include "PacketHandler.h"
+#include "Game.h"
 
-Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false)
+Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false),_game(make_shared<Game>(this))
 {
+    
 }
 
 Room::~Room()
 {
-    for(auto i=_users.begin(); i!=_users.end(); ++i)
-    {
-        if(i->second==nullptr)
-        {
-            continue;
-        }
-        //i->second->session->room=nullptr;
-        delete i->second;
-        i->second = nullptr;
-    }
+    _game = nullptr;
 }
 
-void Room::Enter(User* user)
+void Room::Enter(GameSession* session, unsigned int userId, string userName)
 {
     if(isStart==true)
     {
         return;
     }
     userCount.fetch_add(1);
-    LOCK_GUARD
-    _users[user->_userID] = user;
+    {
+        LOCK_GUARD;
+        _gameSessions[userId] = session;
+    }
+    _game->AddUser(userId, userName);
+    session->userId = userId;
+    session->game = _game.get();
 }
 
-void Room::Leave(User* user)
+void Room::Leave(unsigned int userId)
 {
-    if(isStart==true)
-    {
-        return;
-    }
-    userCount.fetch_sub(1);
     LOCK_GUARD
-    _users.erase(user->_userID);
+    auto count = _gameSessions.erase(userId);
+    if (count)
+    {
+        userCount.fetch_sub(1);
+    }
 }
+
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
-    
     if (isStart == false)
     {
         return;
     }
-    
 
-    for (auto& user : _users)
+    for (auto& session : _gameSessions)
     {
-
-        user.second->_session->RegisterSend(buffer);
-
+        session.second->RegisterSend(buffer);
     }
+}
+
+unsigned Room::GetRoomID()
+{
+    return _roomID;
 }
 
 void Room::SetMaxUserCount(unsigned number)
@@ -75,28 +74,15 @@ void Room::AddUserID(unsigned int userID)
 
 bool Room::HasUser(unsigned userID)
 {
-    if(isStart==true)
-    {
-        return true;
-    }
-
     LOCK_GUARD
-    auto it=_users.find(userID);
-    if(it!=_users.end())
-    {
-        return true;
-    }
-    return false;
+    return _gameSessions.count(userID) > 0;
 }
 
 bool Room::HasUserID(unsigned userID)
 {
-    for(auto it =_userList.begin(); it!=_userList.end(); ++it)
-    {
-        if(*it==userID)
-        {
-            return true;
-        }
+    auto it = find(_userList.begin(), _userList.end(), userID);
+    if (it != _userList.end()) {
+        return true;
     }
     return false;
 }
@@ -108,36 +94,56 @@ bool Room::CanStart()
 
 bool Room::CanEnd()
 {
-    return userCount.load() <= 1;
-}
-
-void Room::Dead()
-{
-    userCount.fetch_sub(1);
+    return userCount.load() < 1 && isStart==true;
 }
 
 void Room::InitGame()
 {
-    LOCK_GUARD;
-    isStart = true;
-    for(auto it = _users.begin(); it!= _users.end(); ++it)
     {
-        Protocol::UserInfo& userInfo = it->second->GetUserInfo();
-        userInfo.mutable_moveinfo()->set_positionx(0);
-        userInfo.mutable_moveinfo()->set_positiony(0);
-
-        PacketHandler& ph= PacketHandler::GetPacketHandler();
-
-        auto buffer = ph.MakeBufferSharedPtr(userInfo, S_UserInfo);
-
-        Broadcast(buffer);
+        LOCK_GUARD;
+        isStart = true;
     }
+    
+    
+    _game->Init(_maxUserCount);
+
+    thread gamethread([this](){
+        GameLoop();
+        EndGame();
+        //Broadcast(PacketHandler::MakeBufferSharedPtr(Protocol::S_GameEnd(), S_EndGame));
+        RoomManager::DeleteRoom(_roomID);
+    });
+    gamethread.detach();
 }
 
 void Room::EndGame()
 {
     LOCK_GUARD;
-      
     isStart = false;
-    _userList.clear();
+
+}
+
+void Room::AddProjectile(int ownerId, float x, float y, float speed, float direction, float damage)
+{
+    _game->AddProjectile(ownerId,x,y,speed,direction,damage);
+}
+
+void Room::GameLoop()
+{
+    chrono::milliseconds loopDuration(33);
+
+    while (CanEnd()==false)
+    {
+        auto startTime = chrono::steady_clock::now();
+        _game->Tick();
+
+        auto elapsedTime = chrono::steady_clock::now() - startTime;
+
+        if(elapsedTime<loopDuration)
+        {
+            cout << "sleep" << endl;
+            this_thread::sleep_for(loopDuration - elapsedTime);
+        }
+        
+    }
 }

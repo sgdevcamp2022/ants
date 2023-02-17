@@ -3,43 +3,44 @@
 #include "Room.h"
 #include "User.h"
 
-map<unsigned int, Room*> RoomManager::_rooms;
+
+map<unsigned int, shared_ptr<Room>> RoomManager::_rooms;
 mutex RoomManager::mutexLock;
 
 RoomManager::~RoomManager()
 {
     for(auto it = _rooms.begin(); it !=_rooms.end(); ++it)
     {
-        DeleteRoom(it->second);
+        DeleteRoom(it->second->GetRoomID());
     }
 }
 
-Room* RoomManager::MakeRoom(unsigned roomID)
+std::shared_ptr<Room> RoomManager::MakeRoom(unsigned roomID)
 {
-
-    Room* room = new Room(roomID);
-    //필요시 여기에서 UserID 입력
-    LOCK_GUARD
+    std::shared_ptr<Room> room = std::make_shared<Room>(roomID);
+    LOCK_GUARD;
     _rooms[roomID] = room;
     return room;
 }
 
-Room* RoomManager::GetRoomByRoomID(unsigned roomID)
+shared_ptr<Room> RoomManager::GetRoomByRoomID(unsigned roomID)
 {
     LOCK_GUARD
-    auto it=_rooms.find(roomID);
-    if(it!=_rooms.end())
+        auto it = _rooms.find(roomID);
+    if (it != _rooms.end())
     {
         return it->second;
     }
     return nullptr;
 }
 
-void RoomManager::DeleteRoom(Room* room)
+void RoomManager::DeleteRoom(int roomId)
 {
-    LOCK_GUARD
-    if (room == nullptr)
+    LOCK_GUARD;
+    auto it = _rooms.find(roomId);
+    if (it == _rooms.end())
+    {
         return;
-    delete room;
-    room = nullptr;
+    }
+    _rooms.erase(it);
 }

@@ -23,19 +23,22 @@ enum :unsigned int
     M_TEST = 1999,
 
     C_EnterRoom = 2000,
-    C_UserInfo=2001,
-    S_UserInfo=2002,
+    S_StartGame = 2001,
 
-    C_Move = 2003,
-    S_Move = 2004,
+    C_UserInfo=2002,
+    S_UserInfo=2003,
 
-    C_Attack = 2005,
-    S_Attack = 2006,
+    C_Move = 2004,
+    S_Move = 2005,
+    S_MoveAdvanced=2105,
 
-    C_Attacked = 2007,
-    S_Attacked = 2008,
+    C_Attack = 2006,
+    S_Attack = 2007,
 
-    S_Dead = 2009,
+    C_Attacked = 2008,
+    S_Attacked = 2009,
+
+    S_Dead = 2010,
 
     C_TEST = 2999,
 
@@ -60,16 +63,15 @@ public:
 
 
     void HandlePacket(GameSession* session, char* data, int length);
-
-   
     
-    void HandleMatcingTest(GameSession* session, char* data, int length);
+    void HandleMatchingTest(GameSession* session, char* data, int length);
 
     void HandleMatchingInitRoom(GameSession* session, char* data, int length);
 
     void HandleClientEnterRoom(GameSession* session, char* data, int length);
 
     void HandleClientMove(GameSession* session, char* data, int length);
+    void HandleClientMoveAdvanced(GameSession* session, char* data, int length);
 
     void HandleClientAttack(GameSession* session, char* data, int length);
 
@@ -78,7 +80,7 @@ public:
     bool ValidateUser(GameSession* session);
 
     template<typename T>
-    char* MakeBuffer(T& packet,unsigned int pakcetID )
+    static char* MakeBuffer(T& packet,unsigned int pakcetID )
     {
         const unsigned __int16 dataLength = packet.ByteSizeLong();
         const unsigned __int16 packetLength = dataLength + sizeof(PacketHeader);
@@ -93,7 +95,7 @@ public:
     }
 
     template<typename T>
-    std::shared_ptr<char> MakeBufferSharedPtr(T& packet, unsigned int pakcetID)
+    static std::shared_ptr<char> MakeBufferSharedPtr(T& packet, unsigned int pakcetID)
     {
         const unsigned __int16 dataLength = packet.ByteSizeLong();
         const unsigned __int16 packetLength = dataLength + sizeof(PacketHeader);

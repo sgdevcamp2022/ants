@@ -3,28 +3,43 @@
 
 class GameSession;
 
-
 class User
 {
 public:
-    User(unsigned int _userID, string _name, GameSession* _session);
+    User(unsigned int _userID, string _name);
     ~User();
-    Protocol::UserInfo& GetUserInfo();
+    const Protocol::UserInfo& GetUserInfo();
+    Protocol::UserInfo CopyUserInfo();
 
 
+    
+    unsigned int GetUserId();
+    string GetName();
+    const Protocol::MoveInfo& GetReferenceMoveInfo();
+    float GetX() { return _moveInfo.positionx(); }
+    float GetY() { return _moveInfo.positiony(); }
+    Protocol::Direction GetDirection() { return _moveInfo.direction(); }
+
+    float GetDistance(float x, float y);
+
+    void SetUserId(const unsigned int id);
+    void SetName(const string name);
+    void SetPosition(const float& x, const float& y);
+    void SetMoveInfo(const Protocol::MoveInfo moveInfo);
+    void SetHp(unsigned  int& hp);
+
+    void UserAttacked(unsigned int damage);
+private:
+
+    Protocol::UserInfo _userInfo;
+    Protocol::MoveInfo _moveInfo;
+    mutex mutexLock;
     //임시로 남겨둠, 아니면 이 아래는 맵에서 관리?
     unsigned int _userID;
     string _name;
-    GameSession* _session;
-    Protocol::UserState _state;
-    Protocol::Direction _direction;
-    int _positionX;
-    int _positionY;
-    int hp;
-
-private:
-
-    Protocol::UserInfo* userInfo;
-
+    int _hp;
+    float _positionX;
+    float _positionY;
+    bool _isMoved;
 };
 

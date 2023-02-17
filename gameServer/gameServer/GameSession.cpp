@@ -12,14 +12,13 @@ Session(sessionID,io_context,server), packetHandler(PacketHandler::GetPacketHand
 
 GameSession::~GameSession()
 {
-    ;
     delete _buffer;
 }
 
 void GameSession::OnConnect()
 {
     Session::OnConnect();
-    user = new User(0,"null",this);
+
 
     //세션 관리하는 곳에 this 추가
 }
@@ -28,15 +27,14 @@ void GameSession::OnDisconnect()
 {
     Session::OnDisconnect();
 
-    User* user = nullptr;
-
-    // 메모리 테스트용 Room 삭제 room 생성 -> 시작 -> 진행 -> 종료 로직 필요
-    if(room!=nullptr)
+    if(room==nullptr)
     {
-        RoomManager::DeleteRoom(room);
+        return;
     }
-    
-    Room* room = nullptr;
+    room->Leave(userId);
+    userId = NULL;
+    game = nullptr;
+    room = nullptr;
 }
 
 void GameSession::OnSend()

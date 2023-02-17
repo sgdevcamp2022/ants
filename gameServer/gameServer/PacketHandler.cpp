@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "PacketHandler.h"
 
+#include "Game.h"
+
 void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
 {
     
@@ -9,7 +11,7 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
     switch (header->id)
     {
     case M_TEST:
-        HandleMatcingTest(session, data, length);
+        HandleMatchingTest(session, data, length);
         break;
 
     case C_TEST:
@@ -25,7 +27,8 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
         break;
 
     case C_Move:
-        HandleClientMove(session, data, length);
+        //HandleClientMove(session, data, length);
+        HandleClientMoveAdvanced(session, data, length);
         break;
 
     case C_Attack:
@@ -37,7 +40,7 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
     
 }
 
-void PacketHandler::HandleMatcingTest(GameSession* session, char* data, int length)
+void PacketHandler::HandleMatchingTest(GameSession* session, char* data, int length)
 {
     Protocol::M_TEST packet;
     /*PARSE(packet);
@@ -50,6 +53,7 @@ void PacketHandler::HandleMatcingTest(GameSession* session, char* data, int leng
 
 void PacketHandler::HandleMatchingInitRoom(GameSession* session, char* data, int length)
 {
+    //키를 받아와 서 검증, 서버가 아니면 반환
     Protocol::M_InitRoom packet;
     PARSE(packet);
 
@@ -68,7 +72,7 @@ void PacketHandler::HandleMatchingInitRoom(GameSession* session, char* data, int
         return;
     }
 
-    Room* room = roomManager.MakeRoom(roomID);
+    auto room = roomManager.MakeRoom(roomID);
     room->SetMaxUserCount(packet.userid_size());
 
     for (auto i = 0; i < packet.userid_size(); ++i)
@@ -90,9 +94,7 @@ void PacketHandler::HandleClientEnterRoom(GameSession* session, char* data, int 
     PARSE(packet);
     RoomManager& roomManager = RoomManager::GetRoomManager();
 
-    Room* room = roomManager.GetRoomByRoomID(packet.roomid());
-
-
+    auto room = roomManager.GetRoomByRoomID(packet.roomid());
 
     if (room == nullptr)
     {
@@ -110,14 +112,9 @@ void PacketHandler::HandleClientEnterRoom(GameSession* session, char* data, int 
         return;
     }
     session->room = room;
-
-    Protocol::UserInfo& userInfo = session->user->GetUserInfo();
-
-    userInfo.set_userid(packet.userid());
-    userInfo.set_name(packet.name());
-
-    // Room에서 Init 후 게임 스레드 만들고 거기서 관리해야함
-    room->Enter(session->user);
+    
+    
+    room->Enter(session,packet.userid(),packet.name());
 
     if (room->CanStart())
     {
@@ -136,18 +133,26 @@ void PacketHandler::HandleClientMove(GameSession* session, char* data, int lengt
     Protocol::C_Move packet;
     PARSE(packet);
 
-
-    Protocol::UserInfo& userInfo = session->user->GetUserInfo();
-
-
-    *(userInfo.mutable_moveinfo()) = packet.moveinfo();
+    session->game->UserMove(session->userId, packet);
+    
 
     Protocol::S_Move sendPacket;
-    sendPacket.set_userid(userInfo.userid());
-    *(sendPacket.mutable_moveinfo()) = packet.moveinfo();
+    sendPacket.set_userid(session->userId);
+    sendPacket.mutable_moveinfo()->CopyFrom(packet.moveinfo());
 
     auto buffer = MakeBufferSharedPtr(sendPacket, S_Move);
     session->room->Broadcast(buffer);
+}
+
+void PacketHandler::HandleClientMoveAdvanced(GameSession* session, char* data, int length)
+{
+    if (ValidateUser(session) == false)
+    {
+        return;
+    }
+    Protocol::C_Move packet;
+    PARSE(packet);
+    session->game->UserMove(session->userId, packet);
 }
 
 void PacketHandler::HandleClientAttack(GameSession* session, char* data, int length)
@@ -157,10 +162,9 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
     Protocol::C_Attack packet;
     PARSE(packet);
 
-    Protocol::UserInfo& userInfo = session->user->GetUserInfo();
-    //필요시 유저 상태 공격으로 변경
+    //나중에 쿨타임 같은 거 추가하려면 게임에 함수 추가
     Protocol::S_Attack sendPacket;
-    sendPacket.set_userid(userInfo.userid());
+    sendPacket.set_userid(session->userId);
     sendPacket.set_directionx(packet.directionx());
     sendPacket.set_directiony(packet.directiony());
 
@@ -179,48 +183,50 @@ void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int l
     Protocol::C_Attacked packet;
     PARSE(packet);
 
-    Protocol::UserInfo& userInfo = session->user->GetUserInfo();
+    
     Protocol::S_Attacked sendPacket;
-    sendPacket.set_userid(userInfo.userid());
+    //sendPacket.set_userid(session->user->GetUserId());
+
+
 
     //체력 깎기 (user info에 체력 두고 관리해야할 듯, 수정필요)
-    int& hp = session->user->hp -= 10;
-    userInfo.set_hp(hp);
+    //int& hp = session->user->hp -= 10;
+    //userInfo.set_hp(hp);
 
-    //죽으면 상태 변경
-    if (hp <= 0)
-    {
-        userInfo.mutable_moveinfo()->set_state(Protocol::DEAD);
-        session->room->Dead();
-        if (session->room->CanEnd())
-        {
-            session->room->EndGame();
+    ////죽으면 상태 변경
+    //if (hp <= 0)
+    //{
+    //    userInfo.mutable_moveinfo()->set_state(Protocol::DEAD);
+    //    session->room->Dead();
+    //    if (session->room->CanEnd())
+    //    {
+    //        session->room->EndGame();
 
-            //DB 접근 최후 승자만 승리+1
+    //        //DB 접근 최후 승자만 승리+1
 
-            //room 제거
+    //        //room 제거
 
-            //return;
-        }
+    //        //return;
+    //    }
 
-        auto buffer = MakeBufferSharedPtr(userInfo, S_Dead);
-        session->room->Broadcast(buffer);
-        return;
-    }
+    //    auto buffer = MakeBufferSharedPtr(userInfo, S_Dead);
+    //    session->room->Broadcast(buffer);
+    //    return;
+    //}
 
 
-    auto buffer = MakeBufferSharedPtr(sendPacket, S_Attacked);
-    session->room->Broadcast(buffer);
+    //auto buffer = MakeBufferSharedPtr(sendPacket, S_Attacked);
+    //session->room->Broadcast(buffer);
 }
 
 bool PacketHandler::ValidateUser(GameSession* session)
 {
-    if (session->user == nullptr)
+    if (session->game == nullptr)
     {
         return false;
     }
-    Protocol::UserInfo& userInfo = session->user->GetUserInfo();
-    if (userInfo.moveinfo().state() == Protocol::DEAD)
+
+    if(session->userId==NULL)
     {
         return false;
     }
