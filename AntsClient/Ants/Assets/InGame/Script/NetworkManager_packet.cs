@@ -6,11 +6,17 @@ using System.Net;
 using UnityEngine;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
+using DG.Tweening;
 public class NetworkManager_packet : MonoBehaviour
 {
 	public GameObject player;
+	public GameObject player2;
 	ServerSession _session = new ServerSession();
-	public void requestMatching()
+	[SerializeField] float time;
+	[SerializeField] float distance;
+
+	bool once;
+    public void requestMatching()
 	{
 		C_Test chat = new C_Test()
 		{
@@ -20,27 +26,132 @@ public class NetworkManager_packet : MonoBehaviour
 	}
 	public void MyPlace()
 	{
-		C_Move move = new C_Move()
-		{
-			MoveInfo = new MoveInfo { State = UserState.Move, Direction = Direction.Down, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
-		};
-		Send(move);
+		if(DatabaseManager.dir == DatabaseManager.changeDir)
+        {
+			DIR();
+			return;
+        }
+        else
+        {
+			if (DatabaseManager.dir == 0)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.Up, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 1)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.Down, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 2)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.Left, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 3)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.Right, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 4)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.UpLeft, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 5)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.UpRight, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 6)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.DownLeft, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if (DatabaseManager.dir == 7)
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.DownRight, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+			else if ((DatabaseManager.dir == 8))
+			{
+				C_Move move = new C_Move()
+				{
+					Moveinfo = new Moveinfo { Direction = Direction.None, PositionX = player.transform.position.x, PositionY = player.transform.position.y }
+				};
+				Send(move);
+			}
+
+			DIR();
+		}
+
 	}
 
-	public void myButton()
-    {
-		InvokeRepeating("MyPlace", 0.33f, 0.33f);
-	}
-    private void Start()
-    {
-
-    }
-
-
-    public void Connect()
+	int dirrr;
+	public void Update()
 	{
-		Init("172.30.1.36", 10006);
+		/*
+		if(DatabaseManager.isDirChange == true)
+        {
+			DatabaseManager.isDirChange = false;
+			DatabaseManager.exdir = DatabaseManager.dir;
+			MyPlace();
+
+		}
+		*/
+
+		List<PacketMessage> list = PacketQueue.Instance.PopAll();
+		foreach (PacketMessage packet in list)
+		{
+			Action<PacketSession, IMessage> handler = PacketManager.Instance.GetPacketHandler(packet.Id);
+			if (handler != null)
+				handler.Invoke(_session, packet.Message);
+		}
+
+
+
 	}
+
+	
+	private void Start()
+    {
+		EnterRoom();
+		InvokeRepeating("MyPlace", 0, 0.05f);
+	}
+	private void Awake()
+	{
+	    Connect();
+	}
+
+	public void Connect()
+	{
+		Init("111.91.176.193", 10006);
+	}
+
 	public void EnterRoom()
     {
 		C_Enterroom enterRoom = new C_Enterroom()
@@ -71,6 +182,7 @@ public class NetworkManager_packet : MonoBehaviour
 	{
 		_session.Disconnect();
 	}
+	/*
 	public void Init() // for local
 	{
 		// DNS (Domain Name System)
@@ -84,8 +196,10 @@ public class NetworkManager_packet : MonoBehaviour
 			() => { return _session; },
 			1);
 	}
+	*/
 	public void Init(string ipAddrString, int portNumber)
 	{
+
 		IPAddress ipAddr = IPAddress.Parse(ipAddrString);
 		IPEndPoint endPoint = new IPEndPoint(ipAddr, portNumber);
 		Connector connector = new Connector();
@@ -93,14 +207,48 @@ public class NetworkManager_packet : MonoBehaviour
 			() => { return _session; },
 			1);
 	}
-	public void Update()
+
+
+
+
+	void DIR()
 	{
-		List<PacketMessage> list = PacketQueue.Instance.PopAll();
-		foreach (PacketMessage packet in list)
+		if (DatabaseManager.changeDir == 0)
 		{
-			Action<PacketSession, IMessage> handler = PacketManager.Instance.GetPacketHandler(packet.Id);
-			if (handler != null)
-				handler.Invoke(_session, packet.Message);
+			player2.transform.DOMove(new Vector2(player2.transform.position.x, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 1)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 2)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 3)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 4)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 5)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 6)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 7)
+		{
+			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
+		}
+		else if (DatabaseManager.changeDir == 8)
+		{
+			transform.DOPause();
+			player2.transform.DOMove(new Vector2(DatabaseManager.X, DatabaseManager.Y), time).SetEase(Ease.Linear);
 		}
 	}
 }

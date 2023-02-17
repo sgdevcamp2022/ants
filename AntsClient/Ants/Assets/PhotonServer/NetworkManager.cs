@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [Header("DisconnectPanel")]
-    public InputField NickNameInput;
+    //public InputField NickNameInput;
 
     [Header("LobbyPanel")]
     public GameObject LobbyPanel;
@@ -82,7 +82,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     #region 서버연결
-    void Awake() => Screen.SetResolution(1920, 1080, true);
+    void Awake()
+    {
+       Screen.SetResolution(1920, 1080, true);
+
+
+
+
+    }
+    private void Start()
+    {
+        Connect();
+    }
 
     void Update()
     {
@@ -98,7 +109,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         LobbyPanel.SetActive(true);
         RoomPanel.SetActive(false);
-        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        PhotonNetwork.LocalPlayer.NickName = DatabaseManager.nickName;
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
         myList.Clear();
     }

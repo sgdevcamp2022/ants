@@ -6,56 +6,58 @@ public class test : MonoBehaviour
 {
     [SerializeField] float time;
     [SerializeField] float distance;
-    string dir;
+
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("dirc", time, time);
-        InvokeRepeating("DIR", time, time);
+
     }
+
     void DIR()
     {
-
-        this.transform.DOMove(new Vector2(DatabaseManager.X, DatabaseManager.Y), time).SetEase(Ease.Linear);
-    }
-    void dirc()
-    {
-        dir = DatabaseManager.dir;
-        switch (dir)
+        if (DatabaseManager.changeDir == 0)
         {
-            case "E": // 오른쪽
-                this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y), time);
-                break;
-            case "W":
-                this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y), time);
-                break;
-            case "N":
-                this.transform.DOMove(new Vector2(transform.position.x, transform.position.y + distance), time);
-                break;
-            case "S":
-                this.transform.DOMove(new Vector2(transform.position.x, transform.position.y - distance), time);
-                break;
-            case "NE":
-                this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y + distance), time);
-                break;
-            case "SW":
-                this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y - distance), time);
-                break;
-            case "SE":
-                this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y - distance), time);
-                break;
-            case "NW":
-                this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y + distance), time);
-                break;
+            this.transform.DOMove(new Vector2(transform.position.x, transform.position.y + distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 1)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x, transform.position.y - distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 2)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 3)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 4)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y + distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 5)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y + distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 6)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x - distance, transform.position.y - distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 7)
+        {
+            this.transform.DOMove(new Vector2(transform.position.x + distance, transform.position.y - distance), time).SetEase(Ease.Linear);
+        }
+        else if (DatabaseManager.changeDir == 8)
+        {
+            transform.DOPause();
+            this.transform.DOMove(new Vector2(DatabaseManager.X, DatabaseManager.Y), time).SetEase(Ease.Linear);
         }
     }
+
+
     // Update is called once per frame
     void Update()
     {
-
-
-
-
-        //this.transform.position = new Vector2(DatabaseManager.X, DatabaseManager.Y);
+        //DIR();
     }
 }

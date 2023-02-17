@@ -160,7 +160,7 @@ MonoBehaviour:
   damage: 5
   attackCycle: 0.5
   stunTime: 0.5
-  speed: 1
+  speed: 3
 --- !u!114 &-9210009518313513292
 MonoBehaviour:
   m_ObjectHideFlags: 0

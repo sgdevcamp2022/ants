@@ -15,7 +15,7 @@ class PacketHandler : MonoBehaviour
 	}
     private void Start()
     {
-		Debug.Log(player);
+
     }
     public static void M_TestHandler(PacketSession session, IMessage packet)
 	{
@@ -36,7 +36,20 @@ class PacketHandler : MonoBehaviour
 		S_Move movePacket = packet as S_Move;
 		ServerSession serverSession = session as ServerSession;
 
-		DatabaseManager.X = movePacket.MoveInfo.PositionX;
-		DatabaseManager.Y = movePacket.MoveInfo.PositionY;
+
 	}
+	public static void S_MoveadvancedHandler(PacketSession session, IMessage packet)
+	{
+
+		S_Moveadvanced movePackets = packet as S_Moveadvanced;
+		S_Move movePacket = movePackets.Move[0];
+
+		ServerSession serverSession = session as ServerSession;
+
+		DatabaseManager.X = movePacket.Moveinfo.PositionX;
+		DatabaseManager.Y = movePacket.Moveinfo.PositionY;
+		DatabaseManager.changeDir = (int)(movePacket.Moveinfo.Direction);
+		Debug.Log("X좌표 : " +DatabaseManager.X+ "X좌표 : "+ DatabaseManager.Y + "방향 : " + DatabaseManager.changeDir);
+	}
+
 }

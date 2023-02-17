@@ -4,54 +4,51 @@ using UnityEngine;
 
 public class PlayerDemi : MonoBehaviour
 {
-    public string dirr;
     // Update is called once per frame
     void Update()
     {
-        dirr = DatabaseManager.dir;
 
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
             if (Input.GetAxisRaw("Vertical") > 0)
             {
-                DatabaseManager.dir = "NE";
+                DatabaseManager.dir = 5;
             }
             else if (Input.GetAxisRaw("Vertical") < 0)
             {
-                DatabaseManager.dir = "SE";
+                DatabaseManager.dir = 7;
             }
             else if ((Input.GetAxisRaw("Vertical") == 0))
             {
-                DatabaseManager.dir = "E";
+                DatabaseManager.dir = 2;
             }
         }
         else if (Input.GetAxisRaw("Horizontal") < 0)
         {
             if (Input.GetAxisRaw("Vertical") > 0)
             {
-                DatabaseManager.dir = "NW";
+                DatabaseManager.dir = 4;
             }
             else if (Input.GetAxisRaw("Vertical") < 0)
             {
-                DatabaseManager.dir = "SW";
+                DatabaseManager.dir = 6;
             }
             else if ((Input.GetAxisRaw("Vertical") == 0))
             {
-                DatabaseManager.dir = "W";
+                DatabaseManager.dir = 3;
             }
         }
         else if ((Input.GetAxisRaw("Vertical") > 0))
         {
-            DatabaseManager.dir = "N";
+            DatabaseManager.dir = 0;
         }
         else if ((Input.GetAxisRaw("Vertical") < 0))
         {
-            DatabaseManager.dir = "S";
+            DatabaseManager.dir = 1;
         }
         else
         {
-            DatabaseManager.dir = "";
+            DatabaseManager.dir = 8;
         }
-
     }
 }
