@@ -25,6 +25,7 @@ public:
     void UserMoveBroadcast();
     void UserMovedBroadcast();
     void AttackedBroadcast();
+    void AttackBroadcast();
     void DeadBroadcast();
 
     void Dead(unsigned int userID);
@@ -42,7 +43,7 @@ private:
     Protocol::S_Attacked _attackedPacket;
     Protocol::S_Dead _deadPacket;
     Protocol::S_MoveAdvanced _movePacket;
-    Protocol::S_MoveAdvanced packet;
+    Protocol::S_AttackAdvanced _attackPacket;
 
     int moveSendTick = 0;
 };

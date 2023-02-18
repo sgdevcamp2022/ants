@@ -57,7 +57,7 @@ void Game::End()
         //packet.set_userid(it.first);
         //auto buffer = PacketHandler::MakeBufferSharedPtr(packet, S_GameEnd);
         //_room->Broadcast(buffer);
-
+        
         delete it.second;
     }
     _users.clear();
@@ -70,13 +70,22 @@ void Game::End()
 void Game::Tick()
 {
     UserMoveBroadcast();
+    AttackBroadcast();
+    AttackedBroadcast();
+    DeadBroadcast();
+
     _movePacket.clear_move();
+    _attackPacket.clear_attack();
     _attackedPacket.clear_userid();
     _deadPacket.clear_userid();
 
     {
         LOCK_GUARD;
         for (auto& it : _users) {
+            if(it.second==nullptr)
+            {
+                continue;
+            }
             CalculateUserPosition(it.second);
         }
     }
@@ -126,7 +135,7 @@ User* Game::CheckCollision(Projectile& projectile)
     {
         if (projectile.GetOwnerId() == it->second->GetUserId())
         {
-            continue;
+            //continue;
         }
 
         float distance = it->second->GetDistance(projectile.GetX(), projectile.GetY());
@@ -141,7 +150,7 @@ User* Game::CheckCollision(Projectile& projectile)
 
 void Game::CalculateUserPosition(User* user)
 {
-
+    
     float x = user->GetX();
     float y = user->GetY();
     float distance = 0.0666;
@@ -191,7 +200,7 @@ void Game::CalculateUserPosition(User* user)
     x += dx;
     y += dy;
     user->SetPosition(x, y);
-    cout << x<<", " << y<<endl;
+    //cout << x<<", " << y<<endl;
 }
 
 void Game::AddUser(unsigned userID, string name)
@@ -204,10 +213,23 @@ void Game::AddUser(unsigned userID, string name)
 
 void Game::AddProjectile(int ownerId, float speed, float directionX, float directionY, float damage)
 {
+    if(this==nullptr)
+    {
+        return;
+    }
     LOCK_GUARD;
     auto user = _users[ownerId];
     Projectile projectile(ownerId, user->GetX(), user->GetY(), speed, directionX, directionY, damage);
     _projectiles.push_back(projectile);
+
+    Protocol::S_Attack packet;
+    packet.set_userid(ownerId);
+    packet.set_directionx(directionX);
+    packet.set_directiony(directionY);
+
+    _attackPacket.add_attack()->Swap(&packet);
+    cout << "Fire!"<<directionX<<", "<<directionY << "\n";
+    
 }
 
 void Game::Remove(unsigned userID)
@@ -222,6 +244,10 @@ void Game::Remove(unsigned userID)
 
 void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
 {
+    if (this == nullptr)
+    {
+        return;
+    }
     LOCK_GUARD;
 
     auto user = _users[userID];
@@ -229,7 +255,11 @@ void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
     {
         return;
     }*/
-    
+
+    if(user== nullptr)
+    {
+        return;
+    }
     user->SetMoveInfo(packet.moveinfo());
        
 
@@ -276,6 +306,18 @@ void Game::AttackedBroadcast()
     _room->Broadcast(buffer);
 }
 
+void Game::AttackBroadcast()
+{
+    LOCK_GUARD;
+    if (_attackPacket.attack_size() < 1)
+    {
+        return;
+    }
+    cout << "send Fire\n";
+    auto buffer = PacketHandler::MakeBufferSharedPtr(_attackPacket, S_AttackAdvanced);
+    _room->Broadcast(buffer);
+}
+
 void Game::DeadBroadcast()
 {
     LOCK_GUARD;
@@ -294,6 +336,7 @@ void Game::Dead(unsigned userID)
         delete it->second;
         _users.erase(it);
     }
+    cout << "Dead : " << userID << endl;
     _deadPacket.add_userid(userID);
     if (_users.size() <= 1)
     {

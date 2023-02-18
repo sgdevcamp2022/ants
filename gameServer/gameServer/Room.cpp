@@ -121,7 +121,15 @@ void Room::InitGame()
 void Room::EndGame()
 {
     LOCK_GUARD;
-    isStart = false;
+    
+    for (auto& session : _gameSessions)
+    {
+        if(session.second!=nullptr)
+        {
+            session.second->game = nullptr;
+        }
+        
+    }
 
 }
 
@@ -139,9 +147,12 @@ void Room::GameLoop()
 
         if(elapsedTime<loopDuration)
         {
-
+            //cout << "sleep" << endl;
             this_thread::sleep_for(loopDuration - elapsedTime);
         }
         
     }
+
+
+    _game->DeadBroadcast();
 }

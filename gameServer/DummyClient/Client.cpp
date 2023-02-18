@@ -114,8 +114,8 @@ void Client::RegisterSend()
         else if (_seqNumber == 4)
         {
             Protocol::C_Attack packet;
-            packet.set_directionx(3.0f);
-            packet.set_directiony(2.0f);
+            packet.set_directionx(1.0f);
+            packet.set_directiony(0.0f);
             cout << "attack" << endl;
             _seqNumber = 2;
 
@@ -198,11 +198,11 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             cout << "userID: " << packet.move(0).userid() << " , position: " << packet.move(0).moveinfo().positionx() << " , " << packet.move(0).moveinfo().positionx() << endl;
             //_seqNumber = 2;
         }
-        else if(data->id == S_Attack)
+        else if(data->id == S_AttackAdvanced)
         {
-            Protocol::S_Attack packet;
+            Protocol::S_AttackAdvanced packet;
             PARSE(packet);
-            cout << packet.userid() << packet.directionx() << packet.directiony() << endl;
+            cout <<"Some Attack : " << packet.attack(0).userid() << packet.attack(0).directionx() << packet.attack(0).directiony() << endl;
             _seqNumber = 2;
         }
         else if (data->id == S_Attacked)
@@ -213,11 +213,15 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             _seqNumber = 2;
 
         }
+        else if (data->id == S_Dead)
+        {
+            Protocol::S_Dead packet;
+            PARSE(packet);
+            cout << "userid: " << packet.userid(0) << " Dead!"  << endl;
+            return;
+        }
         else
         {
-            Protocol::UserInfo packet;
-            PARSE(packet);
-            cout << "userid: " << packet.userid() << " Dead! state:" << packet.state() << endl;
             return;
         }
         RegisterSend();
