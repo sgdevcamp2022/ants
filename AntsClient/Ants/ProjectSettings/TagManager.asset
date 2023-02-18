@@ -12,6 +12,9 @@ TagManager:
   - Active
   - FOV
   - Player2
+  - Bullet
+  - attackPVP
+  - net
   layers:
   - Default
   - TransparentFX

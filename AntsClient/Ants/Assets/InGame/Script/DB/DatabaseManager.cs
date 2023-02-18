@@ -21,6 +21,12 @@ public class DatabaseManager : MonoBehaviour
     public static int changeDir;
 
     public static bool isDirChange;
+    public static bool isShoot;
+    public static float ShootX;
+    public static float ShootY;
+
+
+    public static bool isHit;
     private void Update()
     {
         if(dir != exdir && isDirChange == false)
@@ -33,7 +39,9 @@ public class DatabaseManager : MonoBehaviour
     static public DatabaseManager instance;
     private void Awake()
     {
-        dir = 8;
+        isHit = false;
+           isShoot = false;
+           dir = 8;
         changeDir = 8;
 
         isDirChange = false;

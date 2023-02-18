@@ -8,16 +8,25 @@ using UnityEngine;
 class PacketHandler : MonoBehaviour
 {
 	static public GameObject player;
-
-    private void Awake()
-    {
-		player = GameObject.FindGameObjectWithTag("Player2");
+	static public GameObject player2;
+	//static public HealthPVP player2H;
+	static public HealthPVP playerH;
+	static public AdcNomalAttack_PVP pvp;
+	static public NetworkManager_packet net;
+	private void Awake()
+	{
+		player= GameObject.FindGameObjectWithTag("Player");
+		player2 = GameObject.FindGameObjectWithTag("Player2");
+		playerH = player.GetComponent<HealthPVP>();
+		//player2H = player2.GetComponent<HealthPVP>();
+		net = GameObject.FindGameObjectWithTag("net").GetComponent<NetworkManager_packet>();
+		pvp = GameObject.FindGameObjectWithTag("attackPVP").GetComponent< AdcNomalAttack_PVP>();
 	}
-    private void Start()
-    {
+	private void Start()
+	{
 
-    }
-    public static void M_TestHandler(PacketSession session, IMessage packet)
+	}
+	public static void M_TestHandler(PacketSession session, IMessage packet)
 	{
 		M_Test chatPacket = packet as M_Test;
 		ServerSession serverSession = session as ServerSession;
@@ -49,7 +58,53 @@ class PacketHandler : MonoBehaviour
 		DatabaseManager.X = movePacket.Moveinfo.PositionX;
 		DatabaseManager.Y = movePacket.Moveinfo.PositionY;
 		DatabaseManager.changeDir = (int)(movePacket.Moveinfo.Direction);
-		Debug.Log("X좌표 : " +DatabaseManager.X+ "X좌표 : "+ DatabaseManager.Y + "방향 : " + DatabaseManager.changeDir);
 	}
 
+
+
+	public static void S_AttackHandler(PacketSession session, IMessage packet)
+	{
+
+		S_Attack attackPacket = packet as S_Attack;
+		ServerSession serverSession = session as ServerSession;
+		//pvp.getAttack(attackPacket.DirectionX, attackPacket.DirectionY);
+
+
+	}
+	public static void S_AttackadvancedHandler(PacketSession session, IMessage packet)
+	{
+		Debug.Log("쐈다");
+		S_Attackadvanced attackadvanced = packet as S_Attackadvanced;
+		ServerSession serverSession = session as ServerSession;
+		S_Attack attack = attackadvanced.Attack[0];
+		DatabaseManager.ShootX = attack.DirectionX;
+		DatabaseManager.ShootY = attack.DirectionY;
+		DatabaseManager.isShoot = true;
+
+
+	}
+	public static void S_AttackedHandler(PacketSession session, IMessage packet)
+	{
+		S_Attacked movePackets = packet as S_Attacked;
+		ServerSession serverSession = session as ServerSession;
+		Debug.Log("맞았다");
+
+		DatabaseManager.isHit = true;
+	}
+
+	public static void S_DeadHandler(PacketSession session, IMessage packet)
+	{
+		S_Dead movePackets = packet as S_Dead;
+		ServerSession serverSession = session as ServerSession;
+		playerH.Death();
+	}
+
+
+	public static void S_StartgameHandler(PacketSession session, IMessage packet)
+	{
+		//S_Dead movePackets = packet as S_Dead;
+	//	ServerSession serverSession = session as ServerSession;
+
+	}
 }
+

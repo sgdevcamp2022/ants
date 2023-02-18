@@ -35,12 +35,6 @@ public class PlayerManager_PVP: MonoBehaviour
     void Update()
     {
         rigidbody2D.velocity = Vector3.zero;
-     
-        
-
-
-
-
 
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
@@ -48,7 +42,48 @@ public class PlayerManager_PVP: MonoBehaviour
         PlayerState();
         PlayerAnimator();
 
-
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            if (Input.GetAxisRaw("Vertical") > 0)
+            {
+                DatabaseManager.dir = 5;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                DatabaseManager.dir = 7;
+            }
+            else if ((Input.GetAxisRaw("Vertical") == 0))
+            {
+                DatabaseManager.dir = 2;
+            }
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            if (Input.GetAxisRaw("Vertical") > 0)
+            {
+                DatabaseManager.dir = 4;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                DatabaseManager.dir = 6;
+            }
+            else if ((Input.GetAxisRaw("Vertical") == 0))
+            {
+                DatabaseManager.dir = 3;
+            }
+        }
+        else if ((Input.GetAxisRaw("Vertical") > 0))
+        {
+            DatabaseManager.dir = 0;
+        }
+        else if ((Input.GetAxisRaw("Vertical") < 0))
+        {
+            DatabaseManager.dir = 1;
+        }
+        else
+        {
+            DatabaseManager.dir = 8;
+        }
 
         //스테미나가 음수가 되지 않도록 제한함.
         if (DatabaseManager.nowStemina < 0)

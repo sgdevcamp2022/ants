@@ -36,7 +36,7 @@ namespace MoreMountains.CorgiEngine
             }
             else
             {
-                health = GameObject.FindWithTag("Player").GetComponent<Health>();
+                //health = GameObject.FindWithTag("Player").GetComponent<Health>();
             }
 
 

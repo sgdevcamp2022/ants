@@ -114,15 +114,6 @@ public class NetworkManager_packet : MonoBehaviour
 	int dirrr;
 	public void Update()
 	{
-		/*
-		if(DatabaseManager.isDirChange == true)
-        {
-			DatabaseManager.isDirChange = false;
-			DatabaseManager.exdir = DatabaseManager.dir;
-			MyPlace();
-
-		}
-		*/
 
 		List<PacketMessage> list = PacketQueue.Instance.PopAll();
 		foreach (PacketMessage packet in list)
@@ -149,7 +140,7 @@ public class NetworkManager_packet : MonoBehaviour
 
 	public void Connect()
 	{
-		Init("111.91.176.193", 10006);
+		Init("172.30.1.36", 10006);
 	}
 
 	public void EnterRoom()
@@ -209,7 +200,15 @@ public class NetworkManager_packet : MonoBehaviour
 	}
 
 
-
+	public void Attack(float x, float y)
+    {
+		C_Attack attack = new C_Attack()
+		{
+			DirectionX = x,
+			DirectionY = y
+	};
+		Send(attack);
+	}
 
 	void DIR()
 	{
@@ -251,4 +250,6 @@ public class NetworkManager_packet : MonoBehaviour
 			player2.transform.DOMove(new Vector2(DatabaseManager.X, DatabaseManager.Y), time).SetEase(Ease.Linear);
 		}
 	}
+
+
 }

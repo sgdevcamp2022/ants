@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
-public class Health : MonoBehaviour
+public class HealthPVP : MonoBehaviour
 {
     public float HP;
     EnemyStun enemyStun;
@@ -21,11 +21,12 @@ public class Health : MonoBehaviour
         if (HP <= 0)
         {
             Destroy(this.gameObject);
-            if(this.tag == "Player")
-            {
-                PhotonNetwork.Disconnect();
-                SceneManager.LoadScene("SampleScene");
-            }
+        }
+
+        if(DatabaseManager.isHit == true)
+        {
+            DatabaseManager.isHit = false;
+            HP -= 10;
         }
     }
 
