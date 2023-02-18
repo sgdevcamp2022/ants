@@ -57,7 +57,7 @@ const Protocol::MoveInfo& User::GetReferenceMoveInfo()
 
 float User::GetDistance(float x, float y)
 {
-    return (_positionX - x) * (_positionX - x) + (_positionY - y) * (_positionY - y);
+    return (_moveInfo.positionx() - x) * (_moveInfo.positionx() - x) + (_moveInfo.positiony()- y) * (_moveInfo.positiony() - y);
 }
 
 void User::SetUserId(const unsigned int id)
@@ -97,7 +97,7 @@ void User::SetHp(unsigned int& hp)
 
 void User::UserAttacked(unsigned int damage)
 {
-    unsigned int hp = _userInfo.hp() - 10;
+    unsigned int hp = _userInfo.hp() - damage;
     SetHp(hp);
 }
 

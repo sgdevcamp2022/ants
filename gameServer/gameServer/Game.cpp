@@ -61,7 +61,8 @@ void Game::End()
         delete it.second;
     }
     _users.clear();
-    _projectiles.clear();
+    isEnd = true;
+    //_projectiles.clear();
 
 
 }
@@ -87,7 +88,7 @@ void Game::Tick()
 
 void Game::ProjectileTick()
 {
-    std::list<Projectile>::iterator it = _projectiles.begin();
+    list<Projectile>::iterator it = _projectiles.begin();
     while (it != _projectiles.end())
     {
         it->Tick();
@@ -101,7 +102,7 @@ void Game::ProjectileTick()
                 hitUser->UserAttacked(10);
                 _attackedPacket.add_userid(hitUser->GetUserId());
                 //사망 감지
-                if (hitUser->GetHp() < 0)
+                if (hitUser->GetHp() <= 0)
                 {
                     //사망처리
                     Dead(hitUser->GetUserId());
@@ -190,6 +191,7 @@ void Game::CalculateUserPosition(User* user)
     x += dx;
     y += dy;
     user->SetPosition(x, y);
+    cout << x<<", " << y<<endl;
 }
 
 void Game::AddUser(unsigned userID, string name)

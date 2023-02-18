@@ -30,10 +30,10 @@ public:
     void Dead(unsigned int userID);
 
     Protocol::S_Attacked GetAttackedPacket();
-
+    bool isEnd = false;
 private:
 
-    int test = 1;;
+    
 
     Room*_room;
     unordered_map<unsigned int, User*> _users;

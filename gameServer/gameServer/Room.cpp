@@ -94,7 +94,7 @@ bool Room::CanStart()
 
 bool Room::CanEnd()
 {
-    return userCount.load() < 1 && isStart==true;
+    return (userCount.load() < 1 && isStart==true)||_game->isEnd;
 }
 
 void Room::InitGame()

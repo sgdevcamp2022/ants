@@ -109,7 +109,7 @@ void Client::RegisterSend()
             packet.set_allocated_moveinfo(moveInfo);
             //packet.mutable_moveinfo()->set_positionx(1);
             buffer = MakeBuffer(packet, C_Move);
-            _seqNumber = 2;
+            //_seqNumber = 2;
         }
         else if (_seqNumber == 4)
         {
@@ -196,7 +196,7 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             Protocol::S_MoveAdvanced packet;
             PARSE(packet);
             cout << "userID: " << packet.move(0).userid() << " , position: " << packet.move(0).moveinfo().positionx() << " , " << packet.move(0).moveinfo().positionx() << endl;
-            _seqNumber = 2;
+            //_seqNumber = 2;
         }
         else if(data->id == S_Attack)
         {
