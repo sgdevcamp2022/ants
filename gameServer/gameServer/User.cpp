@@ -10,7 +10,7 @@ User::User(unsigned userID, string name)
     _userInfo.set_hp(100);
     _userInfo.set_state(Protocol::IDLE);
 
-    _moveInfo.set_direction(Protocol::DOWN);
+    _moveInfo.set_direction(Protocol::NONE);
     _moveInfo.set_positionx(0.f);
     _moveInfo.set_positiony(0.f);
     
@@ -36,7 +36,6 @@ Protocol::UserInfo User::CopyUserInfo()
 
 unsigned int User::GetUserId()
 {
-    
     return _userInfo.userid();
 }
 

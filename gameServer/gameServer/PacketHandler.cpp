@@ -7,7 +7,7 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
 {
     
     PacketHeader* header = reinterpret_cast<PacketHeader*>(data);
-    cout << "hey:\n";
+    //cout << "hey:\n";
     switch (header->id)
     {
     case M_TEST:
@@ -154,7 +154,7 @@ void PacketHandler::HandleClientMoveAdvanced(GameSession* session, char* data, i
     }
     Protocol::C_Move packet;
     PARSE(packet);
-    cout << "data recved :  ";
+    //cout << "data recved :  ";
     session->game->UserMove(session->userId, packet);
 }
 

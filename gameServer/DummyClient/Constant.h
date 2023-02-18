@@ -12,5 +12,5 @@ const int MAX_RECEIVE_BUFFER_LEN = 512;
 const int MAX_PACKET_COUNT = 3000;
 
 
-const int ROOM_ID = 2220;
-const int USER_ID = 2100;
+const int ROOM_ID = 220;
+const int USER_ID = 100;

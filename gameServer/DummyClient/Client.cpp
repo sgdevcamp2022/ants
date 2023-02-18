@@ -85,18 +85,26 @@ void Client::RegisterSend()
         if (_seqNumber == 1)
         {
             Protocol::M_InitRoom packet;
-            packet.set_roomid(ROOM_ID+a);
-            packet.add_userid(USER_ID+a);
+            packet.set_roomid(ROOM_ID);
+
+            for(int i= 0; i <2;  i++)
+            {
+                packet.add_userid(USER_ID + i);
+            }
+            
+            
             buffer = MakeBuffer(packet, M_InitRoom);
 
         }
         else if (_seqNumber == 2)
         {
+            this_thread::sleep_for(1s);
             Protocol::C_EnterRoom packet;
-            packet.set_userid(USER_ID+a);
+            packet.set_userid(USER_ID+a+1);
             packet.set_name("hwichan");
             packet.set_roomid(ROOM_ID+a);
             buffer = MakeBuffer(packet, C_EnterRoom);
+            
         }
       
         else if (_seqNumber == 3)
@@ -104,12 +112,12 @@ void Client::RegisterSend()
             Protocol::C_Move packet;
             Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
             moveInfo->set_direction(Protocol::DOWN);
-            moveInfo->set_positionx(_seqNumber + 1);
-            moveInfo->set_positiony(_seqNumber + 1);
+            moveInfo->set_positionx(-462.23);
+            moveInfo->set_positiony(-347.3);
             packet.set_allocated_moveinfo(moveInfo);
             //packet.mutable_moveinfo()->set_positionx(1);
             buffer = MakeBuffer(packet, C_Move);
-            //_seqNumber = 2;
+
         }
         else if (_seqNumber == 4)
         {
@@ -117,7 +125,7 @@ void Client::RegisterSend()
             packet.set_directionx(1.0f);
             packet.set_directiony(0.0f);
             cout << "attack" << endl;
-            _seqNumber = 2;
+            return;
 
             buffer = MakeBuffer(packet, C_Attack);
         }
@@ -138,7 +146,7 @@ void Client::RegisterSend()
         boost::asio::async_write(_socket, boost::asio::buffer(buffer, size),
             [this, buffer](boost::system::error_code error, size_t transferredBytes) {AfterSend(error, transferredBytes, buffer); });
 
-
+        
 }
 
 
@@ -225,5 +233,6 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             return;
         }
         RegisterSend();
+        RegisterReceive();
     }
 }
