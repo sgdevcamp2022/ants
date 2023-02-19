@@ -35,7 +35,7 @@ void Game::Init(int maxUserCount)
     for (auto it = _users.begin(); it != _users.end(); ++it) {
         auto& user = it->second;
         user->SetPosition(-464.13, -351.64);
-        position += 3;
+        position += 5;
 
         packet.add_user()->CopyFrom(it->second->GetUserInfo());
     }
@@ -141,7 +141,7 @@ User* Game::CheckCollision(Projectile& projectile)
         float distance = it->second->GetDistance(projectile.GetX(), projectile.GetY());
 
         cout << "distance : " << distance << endl;
-        if (distance < 4.0f)
+        if (distance < 2.0f)
         {
             return it->second;
         }
@@ -155,7 +155,7 @@ void Game::CalculateUserPosition(User* user)
     
     float x = user->GetX();
     float y = user->GetY();
-    float distance = 0.0666;
+    float distance = 0.133;
     Protocol::Direction direction = user->GetDirection();
 
 
@@ -219,7 +219,12 @@ void Game::AddProjectile(int ownerId, float speed, float directionX, float direc
     {
         return;
     }
+    
     LOCK_GUARD;
+    if (isEnd == true)
+    {
+        return;
+    }
     auto user = _users[ownerId];
     Projectile projectile(ownerId, user->GetX(), user->GetY(), speed, directionX, directionY, damage);
     _projectiles.push_back(projectile);
@@ -251,6 +256,11 @@ void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
         return;
     }
     LOCK_GUARD;
+    if (isEnd == true)
+    {
+        return;
+    }
+    _movePacket.clear_move();
 
     auto user = _users[userID];
     /*if (user->GetDirection() == packet.moveinfo().direction() && user->GetDistance(packet.moveinfo().positionx(), packet.moveinfo().positiony()) < 0.00666f)
@@ -263,15 +273,16 @@ void Game::UserMove(unsigned int userID, Protocol::C_Move& packet)
         return;
     }
     user->SetMoveInfo(packet.moveinfo());
-       
+    //user->SetDirection(packet.moveinfo().direction());
 
     //cout<<" UserID "<<userID << "Direction:" <<user->GetDirection() << user->GetX() << " , " << user->GetY() << endl;
 
     Protocol::S_Move sendPacket;
     sendPacket.set_userid(userID);
     sendPacket.mutable_moveinfo()->CopyFrom(user->GetReferenceMoveInfo());
-
-    _movePacket.add_move()->Swap(&sendPacket);
+    //_movePacket.add_move()->Swap(&sendPacket);
+    auto buf = PacketHandler::MakeBufferSharedPtr(sendPacket, S_Move);
+    _room->Broadcast(buf);
 }
 
 Protocol::S_Attacked Game::GetAttackedPacket()

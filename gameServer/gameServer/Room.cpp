@@ -45,6 +45,7 @@ void Room::Leave(unsigned int userId)
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
+    
     if (isStart == false)
     {
         return;
@@ -153,6 +154,6 @@ void Room::GameLoop()
         
     }
 
-
+    _game->AttackedBroadcast();
     _game->DeadBroadcast();
 }

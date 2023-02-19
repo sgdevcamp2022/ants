@@ -98,6 +98,7 @@ void Client::RegisterSend()
         }
         else if (_seqNumber == 2)
         {
+            return;
             this_thread::sleep_for(1s);
             Protocol::C_EnterRoom packet;
             packet.set_userid(USER_ID+a+1);
@@ -106,12 +107,12 @@ void Client::RegisterSend()
             buffer = MakeBuffer(packet, C_EnterRoom);
             
         }
-      
         else if (_seqNumber == 3)
         {
+            this_thread::sleep_for(1s);
             Protocol::C_Move packet;
             Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
-            moveInfo->set_direction(Protocol::DOWN);
+            moveInfo->set_direction(Protocol::NONE);
             moveInfo->set_positionx(-462.23);
             moveInfo->set_positiony(-347.3);
             packet.set_allocated_moveinfo(moveInfo);
@@ -119,28 +120,111 @@ void Client::RegisterSend()
             buffer = MakeBuffer(packet, C_Move);
 
         }
-        else if (_seqNumber == 4)
+        else if(_seqNumber==4)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::RIGHT);
+            moveInfo->set_positionx(-462.23);
+            moveInfo->set_positiony(-347.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==5)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::NONE);
+            moveInfo->set_positionx(-459.23);
+            moveInfo->set_positiony(-347.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==6)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::UP);
+            moveInfo->set_positionx(-459.23);
+            moveInfo->set_positiony(-347.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==7)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::NONE);
+            moveInfo->set_positionx(-459.23);
+            moveInfo->set_positiony(-344.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==8)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::LEFT);
+            moveInfo->set_positionx(-462.23);
+            moveInfo->set_positiony(-344.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==9)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::NONE);
+            moveInfo->set_positionx(-462.23);
+            moveInfo->set_positiony(-344.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+        }
+        else if(_seqNumber==10)
+        {
+            this_thread::sleep_for(1s);
+            Protocol::C_Move packet;
+            Protocol::MoveInfo* moveInfo = new Protocol::MoveInfo();
+            moveInfo->set_direction(Protocol::DOWN);
+            moveInfo->set_positionx(-462.23);
+            moveInfo->set_positiony(-344.3);
+            packet.set_allocated_moveinfo(moveInfo);
+            //packet.mutable_moveinfo()->set_positionx(1);
+            buffer = MakeBuffer(packet, C_Move);
+            _seqNumber = 2;
+        }
+        else if(_seqNumber==11){}
+        else if (_seqNumber == 12)
         {
             Protocol::C_Attack packet;
             packet.set_directionx(1.0f);
             packet.set_directiony(0.0f);
             cout << "attack" << endl;
-            return;
-
+            return ;
             buffer = MakeBuffer(packet, C_Attack);
-        }
-        else if (_seqNumber == 5)
-        {
-            Protocol::C_Attacked packet;
-            packet.set_userid(USER_ID);
-
-            buffer = MakeBuffer(packet, C_Attacked);
+            _seqNumber = 2;
         }
         else
         {
             return;
         }
 
+        if(buffer==nullptr)
+        {
+            return;
+        }
         const int size = reinterpret_cast<PacketHeader*>(buffer)->size;
 
         boost::asio::async_write(_socket, boost::asio::buffer(buffer, size),
@@ -204,21 +288,21 @@ void Client::AfterReceive(const boost::system::error_code& error, size_t length)
             Protocol::S_MoveAdvanced packet;
             PARSE(packet);
             cout << "userID: " << packet.move(0).userid() << " , position: " << packet.move(0).moveinfo().positionx() << " , " << packet.move(0).moveinfo().positionx() << endl;
-            //_seqNumber = 2;
+            
         }
         else if(data->id == S_AttackAdvanced)
         {
-            Protocol::S_AttackAdvanced packet;
+           /* Protocol::S_AttackAdvanced packet;
             PARSE(packet);
             cout <<"Some Attack : " << packet.attack(0).userid() << packet.attack(0).directionx() << packet.attack(0).directiony() << endl;
-            _seqNumber = 2;
+            */
         }
         else if (data->id == S_Attacked)
         {
             Protocol::S_Attacked packet;
             PARSE(packet);
             cout << "user id: " << packet.userid(0) << " in attacked" << endl;
-            _seqNumber = 2;
+           
 
         }
         else if (data->id == S_Dead)
