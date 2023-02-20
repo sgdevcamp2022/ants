@@ -28,7 +28,6 @@ public class NetworkManager_packet : MonoBehaviour
 	{
 		if(DatabaseManager.dir == DatabaseManager.changeDir)
         {
-			DIR();
 			return;
         }
         else
@@ -105,8 +104,6 @@ public class NetworkManager_packet : MonoBehaviour
 				};
 				Send(move);
 			}
-
-			DIR();
 		}
 
 	}
@@ -130,8 +127,7 @@ public class NetworkManager_packet : MonoBehaviour
 	
 	private void Start()
     {
-		EnterRoom();
-		InvokeRepeating("MyPlace", 0, 0.05f);
+		player2.transform.DOMove(new Vector2(DatabaseManager.X2, DatabaseManager.Y2), time).SetEase(Ease.Linear);
 	}
 	private void Awake()
 	{
@@ -143,15 +139,17 @@ public class NetworkManager_packet : MonoBehaviour
 		Init("172.30.1.36", 10006);
 	}
 
-	public void EnterRoom()
+	public void EnterRoom(int UserId)
     {
 		C_Enterroom enterRoom = new C_Enterroom()
 		{
 			RoomID = 220,
-			UserID = 100,
+			UserID = (uint)(UserId),
 			Name = "yaho"
 		};
 		Send(enterRoom);
+		InvokeRepeating("DIR", 0, 0.05f);
+		InvokeRepeating("MyPlace", 0, 0.5f);
 
 	}
 	public void Send(IMessage packet)
@@ -173,21 +171,7 @@ public class NetworkManager_packet : MonoBehaviour
 	{
 		_session.Disconnect();
 	}
-	/*
-	public void Init() // for local
-	{
-		// DNS (Domain Name System)
-		string host = Dns.GetHostName();
-		IPHostEntry ipHost = Dns.GetHostEntry(host);
-		IPAddress ipAddr = ipHost.AddressList[0];
-		IPEndPoint endPoint = new IPEndPoint(ipAddr, 10006);
 
-		Connector connector = new Connector();
-		connector.Connect(endPoint,
-			() => { return _session; },
-			1);
-	}
-	*/
 	public void Init(string ipAddrString, int portNumber)
 	{
 
@@ -210,44 +194,44 @@ public class NetworkManager_packet : MonoBehaviour
 		Send(attack);
 	}
 
-	void DIR()
+	public void DIR()
 	{
-		if (DatabaseManager.changeDir == 0)
+		if (DatabaseManager.changeDir2 == 0)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 1)
+		else if (DatabaseManager.changeDir2 == 1)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 2)
+		else if (DatabaseManager.changeDir2 == 2)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 3)
+		else if (DatabaseManager.changeDir2 == 3)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 4)
+		else if (DatabaseManager.changeDir2 == 4)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 5)
+		else if (DatabaseManager.changeDir2 == 5)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y + distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 6)
+		else if (DatabaseManager.changeDir2 == 6)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x - distance, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 7)
+		else if (DatabaseManager.changeDir2 == 7)
 		{
 			player2.transform.DOMove(new Vector2(player2.transform.position.x + distance, player2.transform.position.y - distance), time).SetEase(Ease.Linear);
 		}
-		else if (DatabaseManager.changeDir == 8)
+		else if (DatabaseManager.changeDir2 == 8)
 		{
 			transform.DOPause();
-			player2.transform.DOMove(new Vector2(DatabaseManager.X, DatabaseManager.Y), time).SetEase(Ease.Linear);
+			player2.transform.DOMove(new Vector2(DatabaseManager.X2, DatabaseManager.Y2), time).SetEase(Ease.Linear);
 		}
 	}
 

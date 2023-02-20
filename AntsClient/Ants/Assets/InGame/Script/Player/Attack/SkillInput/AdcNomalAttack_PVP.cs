@@ -5,6 +5,7 @@ using UnityEngine;
 public class AdcNomalAttack_PVP : MonoBehaviour
 {
     public GameObject player;
+    public GameObject player2;
     public GameObject bullet;
     public Transform pos;
     public float _cooltime = 1;
@@ -30,15 +31,23 @@ public class AdcNomalAttack_PVP : MonoBehaviour
         if(DatabaseManager.isShoot == true)
         {
             DatabaseManager.isShoot = false;
-            getAttack(DatabaseManager.ShootX, DatabaseManager.ShootY);
+            float z = Mathf.Atan2(DatabaseManager.ShootY, DatabaseManager.ShootX) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, z);
+            GameObject _bullet = Instantiate(bullet, this.transform.position, transform.rotation);
+        }
+
+        if (DatabaseManager.isShoot2 == true)
+        {
+            DatabaseManager.isShoot2 = false;
+            float z = Mathf.Atan2(DatabaseManager.ShootY2, DatabaseManager.ShootX2) * Mathf.Rad2Deg;
+            player2.transform.rotation = Quaternion.Euler(0, 0, z);
+            GameObject _bullet = Instantiate(bullet, player2.transform.position, player2.transform.rotation);
         }
     }
     
     public void getAttack(float x, float y)
     {
-        float z = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, z);
-        GameObject _bullet = Instantiate(bullet, this.transform.position, transform.rotation);
+
     }
 
 }
