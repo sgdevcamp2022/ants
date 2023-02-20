@@ -32,6 +32,7 @@ public:
 
     Protocol::S_Attacked GetAttackedPacket();
     bool isEnd = false;
+    int winner = 0;
 private:
 
     

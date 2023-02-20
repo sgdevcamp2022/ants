@@ -48,10 +48,20 @@ void Game::End()
 {
     LOCK_GUARD;
 
+    if (_users.size()<1)
+    {
+        winner = 0;
+    }
+    
     for (auto& it : _users) {
         if (it.second == nullptr)
         {
             continue;
+        }
+
+        if(it.second->GetHp()>0)
+        {
+            winner = it.first;
         }
         //Protocol::S_GameEnd packet;
         //packet.set_userid(it.first);

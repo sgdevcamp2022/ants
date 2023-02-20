@@ -5,6 +5,7 @@
 #include "GameSession.h"
 #include "PacketHandler.h"
 #include "Game.h"
+#include "LobbySession.h"
 
 Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false),_game(make_shared<Game>(this))
 {
@@ -122,7 +123,20 @@ void Room::InitGame()
 void Room::EndGame()
 {
     LOCK_GUARD;
+
+    Protocol::S_GameEnd packet;
+    packet.set_messagetype(7);
+    packet.set_winnerid(to_string(_game->winner));
+
+    for( auto i :_userList)
+    {
+        packet.add_userid(to_string(i));
+    }
+
+    g_lobbySession.RegisterSend(packet);
     
+
+    cout << "end" << endl;
     for (auto& session : _gameSessions)
     {
         if(session.second!=nullptr)
@@ -156,4 +170,6 @@ void Room::GameLoop()
 
     _game->AttackedBroadcast();
     _game->DeadBroadcast();
+
+   
 }
