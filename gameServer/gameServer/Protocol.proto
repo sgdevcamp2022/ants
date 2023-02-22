@@ -1,0 +1,110 @@
+syntax = "proto3";
+package Protocol;
+
+enum UserState
+{
+    IDLE = 0;
+    MOVE = 1;
+    Attack = 2;
+    DEAD = 3;
+}
+
+enum Direction
+{
+    UP = 0;
+    DOWN = 1;
+    LEFT = 2;
+    RIGHT = 3;
+    UP_LEFT=4;
+    UP_RIGHT=5;
+    DOWN_LEFT=6;
+    DOWN_RIGHT=7;
+}
+
+//------게임 서버----------
+message UserInfo
+{
+    uint32 userID=1;
+    string name=2;
+    UserState state=3;
+    uint32 hp=4;
+    MoveInfo moveInfo=5;
+}
+
+message MoveInfo
+{
+    Direction direction=1;
+    float positionX=2;
+    float positionY=3;
+}
+
+// 매칭 서버 관련
+message M_TEST
+{
+    string msg=1;
+}
+
+message M_InitRoom
+{
+    uint32 roomID=1;
+    repeated uint32 userID=2;
+}
+
+message S_RoomCompleted
+{
+    uint32 roomID=1;
+    bool isCompleted = 2;
+}
+
+// 클라이언트 관련
+message C_TEST
+{
+    string msg=1;
+}
+
+message C_EnterRoom
+{
+    uint32 userID=1;
+    uint32 roomID=2;
+    string name=3;
+}
+
+message S_GameStart
+{
+    repeated UserInfo user=1;
+}
+
+
+message C_Move
+{
+    MoveInfo moveInfo=1;
+}
+
+
+message S_Move
+{
+    uint32 userID=1;
+    MoveInfo moveInfo=2;
+}
+
+message C_Attack
+{
+    float directionX=1;
+    float directionY=2;
+}
+
+message S_Attack
+{
+    uint32 userID=1;
+    float directionX=2;
+    float directionY=3;
+}
+
+message C_Attacked
+{
+    uint32 userID=1;
+}
+message S_Attacked
+{
+    repeated uint32 userID=1;
+}

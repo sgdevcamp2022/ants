@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class DatabaseManager : MonoBehaviour
 {
+    public static float nowStemina;
+    public static float fullStemina;
 
-    public static int stat;
+    public static string playerState;
+
+    public static bool isAction;
+    public static bool isRestOneSec;
+    public static bool 변수이름;
 
 
     static public DatabaseManager instance;
@@ -22,4 +28,4 @@ public class DatabaseManager : MonoBehaviour
         }
 
     }
-    }
+}

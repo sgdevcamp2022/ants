@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Obstracle
+  - Enemy
+  - P_Bullet
+  - E_Bullet
+  - Slot
+  - Active
+  - FOV
   layers:
   - Default
   - TransparentFX
@@ -13,11 +20,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Mask
+  - BehindMask
+  - Obstracle
+  - Player
+  - Black
   - 
   - 
   - 
