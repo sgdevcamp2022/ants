@@ -57,6 +57,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="LobbySession.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -96,6 +99,9 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbySession.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

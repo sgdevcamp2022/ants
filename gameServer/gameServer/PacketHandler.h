@@ -34,11 +34,13 @@ enum :unsigned int
 
     C_Attack = 2006,
     S_Attack = 2007,
+    S_AttackAdvanced=2107,
 
     C_Attacked = 2008,
     S_Attacked = 2009,
 
     S_Dead = 2010,
+    S_GameEnd=2011,
 
     C_TEST = 2999,
 
@@ -74,6 +76,7 @@ public:
     void HandleClientMoveAdvanced(GameSession* session, char* data, int length);
 
     void HandleClientAttack(GameSession* session, char* data, int length);
+    void HandleClientAttackAdvanced(GameSession* session, char* data, int length);
 
     void HandleClientAttacked(GameSession* session, char* data, int length);
 

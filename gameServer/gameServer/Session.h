@@ -14,7 +14,7 @@ public:
 
 	void Init() {}
 
-	void RegisterReceive();
+    void RegisterReceive();
 
 	void RegisterSend(char* buffer);
 	void RegisterSend(shared_ptr<char>& buffer);

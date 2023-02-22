@@ -23,9 +23,7 @@ public:
     
     void InitGame();
     void EndGame();
-
-    void AddProjectile(int ownerId, float x, float y, float speed, float direction, float damage);
-
+    
 private:
     friend class Game;
     void GameLoop();

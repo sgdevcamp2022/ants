@@ -7,7 +7,7 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
 {
     
     PacketHeader* header = reinterpret_cast<PacketHeader*>(data);
-
+    //cout << "hey:\n";
     switch (header->id)
     {
     case M_TEST:
@@ -32,7 +32,8 @@ void PacketHandler::HandlePacket(GameSession* session, char* data, int length)
         break;
 
     case C_Attack:
-        HandleClientAttack(session, data, length);
+        //HandleClientAttack(session, data, length);
+        HandleClientAttackAdvanced(session, data, length);
         break;
     case C_Attacked:
         HandleClientAttacked(session, data, length);
@@ -134,6 +135,7 @@ void PacketHandler::HandleClientMove(GameSession* session, char* data, int lengt
     PARSE(packet);
 
     session->game->UserMove(session->userId, packet);
+
     
 
     Protocol::S_Move sendPacket;
@@ -152,6 +154,7 @@ void PacketHandler::HandleClientMoveAdvanced(GameSession* session, char* data, i
     }
     Protocol::C_Move packet;
     PARSE(packet);
+    //cout << "data recved :  ";
     session->game->UserMove(session->userId, packet);
 }
 
@@ -162,6 +165,7 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
     Protocol::C_Attack packet;
     PARSE(packet);
 
+
     //나중에 쿨타임 같은 거 추가하려면 게임에 함수 추가
     Protocol::S_Attack sendPacket;
     sendPacket.set_userid(session->userId);
@@ -170,6 +174,15 @@ void PacketHandler::HandleClientAttack(GameSession* session, char* data, int len
 
     auto buffer = MakeBufferSharedPtr(sendPacket, S_Attack);
     session->room->Broadcast(buffer);
+}
+
+void PacketHandler::HandleClientAttackAdvanced(GameSession* session, char* data, int length)
+{
+    ValidateUser(session);
+
+    Protocol::C_Attack packet;
+    PARSE(packet);
+    session->game->AddProjectile(session->userId, PROJECTILE_SPEED, packet.directionx(), packet.directiony(), 10);
 }
 
 void PacketHandler::HandleClientAttacked(GameSession* session, char* data, int length)

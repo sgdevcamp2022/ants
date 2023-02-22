@@ -5,6 +5,7 @@
 #include "GameSession.h"
 #include "PacketHandler.h"
 #include "Game.h"
+#include "LobbySession.h"
 
 Room::Room(unsigned roomID) : _roomID(roomID),userCount(0), _maxUserCount(0), isStart(false),_game(make_shared<Game>(this))
 {
@@ -45,6 +46,7 @@ void Room::Leave(unsigned int userId)
 
 void Room::Broadcast(shared_ptr<char>& buffer)
 {
+    
     if (isStart == false)
     {
         return;
@@ -94,7 +96,7 @@ bool Room::CanStart()
 
 bool Room::CanEnd()
 {
-    return userCount.load() < 1 && isStart==true;
+    return (userCount.load() < 1 && isStart==true)||_game->isEnd;
 }
 
 void Room::InitGame()
@@ -110,7 +112,9 @@ void Room::InitGame()
     thread gamethread([this](){
         GameLoop();
         EndGame();
-        //Broadcast(PacketHandler::MakeBufferSharedPtr(Protocol::S_GameEnd(), S_EndGame));
+        
+
+        _game = nullptr;
         RoomManager::DeleteRoom(_roomID);
     });
     gamethread.detach();
@@ -119,14 +123,31 @@ void Room::InitGame()
 void Room::EndGame()
 {
     LOCK_GUARD;
-    isStart = false;
+
+    Protocol::S_GameEnd packet;
+    packet.set_messagetype(7);
+    packet.set_winnerid(to_string(_game->winner));
+
+    for( auto i :_userList)
+    {
+        packet.add_userid(to_string(i));
+    }
+
+    g_lobbySession.RegisterSend(packet);
+    
+
+    cout << "end" << endl;
+    for (auto& session : _gameSessions)
+    {
+        if(session.second!=nullptr)
+        {
+            session.second->game = nullptr;
+        }
+        
+    }
 
 }
 
-void Room::AddProjectile(int ownerId, float x, float y, float speed, float direction, float damage)
-{
-    _game->AddProjectile(ownerId,x,y,speed,direction,damage);
-}
 
 void Room::GameLoop()
 {
@@ -141,9 +162,14 @@ void Room::GameLoop()
 
         if(elapsedTime<loopDuration)
         {
-            cout << "sleep" << endl;
+            //cout << "sleep" << endl;
             this_thread::sleep_for(loopDuration - elapsedTime);
         }
         
     }
+
+    _game->AttackedBroadcast();
+    _game->DeadBroadcast();
+
+   
 }

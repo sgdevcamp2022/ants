@@ -10,7 +10,7 @@ User::User(unsigned userID, string name)
     _userInfo.set_hp(100);
     _userInfo.set_state(Protocol::IDLE);
 
-    _moveInfo.set_direction(Protocol::DOWN);
+    _moveInfo.set_direction(Protocol::NONE);
     _moveInfo.set_positionx(0.f);
     _moveInfo.set_positiony(0.f);
     
@@ -36,7 +36,6 @@ Protocol::UserInfo User::CopyUserInfo()
 
 unsigned int User::GetUserId()
 {
-    
     return _userInfo.userid();
 }
 
@@ -45,9 +44,19 @@ string User::GetName()
     return _userInfo.name();
 }
 
+int User::GetHp()
+{
+    return _userInfo.hp();
+}
+
+const Protocol::MoveInfo& User::GetReferenceMoveInfo()
+{
+    return _moveInfo;
+}
+
 float User::GetDistance(float x, float y)
 {
-    return (_positionX - x) * (_positionX - x) + (_positionY - y) * (_positionY - y);
+    return (_moveInfo.positionx() - x) * (_moveInfo.positionx() - x) + (_moveInfo.positiony()- y) * (_moveInfo.positiony() - y);
 }
 
 void User::SetUserId(const unsigned int id)
@@ -68,6 +77,11 @@ void User::SetPosition(const float& x, const float& y)
     //*_userInfo.mutable_moveinfo() = _moveInfo;
 }
 
+void User::SetDirection(Protocol::Direction direction)
+{
+    _moveInfo.set_direction(direction);
+}
+
 void User::SetMoveInfo(const Protocol::MoveInfo moveInfo)
 {
     _isMoved = true;
@@ -77,13 +91,12 @@ void User::SetMoveInfo(const Protocol::MoveInfo moveInfo)
 
 void User::SetHp(unsigned int& hp)
 {
-    LOCK_GUARD
     _userInfo.set_hp(hp);
 }
 
 void User::UserAttacked(unsigned int damage)
 {
-    unsigned int hp = _userInfo.hp() - 10;
+    unsigned int hp = _userInfo.hp() - damage;
     SetHp(hp);
 }
 
