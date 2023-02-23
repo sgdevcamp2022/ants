@@ -7,10 +7,10 @@
 - 1/23 ~ 2/21
 
 ### 개발 인원 : 5명
-- Client      : 2명
-- LobbyServer : 1명
-- MatchServer : 1명
-- GameServer  : 1명
+- Client      : 서민지, 설민우
+- LobbyServer : 신지훈
+- MatchServer : 김성신
+- GameServer  : 정휘찬
 
 ### 주요 기능
 
