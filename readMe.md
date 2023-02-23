@@ -1,16 +1,27 @@
-### 개요
-Boost/Asio 사용
-
-탑다운 슈터 게임을 위한 TCP 게임 서버
-
-유니티에서 사용할 네트워크 DLL
+### 프로젝트 개요
+- 멀티플레이 2D 슈팅 게임
+> 인증 로비 부터 PVE, PVP(서버) 까지 모두 직접 만드는 게임
 
 
-### 프로젝트 폴더
-gameServer 폴더 내 프로젝트 별로 구분
+### 개발 기간
+- 1/23 ~ 2/21
 
-gameServer/DummyClient: 테스트용 더미 클라이언트
+### 개발 인원 : 5명
+- Client      : 2명
+- LobbyServer : 1명
+- MatchServer : 1명
+- GameServer  : 1명
 
-gameServer/NetworkCppHwichan: 유니티에서 사용할 수 있는 DLL, C++로 작성
+### 주요 기능
 
-gameServer/gameServer: 게임 서버
+
+### 아키텍처
+
+### PMP
+
+### 중간 발표
+
+### 최종 발표
+
+### 위험리관리
+ 
