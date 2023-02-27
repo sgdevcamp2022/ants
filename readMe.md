@@ -102,5 +102,9 @@
 [파일 링크](https://github.com/sgdevcamp2022/ants/blob/main/doc/PPT/%5B%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C%5D%20%EC%A0%84%EB%9D%BC_Ants.pdf)
 ## 위험 관리
 [파일 링크](https://github.com/sgdevcamp2022/ants/tree/main/doc/risk_management)
-## 팀 목표
+## 팀 목표 및 회고
 ![image](https://user-images.githubusercontent.com/40656425/221360536-9da8fa45-2645-4f97-ba65-14583c3198a4.png)
+
+
+정휘찬
+- [회고록](https://velog.io/@oak_cassia/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-%EC%96%BB%EC%9D%80-%EA%B2%83)
