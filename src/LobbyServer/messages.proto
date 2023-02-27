@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package commandpk;
+
+enum msgType {
+   login= 0;
+   buyitem=1;
+}
+
+message CustomerList {
+    string nickname =1;
+    int32 level =2;
+    int32 exp = 3;
+    int32 cash =4;
+}
+
+message Buyitem {
+    int32 cash =1;
+    string itemcode=2; 
+}
+
+message log {
+    int32 cd = 1;
+    string token = 2;
+    string buy =3;
+}
+
+
+
+message Getinven {
+    message Result {
+        string listnum = 1;
+        string fit = 2;
+        int32 location = 3;
+        string itemcode = 4;
+    }
+    repeated Result result = 1;
+}
+
+message Getstash {
+    message Result {
+        string listnum = 1;
+        string itemcode = 2;
+    }
+    repeated Result result = 1;
+}
+
+
+message Upinven {
+    int32 function = 1; 
+    repeated sendInventory inventory =2;
+}
+
+message sendInventory{
+    string listnum = 1;
+    string nickname = 2;
+    string fit = 3;
+    int32 location = 4;
+    string itemcode = 5;
+}
+
+message Endgame {
+    int32 function =1;
+    string rownum =2;
+    repeated string user =3;
+}
+
+message userID {
+    string userid =1;
+}
