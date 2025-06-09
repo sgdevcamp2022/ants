@@ -10,11 +10,11 @@
 ### 개발 인원 : 5명
 | 이름 | 개인 깃허브 | 담당 역할 및 기능 |
 | ------ | ---------- | ------ |
-| 김성신 |    | <img src="https://img.shields.io/badge/-BE-red"> 매칭 서버, 유니티 네트워크 매니저 |
-| 정휘찬 |  | <img src="https://img.shields.io/badge/-BE-red"> 게임 서버     |
-| 서민지 |            | <img src="https://img.shields.io/badge/-FE-blue"> 로비 UI |
-| 설민우 |          | <img src="https://img.shields.io/badge/-FE-blue"> 게임 클라이언트, 포톤 |
-| 신지훈 |          | <img src="https://img.shields.io/badge/-BE-red"> 매치 서버|
+| 김성신 |      | <img src="https://img.shields.io/badge/-BE-red"> 매칭 서버, 유니티 네트워크 매니저 |
+| 정휘찬 |      | <img src="https://img.shields.io/badge/-BE-red"> 게임 서버     |
+| 서민지 |      | <img src="https://img.shields.io/badge/-FE-blue"> 로비 UI |
+| 설민우 |      | <img src="https://img.shields.io/badge/-FE-blue"> 게임 클라이언트, 포톤 |
+| 신지훈 |      | <img src="https://img.shields.io/badge/-BE-red"> 인증, 로비 서버|
 <br/>
 
 ## 기술 스택
